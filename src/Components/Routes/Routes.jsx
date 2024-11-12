@@ -30,6 +30,9 @@ import Orders from "../Dashboard/Orders";
 import Products from "../Dashboard/Products";
 import MainCategory from "../Dashboard/Category/MainCategory";
 import SubCategory from "../Dashboard/Category/SubCategory";
+import OrganizationTable from "../Dashboard/Organization/AllOrganization";
+import OrganizationRequest from "../Dashboard/Organization/OrganizationRequest";
+import OrganizationPayment from "../Dashboard/Organization/OrganizationPayment";
 
 //
 
@@ -89,6 +92,18 @@ const router = createBrowserRouter([
           {
             path: "earning",
             element: <Earning />,
+          },
+          {
+            path: "organizations",
+            element: <OrganizationTable />,
+          },
+          {
+            path: "organization-request",
+            element: <OrganizationRequest />,
+          },
+          {
+            path: "organization-payment",
+            element: <OrganizationPayment />,
           },
           {
             path: "subscription",

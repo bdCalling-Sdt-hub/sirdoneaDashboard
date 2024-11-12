@@ -1,7 +1,5 @@
-// AddSubCategoryModal.js
-import React from "react";
+/* eslint-disable react/prop-types */
 import { Modal, Input, Button } from "antd";
-import { PlusOutlined } from "@ant-design/icons";
 
 const AddSubCategoryModal = ({ visible, onClose, onSave }) => {
   return (
