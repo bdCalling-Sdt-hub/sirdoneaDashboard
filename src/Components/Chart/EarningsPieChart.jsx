@@ -1,4 +1,3 @@
-import React from "react";
 import { PieChart, Pie, Cell, Text } from "recharts";
 
 export default function EarningsPieChart() {
@@ -9,21 +8,12 @@ export default function EarningsPieChart() {
   ];
 
   const COLORS = {
-    Done: "#29606C",
-    "In Progress": "#4A4A4A",
-    Left: "#DD1122",
+    Done: "#FEBC60",
+    "In Progress": "#99855B",
+    Left: "#E07B61",
   };
 
-  const renderCustomLabel = ({
-    cx,
-    cy,
-    midAngle,
-    innerRadius,
-    outerRadius,
-    index,
-    name,
-    value,
-  }) => {
+  const renderCustomLabel = ({ cx, cy, midAngle, outerRadius, value }) => {
     // const radius = innerRadius + (outerRadius - innerRadius) * 0.5;
     const RADIAN = Math.PI / 180;
     const x = cx + outerRadius * Math.cos(-midAngle * RADIAN);
@@ -80,7 +70,7 @@ export default function EarningsPieChart() {
           nameKey="name"
           cx="50%"
           cy="50%"
-          innerRadius={50}
+          innerRadius={70}
           outerRadius={90}
           labelLine={false}
           label={renderCustomLabel}

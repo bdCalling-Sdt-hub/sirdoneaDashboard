@@ -7,7 +7,7 @@ import {
 import { Badge, ConfigProvider, Dropdown, Typography, Grid } from "antd";
 import { Link } from "react-router-dom";
 import { useEffect, useState } from "react";
-// import user from "/images/user.png";
+import { GiHamburgerMenu } from "react-icons/gi";
 
 const notifications = [
   {
@@ -73,7 +73,7 @@ const Topbar = ({ collapsed, setCollapsed }) => {
           key={notification.id}
           className="flex gap-2 py-2 border-b last:border-b-0"
         >
-          <BellFilled style={{ color: "#2B4257", fontSize: "20px" }} />
+          <BellFilled style={{ color: "#1B7443", fontSize: "20px" }} />
           <div className="flex flex-col items-start">
             <p>{notification.message}</p>
             <p className="text-gray-400 text-sm">{notification.time}</p>
@@ -83,7 +83,7 @@ const Topbar = ({ collapsed, setCollapsed }) => {
       <div className="text-center mt-4">
         <Link
           to="/notifications"
-          className="bg-[#2B4257] text-white hover:text-gray-200 px-4 py-2 rounded inline-block"
+          className="bg-[#1B7443] text-white hover:text-gray-200 px-4 py-2 rounded inline-block"
         >
           See More
         </Link>
@@ -93,17 +93,15 @@ const Topbar = ({ collapsed, setCollapsed }) => {
 
   return (
     <div className="py-2 mx-[-50px] flex justify-between items-center bg-[#ffffff] rounded-xl">
-      <div className="flex items-center gap-2 text-base-color ml-4 mt-2">
-        <Typography.Title level={3} type="secondary">
-          <BarsOutlined
-            onClick={() => setCollapsed(!collapsed)}
-            className="text-3xl"
-          />
-        </Typography.Title>
+      <div className="flex items-center gap-2 text-[#1B7443] ml-4 mt-2 cursor-pointer">
+        <GiHamburgerMenu
+          onClick={() => setCollapsed(!collapsed)}
+          className="text-3xl"
+        />
       </div>
       <div className="flex items-center justify-center gap-3 mr-5">
         {/* notification */}
-        <div className="border border-[#013564] rounded-full px-2 py-2 h-9 flex cursor-pointer">
+        <div className="border border-[#1B7443] rounded-full px-2 py-2 h-9 flex cursor-pointer">
           <ConfigProvider
             theme={{
               components: {
@@ -124,7 +122,7 @@ const Topbar = ({ collapsed, setCollapsed }) => {
                 <BellOutlined
                   shape="circle"
                   size="small"
-                  className="text-lg font-bold text-[#013564]"
+                  className="text-lg font-bold text-[#1B7443]"
                 />
               </Badge>
             </Dropdown>
@@ -133,9 +131,9 @@ const Topbar = ({ collapsed, setCollapsed }) => {
 
         <Link
           to="profile"
-          className="flex items-center justify-center text-center gap-2 bg-transparent border rounded-full border-[#013564] p-2 mr-5"
+          className="flex items-center justify-center text-center gap-2 bg-transparent border rounded-full border-[#1B7443] p-2 mr-5"
         >
-          <UserOutlined className="text-lg" />
+          <UserOutlined className="text-lg text-[#1B7443]" />
         </Link>
       </div>
     </div>

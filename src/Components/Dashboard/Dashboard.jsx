@@ -1,12 +1,11 @@
-import { ConfigProvider, Select } from "antd";
-import Bar_Chart from "../Chart/BarChart";
+import { Card, ConfigProvider, Select } from "antd";
 
 import { AllIcons } from "../../../public/images/AllImages";
 import { useEffect, useState } from "react";
 import axios from "axios";
 import UsersTable from "../Tables/UsersTable";
-
-// import Line_Chart from "../Chart/LineChart";
+import Area_Chart from "../Chart/AreaChart";
+import EarningsPieChart from "../Chart/EarningsPieChart";
 
 const Dashboard = () => {
   const [data, setData] = useState([]);
@@ -150,17 +149,18 @@ const Dashboard = () => {
             </div>
             <hr />
             <div>
-              <Bar_Chart />
+              <Area_Chart />
             </div>
           </div>
         </div>
 
-        <div className="flex flex-col lg:flex-row gap-4 mt-5">
+        <div className="flex flex-col lg:flex-row gap-4 mt-5"></div>
+
+        <div className="flex flex-col lg:flex-row gap-3">
           <div
-            className="bg-[#FFFFFF] rounded flex-1 p-3"
-            style={{ boxShadow: "0px 0px 5px 2px #00000040" }}
+            className="rounded flex-1"
           >
-            <div className="flex justify-between items-center mx-3 py-2">
+            <div className="flex justify-between items-center mx-3 ">
               <p className="text-2xl font-semibold text-base-color">
                 Recent users
               </p>
@@ -171,6 +171,45 @@ const Dashboard = () => {
               </div> */}
             </div>
             <UsersTable data={data} loading={loading} />
+          </div>
+          <div>
+            <p className="text-xl font-bold text-black mb-1">Earning Chart</p>
+            <div className="flex flex-col items-center justify-center">
+              <ConfigProvider
+                theme={{
+                  components: {
+                    Card: {
+                      headerBg: "#1B7443",
+                      colorTextHeading: "rgb(253,253,253)",
+                    },
+                  },
+                }}
+              >
+                <Card
+                  title="Comparing With Previous Month"
+                  style={{
+                    width: "100%",
+                    height: "100%",
+                    border: "2px solid #1B7443",
+                    borderRadius: "12px",
+                  }}
+                >
+                  <EarningsPieChart />
+                  <div className="flex lg:flex-col xl:flex-row items-center justify-between mx-6 gap-7">
+                    <div>
+                      <p className="text-lg">Earning</p>
+                      <p className="text-2xl font-bold">$ 3500.55</p>
+                    </div>
+                    <div>
+                      <p className="text-base text-[#28C66F]">62%</p>
+                      <p className="text-sm text-[#656565]">
+                        More than Last Month
+                      </p>
+                    </div>
+                  </div>
+                </Card>
+              </ConfigProvider>
+            </div>
           </div>
         </div>
       </div>
