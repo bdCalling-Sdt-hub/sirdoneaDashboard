@@ -19,10 +19,10 @@ const countryCodes = [
 const Profile = () => {
   // eslint-disable-next-line no-unused-vars
   const [profileData, setProfileData] = useState({
-    fullName: "Mr Ramandeep Singh",
+    fullName: "Sirdonea",
     lastName: "",
-    email: "mr.singh@example.com",
-    phoneCode: "BD",
+    email: "sirdonea@example.com",
+    phoneCode: "US",
     phoneNumber: "01846875456",
     birthday: "1990-01-01",
   });
@@ -47,7 +47,7 @@ const Profile = () => {
         <Button
           icon={<EditOutlined />}
           onClick={handleEditClick}
-          className="bg-[#013564] text-white h-10"
+          className="bg-[#1b7443] text-white h-10"
         >
           Edit Profile
         </Button>
@@ -57,7 +57,7 @@ const Profile = () => {
           <div className="flex flex-col items-center">
             <h3 className="xl:text-lg font-bold">Admin</h3>
             <h2 className="text-xl lg:text-2xl font-bold">
-              {profileData.fullName}{" "}
+              {profileData.fullName}
             </h2>
           </div>
           <div className="flex-1">
@@ -66,8 +66,8 @@ const Profile = () => {
                 components: {
                   Input: {
                     colorTextPlaceholder: "rgba(255,255,255,0.7)",
-                    hoverBg: "#E8E8F5",
-                    activeBg: "#E8E8F5",
+                    hoverBg: "#B2DAC4",
+                    activeBg: "#B2DAC4",
                   },
                 },
               }}
@@ -87,7 +87,7 @@ const Profile = () => {
                   }
                 >
                   <Input
-                    className="bg-[#E8E8F5] rounded-lg h-10 font-semibold w-96"
+                    className="bg-[#B2DAC4] rounded-lg h-10 font-semibold w-96"
                     value={profileData.fullName}
                     readOnly
                   />
@@ -106,7 +106,7 @@ const Profile = () => {
                   }
                 >
                   <Input
-                    className=" bg-[#E8E8F5] rounded-lg h-10 font-semibold w-96"
+                    className=" bg-[#B2DAC4] rounded-lg h-10 font-semibold w-96"
                     value={profileData.email}
                     readOnly
                   />
@@ -129,7 +129,7 @@ const Profile = () => {
                       <Select
                         defaultValue={profileData.phoneCode}
                         className="h-10"
-                        style={{ width: 150 }}
+                        style={{ width: 120 }}
                         open={false}
                       >
                         {countryCodes.map((country) => (
@@ -148,7 +148,7 @@ const Profile = () => {
                       </Select>
 
                       <Input
-                        className="bg-[#E8E8F5] rounded-lg h-10 font-semibold w-56"
+                        className="bg-[#B2DAC4] rounded-lg h-10 font-semibold w-64"
                         value={profileData.phoneNumber}
                         readOnly
                       />
@@ -169,7 +169,7 @@ const Profile = () => {
                   }
                 >
                   <Input
-                    className="bg-[#E8E8F5] rounded-lg h-10 font-semibold w-96"
+                    className="bg-[#B2DAC4] rounded-lg h-10 font-semibold w-96"
                     value={profileData.birthday}
                     prefix={
                       <div style={{ display: "flex", alignItems: "center" }}>

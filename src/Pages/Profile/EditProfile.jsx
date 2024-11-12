@@ -49,13 +49,13 @@ const EditProfile = () => {
         </div>
       </div>
 
-      <div className=" bg-white rounded-lg shadow-lg p-6 md:mx-10 xl:mx-40">
+      <div className="relative bg-white rounded-lg shadow-lg p-6 md:mx-10 xl:mx-40">
         <div className="relative">
           <ConfigProvider
             theme={{
               components: {
                 Button: {
-                  defaultHoverBg: "rgb(43,66,87)",
+                  defaultHoverBg: "#1b7443",
                   defaultHoverBorderColor: "rgb(255,255,255)",
                   defaultHoverColor: "rgb(255,255,255)",
                 },
@@ -82,7 +82,7 @@ const EditProfile = () => {
                 name="fullName"
               >
                 <Input
-                  className="bg-[#E8E8F5] rounded-lg h-12 font-semibold"
+                  className="bg-[#B2DAC4] rounded-lg h-12 font-semibold"
                   placeholder="Enter Full Name"
                 />
               </Form.Item>
@@ -93,7 +93,7 @@ const EditProfile = () => {
                 name="email"
               >
                 <Input
-                  className="bg-[#E8E8F5] rounded-lg h-12 font-semibold"
+                  className="bg-[#B2DAC4] rounded-lg h-12 font-semibold"
                   placeholder="Enter Email"
                 />
               </Form.Item>
@@ -127,7 +127,7 @@ const EditProfile = () => {
                   />
                   <Form.Item name="phoneNumber" noStyle>
                     <Input
-                      className="bg-[#E8E8F5] rounded-lg h-12 font-semibold"
+                      className="bg-[#B2DAC4] rounded-lg h-12 font-semibold"
                       placeholder="Enter Phone Number"
                     />
                   </Form.Item>
@@ -142,7 +142,7 @@ const EditProfile = () => {
                 name="birthday"
               >
                 <div
-                  className="bg-[#E8E8F5] rounded-lg h-12 font-semibold w-full flex items-center justify-between cursor-pointer"
+                  className="bg-[#B2DAC4] rounded-lg h-12 font-semibold w-full flex items-center justify-between cursor-pointer"
                   onClick={() => setIsPickerVisible(!isPickerVisible)}
                 >
                   <span className="ml-2">
@@ -154,7 +154,7 @@ const EditProfile = () => {
                 </div>
               </Form.Item>
               {isPickerVisible && (
-                <div className="absolute bg-white p-2 shadow-lg rounded-md">
+                <div className="absolute top-10 right-5 bg-white p-2 shadow-lg rounded-md">
                   <DayPicker
                     mode="single"
                     selected={selectedBirthday}
@@ -167,7 +167,7 @@ const EditProfile = () => {
                 block
                 form="editProfileForm"
                 htmlType="submit"
-                className="bg-[#2B4257] text-white h-12 py-5 rounded-xl font-semibold text-lg"
+                className="bg-[#1b7443] text-white h-12 py-5 rounded-xl font-semibold text-lg"
               >
                 Save Changes
               </Button>
