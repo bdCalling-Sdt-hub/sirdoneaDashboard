@@ -75,7 +75,7 @@ const DashboardLayout = () => {
         {
           key: "sub-category",
           icon: <span>&#8226;</span>,
-          label: <NavLink to="sub-category">Sub category</NavLink>,
+          label: <NavLink to="sub-category">Sub Category</NavLink>,
         },
       ],
     },

@@ -25,10 +25,11 @@ import PrivacyPolicy from "../Dashboard/settings/PrivacyPolicy";
 
 import Notifications from "../Dashboard/Notifications";
 import Earning from "../Dashboard/Earning";
-import AllDrivers from "../Dashboard/Driver/AllDrivers";
-import DriverRequest from "../Dashboard/Driver/DriverRequest";
-import DriverRequestPage from "../Dashboard/Driver/DriverRequestDetails";
+
 import Orders from "../Dashboard/Orders";
+import Products from "../Dashboard/Products";
+import MainCategory from "../Dashboard/Category/MainCategory";
+import SubCategory from "../Dashboard/Category/SubCategory";
 
 //
 
@@ -74,16 +75,16 @@ const router = createBrowserRouter([
             element: <Orders />,
           },
           {
-            path: "all-drivers",
-            element: <AllDrivers />,
+            path: "main-category",
+            element: <MainCategory />,
           },
           {
-            path: "driver-request",
-            element: <DriverRequest />,
+            path: "sub-category",
+            element: <SubCategory />,
           },
           {
-            path: "driver-request/:id",
-            element: <DriverRequestPage />,
+            path: "products",
+            element: <Products />,
           },
           {
             path: "earning",
