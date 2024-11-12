@@ -1,0 +1,89 @@
+import { Button, ConfigProvider, Form, Input } from "antd";
+
+import { useNavigate } from "react-router-dom";
+import forgotImage from "/images/authImages/ForgotPassword.png";
+
+const ForgotPassword = () => {
+  const navigate = useNavigate();
+
+  const onFinish = (values) => {
+    console.log("Success:", values);
+    navigate("/verify-otp");
+  };
+  return (
+    <div className="min-h-screen bg-white">
+      <div className="max-w-[1350px] w-[90%] mx-auto flex flex-col lg:flex-row justify-center gap-10 items-center min-h-screen py-10">
+        <div className="w-full md:w-[80%] lg:w-[50%] flex justify-center items-center">
+          <img
+            src={forgotImage}
+            alt="forgot_Password_Img"
+            className="h-[320px] w-[320px] md:h-[380px] md:w-[380px] lg:h-[520px] lg:w-[520px]"
+          />
+        </div>
+        <div className="h-[80vh] w-[2px] bg-[#1B7443] hidden lg:block"></div>
+        <div className="w-full md:w-[80%] lg:w-[50%]">
+          <div className="">
+            <div className="mb-8">
+              <h1 className="text-xl md:text-3xl lg:text-4xl font-bold mb-4">
+                Forgot password
+              </h1>
+              <p className="text-sm md:text-lg lg:text-xl mb-2">
+                Enter your email address to ger a verification code for
+                resetting your password.
+              </p>
+            </div>
+            <ConfigProvider
+              theme={{
+                components: {
+                  Form: {
+                    colorError: "#F44848",
+                  },
+                  Button: {
+                    defaultHoverBg: "#1B7443",
+                    defaultHoverColor: "white",
+                  },
+                  Input: {
+                    colorTextPlaceholder: "rgb(113,111,111)",
+                  },
+                },
+              }}
+            >
+              <Form
+                layout="vertical"
+                className="bg-transparent w-full"
+                onFinish={onFinish}
+              >
+                <Form.Item
+                  rules={[
+                    {
+                      required: true,
+                      message: "Email is Required",
+                    },
+                  ]}
+                  name="email"
+                  className="text-primary-color"
+                >
+                  <Input
+                    placeholder="Enter your email"
+                    type="email"
+                    className="py-2 px-3 sm:text-xl bg-transparent border-black text-black hover:bg-[#8bc4fa] focus:bg-transparent focus:border-black"
+                  />
+                </Form.Item>
+
+                <Form.Item>
+                  <Button
+                    className="w-full py-5 sm:py-7 border text-lg sm:text-2xl text-white bg-[#1B7443] hover:border-[#36ac6b] font-semibold rounded-2xl mt-5 sm:mt-14"
+                    htmlType="submit"
+                  >
+                    Get OTP
+                  </Button>
+                </Form.Item>
+              </Form>
+            </ConfigProvider>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+};
+export default ForgotPassword;
