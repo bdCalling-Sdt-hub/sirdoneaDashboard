@@ -9,10 +9,7 @@ const SettingsChangePassword = () => {
   };
   return (
     <div>
-      <div
-        className="container w-[90%] mx-auto min-h-[80vh] p-20 flex justify-center items-center"
-        style={{ boxShadow: "0px 0px 5px 2px #00000040" }}
-      >
+      <div className="container w-[90%] mx-auto min-h-[80vh] p-20 flex justify-center items-center">
         <div className="w-full lg:w-[70%]">
           <Form
             onFinish={onFinish}
@@ -82,14 +79,14 @@ const SettingsChangePassword = () => {
             <div className="mt-10">
               <Link
                 to="/settings/forgot-password"
-                className="!text-secondary-color text-lg !underline"
+                className="text-[#1B7443] text-lg !underline"
               >
                 Forgot Password?
               </Link>
             </div>
             <Form.Item>
               <Button
-                className="w-full py-6 border !border-secondary-color hover:border-secondary-color text-xl !text-primary-color bg-secondary-color hover:!bg-secondary-color font-semibold rounded-2xl mt-8"
+                className="w-full py-6 border !border-secondary-color hover:border-secondary-color text-xl !text-white bg-[#1B7443] hover:!bg-[#1B7443] font-semibold rounded-2xl mt-8"
                 htmlType="submit"
               >
                 Change password

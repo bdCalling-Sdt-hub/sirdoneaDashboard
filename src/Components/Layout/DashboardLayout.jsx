@@ -68,14 +68,14 @@ const DashboardLayout = () => {
       label: <span className="text-base-color">Categories</span>,
       children: [
         {
-          key: "all-drivers",
+          key: "main-category",
           icon: <span>&#8226;</span>,
-          label: <NavLink to="all-drivers">Driver List</NavLink>,
+          label: <NavLink to="main-category">Main Category</NavLink>,
         },
         {
-          key: "driver-request",
+          key: "sub-category",
           icon: <span>&#8226;</span>,
-          label: <NavLink to="driver-request">Driver Request</NavLink>,
+          label: <NavLink to="sub-category">Sub category</NavLink>,
         },
       ],
     },

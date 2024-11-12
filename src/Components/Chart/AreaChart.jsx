@@ -10,18 +10,18 @@ import {
 } from "recharts";
 
 const data = [
-  { name: "Jan", uv: 475 },
-  { name: "Feb", uv: 580 },
-  { name: "Mar", uv: 300 },
-  { name: "Apr", uv: 525 },
-  { name: "May", uv: 375 },
-  { name: "Jun", uv: 450 },
-  { name: "Jul", uv: 575 },
-  { name: "Aug", uv: 360 },
-  { name: "Sep", uv: 200 },
-  { name: "Oct", uv: 400 },
-  { name: "Nov", uv: 300 },
-  { name: "Dec", uv: 600 },
+  { month: "Jan", income: 475 },
+  { month: "Feb", income: 580 },
+  { month: "Mar", income: 300 },
+  { month: "Apr", income: 525 },
+  { month: "May", income: 375 },
+  { month: "Jun", income: 450 },
+  { month: "Jul", income: 575 },
+  { month: "Aug", income: 360 },
+  { month: "Sep", income: 200 },
+  { month: "Oct", income: 400 },
+  { month: "Nov", income: 300 },
+  { month: "Dec", income: 600 },
 ];
 
 const Area_Chart = () => {
@@ -43,28 +43,28 @@ const Area_Chart = () => {
             bottom: 0,
           }}
         >
-          <XAxis dataKey="name" tick={{ ...tickStyle }} tickMargin={6} />
+          <XAxis dataKey="month" tick={{ ...tickStyle }} tickMargin={6} />
           <YAxis
             tickFormatter={yAxisTickFormatter}
             tick={{ ...tickStyle }}
             tickMargin={16}
-            axisLine={{
-              stroke: "#F5382C", // Y-axis line color
-              strokeWidth: 2,
-              strokeDasharray: "7 7",
-            }}
           />
           <defs>
-            <linearGradient id="colorUv" x1="0" y1="0" x2="0" y2="1">
-              <stop offset="25.38%" stopColor="#FAA39EAA" stopOpacity={1} />
-              <stop offset="100%" stopColor="#F5382CEE" stopOpacity={1} />
+            <linearGradient id="colorName" x1="0" y1="0" x2="0" y2="1">
+              <stop offset="60%" stopColor="#B4E4A3" stopOpacity={1} />
+              <stop offset="100%" stopColor="#E8FFE300" stopOpacity={1} />
             </linearGradient>
           </defs>
           <Tooltip
-            formatter={(value, name, props) => [`${value}K`, "UV"]}
+            formatter={(value, month, props) => [`${value}K`, "income"]}
             labelFormatter={(label) => `Month: ${label}`}
           />
-          <Area type="monotone" dataKey="uv" stroke="" fill="url(#colorUv)" />
+          <Area
+            type="monotone"
+            dataKey="income"
+            stroke=""
+            fill="url(#colorName)"
+          />
         </AreaChart>
       </ResponsiveContainer>
     </div>
