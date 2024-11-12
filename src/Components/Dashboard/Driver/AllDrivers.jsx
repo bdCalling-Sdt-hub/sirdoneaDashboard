@@ -3,7 +3,7 @@ import { Input } from "antd";
 import axios from "axios";
 import { useEffect, useMemo, useState } from "react";
 import DriverTable from "../../Tables/DriverTable";
-import DriverDetailsModal from "../../UI/DriverDetailsModal";
+import DriverDetailsModal from "../../UI/OrderDetailsModal";
 
 const AllDrivers = () => {
   //* Store Search Value

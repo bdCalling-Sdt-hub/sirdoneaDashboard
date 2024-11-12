@@ -2,6 +2,7 @@
   {
     "id": 1,
     "userName": "John Doe",
+    "organizationName": "Acme Corp",
     "joiningDate": "2022-01-15",
     "contactNumber": "+1-202-555-0143",
     "email": "john.doe@example.com",
@@ -15,6 +16,7 @@
   {
     "id": 2,
     "userName": "Jane Smith",
+    "organizationName": "Globex Inc",
     "joiningDate": "2022-03-22",
     "contactNumber": "+1-202-555-0176",
     "email": "jane.smith@example.com",
@@ -28,6 +30,7 @@
   {
     "id": 3,
     "userName": "Mike Johnson",
+    "organizationName": "Initech",
     "joiningDate": "2021-11-30",
     "contactNumber": "+1-202-555-0198",
     "email": "mike.johnson@example.com",
@@ -41,6 +44,7 @@
   {
     "id": 4,
     "userName": "Emily Davis",
+    "organizationName": "Umbrella Corp",
     "joiningDate": "2022-05-10",
     "contactNumber": "+1-202-555-0123",
     "email": "emily.davis@example.com",
@@ -54,6 +58,7 @@
   {
     "id": 5,
     "userName": "Chris Wilson",
+    "organizationName": "Stark Industries",
     "joiningDate": "2023-02-18",
     "contactNumber": "+1-202-555-0112",
     "email": "chris.wilson@example.com",
@@ -67,6 +72,7 @@
   {
     "id": 6,
     "userName": "Laura Brown",
+    "organizationName": "Wayne Enterprises",
     "joiningDate": "2023-04-25",
     "contactNumber": "+1-202-555-0134",
     "email": "laura.brown@example.com",
@@ -80,6 +86,7 @@
   {
     "id": 7,
     "userName": "James Taylor",
+    "organizationName": "Oscorp",
     "joiningDate": "2023-01-03",
     "contactNumber": "+1-202-555-0156",
     "email": "james.taylor@example.com",
@@ -93,6 +100,7 @@
   {
     "id": 8,
     "userName": "Sophia Martinez",
+    "organizationName": "Hooli",
     "joiningDate": "2022-06-14",
     "contactNumber": "+1-202-555-0189",
     "email": "sophia.martinez@example.com",
@@ -106,6 +114,7 @@
   {
     "id": 9,
     "userName": "William Anderson",
+    "organizationName": "Wonka Industries",
     "joiningDate": "2023-03-19",
     "contactNumber": "+1-202-555-0109",
     "email": "william.anderson@example.com",
@@ -119,6 +128,7 @@
   {
     "id": 10,
     "userName": "Olivia Harris",
+    "organizationName": "Duff Beer Inc",
     "joiningDate": "2022-09-29",
     "contactNumber": "+1-202-555-0167",
     "email": "olivia.harris@example.com",
@@ -132,6 +142,7 @@
   {
     "id": 11,
     "userName": "David Clark",
+    "organizationName": "Prestige Worldwide",
     "joiningDate": "2021-12-05",
     "contactNumber": "+1-202-555-0114",
     "email": "david.clark@example.com",
@@ -145,6 +156,7 @@
   {
     "id": 12,
     "userName": "Isabella Lewis",
+    "organizationName": "Soylent Inc",
     "joiningDate": "2022-08-21",
     "contactNumber": "+1-202-555-0178",
     "email": "isabella.lewis@example.com",
