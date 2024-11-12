@@ -1,10 +1,5 @@
-import {
-  BarsOutlined,
-  BellFilled,
-  BellOutlined,
-  UserOutlined,
-} from "@ant-design/icons";
-import { Badge, ConfigProvider, Dropdown, Typography, Grid } from "antd";
+import { BellFilled, BellOutlined, UserOutlined } from "@ant-design/icons";
+import { Badge, ConfigProvider, Dropdown, Grid } from "antd";
 import { Link } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { GiHamburgerMenu } from "react-icons/gi";

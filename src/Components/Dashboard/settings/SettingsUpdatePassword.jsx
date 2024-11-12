@@ -8,10 +8,7 @@ const SettingsUpdatePassword = () => {
     navigate("/signin");
   };
   return (
-    <div
-      className="container w-[90%] mx-auto min-h-[80vh] p-20 flex justify-center items-center"
-      style={{ boxShadow: "0px 0px 5px 2px #00000040" }}
-    >
+    <div className="container w-[90%] mx-auto min-h-[80vh] p-20 flex justify-center items-center">
       <div className="w-full lg:w-[70%]">
         <div className="mb-10">
           <p className="text-3xl lg:text-[40px] text-base-color font-medium mb-8">
@@ -72,7 +69,7 @@ const SettingsUpdatePassword = () => {
 
           <Form.Item>
             <Button
-              className="w-full py-6 border !border-secondary-color hover:border-secondary-color text-xl !text-primary-color bg-secondary-color hover:!bg-secondary-color font-semibold rounded-2xl mt-8"
+              className="w-full py-6 border !border-secondary-color hover:border-secondary-color text-xl !text-primary-color bg-[#1B7443] hover:!bg-[#1B7443] font-semibold rounded-2xl mt-8"
               htmlType="submit"
             >
               Confirm

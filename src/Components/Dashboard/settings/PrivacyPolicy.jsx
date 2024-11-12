@@ -25,7 +25,7 @@ const PrivacyPolicy = () => {
             className="text-lg cursor-pointer"
             onClick={handleGoBack}
           />
-          <h1 className="text-4xl font-bold py-4 text-secondary-color">
+          <h1 className="text-4xl font-bold py-4 text-[#1B7443]">
             Privacy Policy
           </h1>
         </div>
@@ -39,7 +39,7 @@ const PrivacyPolicy = () => {
         </div>
         <Button
           onClick={handleOnSave}
-          className="w-full py-6 border !border-secondary-color hover:border-secondary-color text-xl !text-primary-color bg-secondary-color hover:!bg-secondary-color font-semibold rounded-2xl mt-8"
+          className="w-full py-6 border !border-secondary-color hover:border-secondary-color text-xl !text-primary-color bg-[#1B7443] hover:!bg-[#1B7443] font-semibold rounded-2xl mt-8"
         >
           Save
         </Button>

@@ -173,7 +173,7 @@ const Dashboard = () => {
             <UsersTable data={data} loading={loading} />
           </div>
           <div>
-            <p className="text-xl font-bold text-black mb-1">Earning Chart</p>
+            <p className="text-xl font-bold text-black mb-1">Product Sales</p>
             <div className="flex flex-col items-center justify-center">
               <ConfigProvider
                 theme={{

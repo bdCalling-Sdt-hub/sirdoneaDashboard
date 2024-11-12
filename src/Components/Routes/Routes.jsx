@@ -28,6 +28,7 @@ import Earning from "../Dashboard/Earning";
 import AllDrivers from "../Dashboard/Driver/AllDrivers";
 import DriverRequest from "../Dashboard/Driver/DriverRequest";
 import DriverRequestPage from "../Dashboard/Driver/DriverRequestDetails";
+import Orders from "../Dashboard/Orders";
 
 //
 
@@ -67,6 +68,10 @@ const router = createBrowserRouter([
           {
             path: "users",
             element: <Users />,
+          },
+          {
+            path: "orders",
+            element: <Orders />,
           },
           {
             path: "all-drivers",
