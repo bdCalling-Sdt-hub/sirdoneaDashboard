@@ -37,6 +37,11 @@ const EarningTable = ({ data, loading, showViewModal, pageSize = 0 }) => {
       key: "amount",
       render: (amount) => `$${amount}`,
     },
+    {
+      title: "Organization Name",
+      dataIndex: "organizationName",
+      key: "organizationName",
+    },
 
     {
       title: "Action",

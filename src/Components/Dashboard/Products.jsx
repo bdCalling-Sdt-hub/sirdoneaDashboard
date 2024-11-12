@@ -81,6 +81,7 @@ const Products = () => {
       title: "Price",
       dataIndex: "price",
       key: "price",
+      render: (price) => `$${price}`,
     },
     {
       title: "Category",
@@ -91,6 +92,11 @@ const Products = () => {
       title: "Sub Category",
       dataIndex: "subCategory",
       key: "subCategory",
+    },
+    {
+      title: "Quantity",
+      dataIndex: "quantity",
+      key: "quantity",
     },
     {
       title: "Action",

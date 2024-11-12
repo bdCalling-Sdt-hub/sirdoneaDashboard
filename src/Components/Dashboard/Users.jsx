@@ -101,6 +101,12 @@ export default function Users() {
           <Table.Column title="Full Name" dataIndex="userName" key="userName" />
           <Table.Column title="Email" dataIndex="email" key="email" />
           <Table.Column
+            title="Total Spend"
+            dataIndex="totalSpent"
+            key="totalSpent"
+            render={(totalSpent) => `$${totalSpent}`}
+          />
+          <Table.Column
             title="Join Date"
             dataIndex="joiningDate"
             key="joiningDate"

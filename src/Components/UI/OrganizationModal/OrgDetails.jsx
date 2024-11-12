@@ -1,6 +1,4 @@
 /* eslint-disable react/prop-types */
-// OrganizationDetails.js
-import React from "react";
 import { Button, Modal } from "antd";
 import { ArrowLeftOutlined } from "@ant-design/icons";
 

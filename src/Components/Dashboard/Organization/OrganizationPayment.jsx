@@ -1,5 +1,5 @@
 // PaymentTable.js
-import  { useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 import { Table, Button, Input, Tooltip, Tag, ConfigProvider } from "antd";
 import { EyeOutlined } from "@ant-design/icons";
 import axios from "axios";
@@ -29,12 +29,12 @@ const OrganizationPayment = () => {
       key: "id",
     },
     {
-      title: "Founder Name",
+      title: "Organizer",
       dataIndex: "founderName",
       key: "founderName",
     },
     {
-      title: "Event Name",
+      title: "Organization",
       dataIndex: "eventName",
       key: "eventName",
     },
@@ -53,11 +53,11 @@ const OrganizationPayment = () => {
       dataIndex: "sells",
       key: "sells",
     },
-    {
-      title: "Per.(%)",
-      dataIndex: "percentage",
-      key: "percentage",
-    },
+    // {
+    //   title: "Per.(%)",
+    //   dataIndex: "percentage",
+    //   key: "percentage",
+    // },
     {
       title: "Payment",
       dataIndex: "payment",

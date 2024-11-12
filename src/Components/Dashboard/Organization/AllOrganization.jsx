@@ -42,6 +42,11 @@ const OrganizationTable = () => {
       key: "organization",
     },
     {
+      title: "Fundraiser Code",
+      dataIndex: "fundraiserCode",
+      key: "fundraiserCode",
+    },
+    {
       title: "Starting Date",
       dataIndex: "startDate",
       key: "startDate",
@@ -57,7 +62,7 @@ const OrganizationTable = () => {
       key: "target",
     },
     {
-      title: "Sells",
+      title: "Actual",
       dataIndex: "sells",
       key: "sells",
     },
@@ -75,7 +80,7 @@ const OrganizationTable = () => {
       ),
     },
     {
-      title: "Situation",
+      title: "Status",
       dataIndex: "situation",
       key: "situation",
       render: (status) => {

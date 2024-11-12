@@ -7,10 +7,23 @@ import {
   DeleteOutlined,
 } from "@ant-design/icons";
 import axios from "axios";
+import RequestDetailsModal from "../../UI/OrganizationModal/ReqDetailsModal";
 
 const OrganizationRequest = () => {
   const [data, setData] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [isModalVisible, setIsModalVisible] = useState(false);
+  const [selectedRecord, setSelectedRecord] = useState(null);
+
+  const showDetailsModal = (record) => {
+    setSelectedRecord(record);
+    setIsModalVisible(true);
+  };
+
+  const closeModal = () => {
+    setIsModalVisible(false);
+    setSelectedRecord(null);
+  };
 
   useEffect(() => {
     const fetchData = async () => {
@@ -41,12 +54,12 @@ const OrganizationRequest = () => {
       ),
     },
     {
-      title: "Event Name",
+      title: "“Organization”",
       dataIndex: "eventName",
       key: "eventName",
     },
     {
-      title: "Name",
+      title: "Organizer",
       dataIndex: "name",
       key: "name",
     },
@@ -55,17 +68,21 @@ const OrganizationRequest = () => {
       dataIndex: "target",
       key: "target",
     },
-    {
-      title: "Percentage",
-      dataIndex: "percentage",
-      key: "percentage",
-    },
+    // {
+    //   title: "Percentage",
+    //   dataIndex: "percentage",
+    //   key: "percentage",
+    // },
     {
       title: "Details",
       key: "details",
-      render: () => (
+      render: (_, record) => (
         <Tooltip title="View Details">
-          <Button icon={<EyeOutlined />} shape="circle" />
+          <Button
+            icon={<EyeOutlined />}
+            shape="circle"
+            onClick={() => showDetailsModal(record)}
+          />
         </Tooltip>
       ),
     },
@@ -129,6 +146,14 @@ const OrganizationRequest = () => {
           className="bg-white rounded-b-lg shadow-lg"
         />
       </ConfigProvider>
+
+      {selectedRecord && (
+        <RequestDetailsModal
+          visible={isModalVisible}
+          onClose={closeModal}
+          data={selectedRecord}
+        />
+      )}
     </div>
   );
 };
