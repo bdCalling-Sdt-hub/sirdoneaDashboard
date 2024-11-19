@@ -8,11 +8,20 @@ import {
   Modal,
   Tooltip,
   Select,
+  Tag,
 } from "antd";
 import axios from "axios";
 import moment from "moment";
 
 const statuses = ["Pending", "Processing", "Shipped", "Delivered", "Canceled"];
+
+const statusColors = {
+  Pending: "orange",
+  Processing: "blue",
+  Shipped: "purple",
+  Delivered: "green",
+  Canceled: "red",
+};
 
 export default function Orders() {
   const [searchText, setSearchText] = useState("");
@@ -25,6 +34,7 @@ export default function Orders() {
     const fetchData = async () => {
       try {
         const response = await axios.get("/data/orderData.json");
+        console.log(response);
         setData(response.data);
       } catch (error) {
         console.error("Error fetching data:", error);
@@ -52,9 +62,7 @@ export default function Orders() {
   const handleStatusChange = (value, record) => {
     setData((prevData) =>
       prevData.map((item) =>
-        item.order_id === record.order_id
-          ? { ...item, order_status: value }
-          : item
+        item.orderId === record.orderId ? { ...item, orderStatus: value } : item
       )
     );
   };
@@ -114,10 +122,10 @@ export default function Orders() {
           dataSource={filteredData}
           loading={loading}
           pagination={{ pageSize: 10 }}
-          rowKey="order_id"
+          rowKey="orderId"
           scroll={{ x: true }}
         >
-          <Table.Column title="Order ID" dataIndex="orderId" key="order_id" />
+          <Table.Column title="Order ID" dataIndex="orderId" key="orderId" />
           <Table.Column
             title="Customer Name"
             dataIndex="customerName"
@@ -139,26 +147,45 @@ export default function Orders() {
             dataIndex="totalItems"
             key="totalItems"
           />
-          <Table.Column title="Total" dataIndex="totalPrice" key="totalPrice" />
+          <Table.Column
+            title="Total"
+            dataIndex="totalPrice"
+            key="totalPrice"
+            render={(price) => `$${price}`}
+          />
           <Table.Column
             title="Order Status"
             dataIndex="orderStatus"
             key="orderStatus"
+            render={(status) => (
+              <Tag color={statusColors[status] || "gray"}>{status}</Tag>
+            )}
           />
           <Table.Column
             title="Change Status"
             dataIndex="orderStatus"
-            key="orderStatus"
+            key="changeStatus"
             render={(status, record) => (
-              <Select
-                value={status}
-                onChange={(value) => handleStatusChange(value, record)}
-                options={statuses.map((status) => ({
-                  value: status,
-                  label: status,
-                }))}
-                style={{ width: 140 }}
-              />
+              <ConfigProvider
+                theme={{
+                  components: {
+                    Select: {
+                      optionSelectedBg: "rgb(27,116,67)",
+                      optionSelectedColor: "rgba(255,255,255,0.88)",
+                    },
+                  },
+                }}
+              >
+                <Select
+                  value={status}
+                  onChange={(value) => handleStatusChange(value, record)}
+                  options={statuses.map((status) => ({
+                    value: status,
+                    label: status,
+                  }))}
+                  style={{ width: 150 }}
+                />
+              </ConfigProvider>
             )}
           />
           <Table.Column
@@ -183,65 +210,107 @@ export default function Orders() {
         </Table>
       </ConfigProvider>
 
-      {/* View Modal */}
-      <Modal
-        title={
-          <div className="pt-5 text-center">
-            <h2 className="text-[#010515] text-2xl font-bold">Order Details</h2>
-            <p className="text-gray-500 mt-2 font-normal">
-              See all details about Order ID:{" "}
-              <span className="font-bold">{currentRecord?.order_id}</span>
-            </p>
-          </div>
-        }
-        open={isViewModalVisible}
-        onCancel={handleCancel}
-        footer={null}
-        centered
-        width={450}
+      {/* Order Details Modal */}
+      <ConfigProvider
+        theme={{
+          components: {
+            Modal: {
+              contentBg: "rgb(255,239,217)",
+            },
+          },
+        }}
       >
-        {currentRecord && (
-          <div className="my-4">
-            <p className="font-semibold mt-2">Order Information</p>
-            <div className="text-left mt-4 space-y-2">
+        <Modal
+          title={
+            <div className="pt-5 text-center bg-[#FFEFD9]">
+              <h2 className="text-[#1b7443] text-3xl font-bold">
+                Order Details
+              </h2>
+            </div>
+          }
+          open={isViewModalVisible}
+          onCancel={handleCancel}
+          footer={null}
+          centered
+          width={600}
+        >
+          {currentRecord && (
+            <div className="my-4">
               <p>
-                Customer Name:{" "}
-                <span className="font-semibold">
-                  {currentRecord.customerName}
-                </span>
+                Order ID: <strong>#{currentRecord.orderId}</strong>
               </p>
               <p>
-                Organization:{" "}
-                <span className="font-semibold">
-                  {currentRecord.organizationName}
-                </span>
+                Customer: <strong>{currentRecord.customerName}</strong>
               </p>
               <p>
-                Total Items:{" "}
-                <span className="font-semibold">
-                  {currentRecord.total_items}
-                </span>
+                Payment Date:{" "}
+                <strong>
+                  {" "}
+                  {moment(currentRecord.date).format("MM/DD/YYYY")}
+                </strong>
               </p>
               <p>
-                Total Price:{" "}
-                <span className="font-semibold">
-                  ${currentRecord.total_price}
-                </span>
+                Organization Name:{" "}
+                <strong> {currentRecord.organizationName}</strong>
               </p>
               <p>
                 Order Status:{" "}
-                <span className="font-semibold">
-                  {currentRecord.order_status}
-                </span>
+                <Tag color={statusColors[currentRecord.orderStatus]}>
+                  {currentRecord.orderStatus}
+                </Tag>
               </p>
               <p>
-                Order Date:{" "}
-                <span className="font-semibold">{currentRecord.date}</span>
+                Location: <strong>{currentRecord.location}</strong>
               </p>
+
+              <table className="table-auto w-full mt-4 border border-collapse">
+                <thead>
+                  <tr className="bg-[#FEBC60]">
+                    <th className="border border-[#FFEFD9] px-4 py-2">
+                      Product Name
+                    </th>
+                    <th className="border border-[#FFEFD9] px-4 py-2">
+                      Product Price
+                    </th>
+                    <th className="border border-[#FFEFD9] px-4 py-2">
+                      Quantity
+                    </th>
+                    <th className="border border-[#FFEFD9] px-4 py-2">Price</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {currentRecord.productList.map((product, index) => (
+                    <tr key={index} className="text-center">
+                      <td className="border border-[#FFEFD9] px-4 py-2">
+                        {product.productName}
+                      </td>
+                      <td className="border border-[#FFEFD9] px-4 py-2">
+                        ${product.productPrice.toFixed(2)}
+                      </td>
+                      <td className="border border-[#FFEFD9] px-4 py-2">
+                        {product.quantity}
+                      </td>
+                      <td className="border border-[#FFEFD9] px-4 py-2">
+                        ${product.price.toFixed(2)}
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+                <tfoot>
+                  <tr className="bg-green-200 font-bold">
+                    <td colSpan="3" className="border px-4 py-2 text-right">
+                      Total Price
+                    </td>
+                    <td className="border border-[#FFEFD9] px-4 py-2">
+                      ${currentRecord.totalPrice.toFixed(2)}
+                    </td>
+                  </tr>
+                </tfoot>
+              </table>
             </div>
-          </div>
-        )}
-      </Modal>
+          )}
+        </Modal>
+      </ConfigProvider>
     </div>
   );
 }

@@ -52,15 +52,15 @@ export default function Earning() {
           <div className="flex flex-col md:flex-row items-center gap-5">
             <h1 className="text-3xl font-bold text-secondary-color">Earning</h1>
             <div className="flex flex-col sm:flex-row items-center gap-3">
-              <div className="flex items-center gap-3 bg-secondary-color text-primary-color px-4 py-2 rounded">
+              <div className="flex items-center gap-3 bg-[#1b7443] text-primary-color px-4 py-2 rounded">
                 <LuArrowLeftRight />
                 <h1>Today’s Earning</h1>
-                <h1>$3230</h1>
+                <h1 className="font-bold text-lg">$3230</h1>
               </div>
-              <div className="flex items-center gap-3 bg-secondary-color text-primary-color px-4 py-2 rounded">
+              <div className="flex items-center gap-3 bg-[#1b7443] text-primary-color px-4 py-2 rounded">
                 <LuArrowLeftRight />
                 <h1>All Earning</h1>
-                <h1>$5230</h1>
+                <h1 className="font-bold text-lg">$5230</h1>
               </div>
             </div>
           </div>

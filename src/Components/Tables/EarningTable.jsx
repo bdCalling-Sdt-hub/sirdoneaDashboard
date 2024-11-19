@@ -11,9 +11,20 @@ const EarningTable = ({ data, loading, showViewModal, pageSize = 0 }) => {
       responsive: ["md"],
     },
     {
+      title: "Email",
+      dataIndex: "email",
+      key: "email",
+    },
+    {
       title: "Acc. Number",
       dataIndex: "accNumber",
       key: "accNumber",
+      render: (accNumber) => `****${accNumber.slice(-4)}`,
+    },
+    {
+      title: "Total Item",
+      dataIndex: "totalItem",
+      key: "totalItem",
     },
     {
       title: "Time & date",
@@ -24,6 +35,12 @@ const EarningTable = ({ data, loading, showViewModal, pageSize = 0 }) => {
       title: "Amount",
       dataIndex: "amount",
       key: "amount",
+      render: (amount) => `$${amount}`,
+    },
+    {
+      title: "Organization Name",
+      dataIndex: "organizationName",
+      key: "organizationName",
     },
 
     {

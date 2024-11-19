@@ -1,0 +1,35 @@
+[
+  {
+    "id": "#1234",
+    "name": "Josef Endrik",
+    "organization": "Super offer",
+    "startDate": "09-14-24",
+    "endDate": "10-30-24",
+    "target": "600$",
+    "sells": "700$",
+    "situation": "Running",
+    "fundraiserCode": "FND001"
+  },
+  {
+    "id": "#1235",
+    "name": "Josef Endrik",
+    "organization": "Dam e kom",
+    "startDate": "09-14-24",
+    "endDate": "10-30-24",
+    "target": "600$",
+    "sells": "700$",
+    "situation": "Completed",
+    "fundraiserCode": "FND002"
+  },
+  {
+    "id": "#1236",
+    "name": "Josef Endrik",
+    "organization": "Eker Offer",
+    "startDate": "09-14-24",
+    "endDate": "10-30-24",
+    "target": "600$",
+    "sells": "700$",
+    "situation": "Pending",
+    "fundraiserCode": "FND003"
+  }
+]

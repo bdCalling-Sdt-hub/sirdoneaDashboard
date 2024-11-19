@@ -75,7 +75,7 @@ const DashboardLayout = () => {
         {
           key: "sub-category",
           icon: <span>&#8226;</span>,
-          label: <NavLink to="sub-category">Sub category</NavLink>,
+          label: <NavLink to="sub-category">Sub Category</NavLink>,
         },
       ],
     },
@@ -112,21 +112,23 @@ const DashboardLayout = () => {
       icon: <HiOutlineUserGroup />,
       children: [
         {
-          key: "change-password",
+          key: "organizations",
+          icon: <span>&#8226;</span>,
+          label: <NavLink to="organizations">Organization</NavLink>,
+        },
+        {
+          key: "organization-request",
           icon: <span>&#8226;</span>,
           label: (
-            <NavLink to="settings/change-password">Change Password</NavLink>
+            <NavLink to="organization-request">Organization Request</NavLink>
           ),
         },
         {
-          key: "privacy-policy",
+          key: "organization-payment",
           icon: <span>&#8226;</span>,
-          label: <NavLink to="privacy-policy">Privacy Policy</NavLink>,
-        },
-        {
-          key: "terms-of-service",
-          icon: <span>&#8226;</span>,
-          label: <NavLink to="terms-of-service">Terms & Condition</NavLink>,
+          label: (
+            <NavLink to="organization-payment">Organization Payment</NavLink>
+          ),
         },
       ],
     },

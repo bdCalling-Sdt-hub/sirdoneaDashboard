@@ -1,0 +1,26 @@
+[
+  {
+    "id": "#1234",
+    "image": "/path/to/image.jpg",
+    "eventName": "Super Offer",
+    "name": "Josef Endrik",
+    "target": "600$",
+    "percentage": "50%"
+  },
+  {
+    "id": "#1235",
+    "image": "/path/to/image.jpg",
+    "eventName": "Dam e kom",
+    "name": "Josef Endrik",
+    "target": "600$",
+    "percentage": "50%"
+  },
+  {
+    "id": "#1236",
+    "image": "/path/to/image.jpg",
+    "eventName": "Super Offer",
+    "name": "Josef Endrik",
+    "target": "600$",
+    "percentage": "50%"
+  }
+]
