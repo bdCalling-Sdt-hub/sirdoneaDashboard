@@ -1,16 +1,14 @@
-import { PieChart, Pie, Cell, Text } from "recharts";
+import { Cell, Pie, PieChart, Text } from "recharts";
 
 export default function EarningsPieChart() {
   const data = [
     { name: "Done", value: 45 },
-    { name: "Left", value: 25 },
-    { name: "In Progress", value: 30 },
+    { name: "Left", value: 30 },
   ];
 
   const COLORS = {
-    Done: "#FEBC60",
-    "In Progress": "#99855B",
-    Left: "#E07B61",
+    Done: "#1B7443",
+    Left: "#60CF92",
   };
 
   const renderCustomLabel = ({ cx, cy, midAngle, outerRadius, value }) => {
@@ -55,14 +53,14 @@ export default function EarningsPieChart() {
 
   return (
     <div className="mt-10">
-      <PieChart width={400} height={250}>
+      <PieChart width={300} height={250}>
         <Pie
           data={[{ name: "Center", value: 1 }]}
           dataKey="value"
           cx="50%"
           cy="50%"
           outerRadius={50}
-          fill="#ffffff"
+          fill="#60CF92"
         />
         <Pie
           data={data}
@@ -70,10 +68,10 @@ export default function EarningsPieChart() {
           nameKey="name"
           cx="50%"
           cy="50%"
-          innerRadius={70}
-          outerRadius={90}
+          innerRadius={0}
+          outerRadius={100}
           labelLine={false}
-          label={renderCustomLabel}
+          // label={renderCustomLabel}
           stroke="none"
         >
           {data.map((entry, index) => (

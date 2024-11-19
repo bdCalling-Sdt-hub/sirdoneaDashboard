@@ -4,21 +4,23 @@ import { Table } from "antd";
 const UsersTable = ({ data, loading, pageSize = 0 }) => {
   const columns = [
     {
-      title: "ID",
+      title: "S. ID",
       dataIndex: "id",
       key: "id",
       responsive: ["md"],
     },
     {
+      title: "Profile Image",
+      dataIndex: "profileImage",
+      key: "profileImage",
+    },
+
+    {
       title: "Full Name",
       dataIndex: "userName",
       key: "userName",
     },
-    {
-      title: "Phone",
-      dataIndex: "contactNumber",
-      key: "contactNumber",
-    },
+
     {
       title: "Email",
       dataIndex: "email",
@@ -26,22 +28,29 @@ const UsersTable = ({ data, loading, pageSize = 0 }) => {
     },
 
     {
-      title: "Date",
+      title: "Product name",
+      dataIndex: "productName",
+      key: "productName",
+    },
+    { title: "Quantity", dataIndex: "quantity", key: "quantity" },
+
+    {
+      title: "Join date",
       dataIndex: "joiningDate",
       key: "joiningDate",
     },
 
-    {
-      title: "User Type",
-      dataIndex: "role", // assuming your data has a "userType" field
-      key: "userType",
-      filters: [
-        { text: "User", value: "user" },
-        { text: "Driver", value: "driver" },
-      ],
-      onFilter: (value, record) => record.role === value,
-      render: (role) => role.charAt(0).toUpperCase() + role.slice(1),
-    },
+    // {
+    //   title: "User Type",
+    //   dataIndex: "role", // assuming your data has a "userType" field
+    //   key: "userType",
+    //   filters: [
+    //     { text: "User", value: "user" },
+    //     { text: "Driver", value: "driver" },
+    //   ],
+    //   onFilter: (value, record) => record.role === value,
+    //   render: (role) => role.charAt(0).toUpperCase() + role.slice(1),
+    // },
   ];
   return (
     <div>

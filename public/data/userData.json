@@ -2,10 +2,14 @@
   {
     "id": 1,
     "userName": "John Doe",
+
+    "profileImage": "image add",
     "organizationName": "Acme Corp",
     "joiningDate": "2022-01-15",
-    "contactNumber": "+1-202-555-0143",
+
     "email": "john.doe@example.com",
+    "productName": "Butterfly Pea Tea",
+    "quantity": "3",
     "avatar": "../images/userImage.png",
     "gender": "Male",
     "dateOfBirth": "1990-05-23",
@@ -16,10 +20,14 @@
   {
     "id": 2,
     "userName": "Jane Smith",
+
+    "profileImage": "image add",
     "organizationName": "Globex Inc",
     "joiningDate": "2022-03-22",
-    "contactNumber": "+1-202-555-0176",
     "email": "jane.smith@example.com",
+    "productName": "Butterfly Pea Tea",
+    "quantity": "3",
+
     "avatar": "../images/userImage.png",
     "gender": "Female",
     "dateOfBirth": "1985-07-10",
@@ -30,10 +38,14 @@
   {
     "id": 3,
     "userName": "Mike Johnson",
+
+    "profileImage": "image add",
     "organizationName": "Initech",
     "joiningDate": "2021-11-30",
-    "contactNumber": "+1-202-555-0198",
+
     "email": "mike.johnson@example.com",
+    "productName": "Butterfly Pea Tea",
+    "quantity": "3",
     "avatar": "../images/userImage.png",
     "gender": "Male",
     "dateOfBirth": "1978-11-12",
@@ -44,10 +56,14 @@
   {
     "id": 4,
     "userName": "Emily Davis",
+
+    "profileImage": "image add",
     "organizationName": "Umbrella Corp",
     "joiningDate": "2022-05-10",
-    "contactNumber": "+1-202-555-0123",
+
     "email": "emily.davis@example.com",
+    "productName": "Butterfly Pea Tea",
+    "quantity": "3",
     "avatar": "../images/userImage.png",
     "gender": "Female",
     "dateOfBirth": "1992-09-18",
@@ -58,10 +74,14 @@
   {
     "id": 5,
     "userName": "Chris Wilson",
+
+    "profileImage": "image add",
     "organizationName": "Stark Industries",
     "joiningDate": "2023-02-18",
-    "contactNumber": "+1-202-555-0112",
+
     "email": "chris.wilson@example.com",
+    "productName": "Butterfly Pea Tea",
+    "quantity": "3",
     "avatar": "../images/userImage.png",
     "gender": "Male",
     "dateOfBirth": "1989-03-05",
@@ -72,10 +92,14 @@
   {
     "id": 6,
     "userName": "Laura Brown",
+
+    "profileImage": "image add",
     "organizationName": "Wayne Enterprises",
     "joiningDate": "2023-04-25",
-    "contactNumber": "+1-202-555-0134",
+
     "email": "laura.brown@example.com",
+    "productName": "Butterfly Pea Tea",
+    "quantity": "3",
     "avatar": "../images/userImage.png",
     "gender": "Female",
     "dateOfBirth": "1987-12-15",
@@ -86,10 +110,14 @@
   {
     "id": 7,
     "userName": "James Taylor",
+
+    "profileImage": "image add",
     "organizationName": "Oscorp",
     "joiningDate": "2023-01-03",
-    "contactNumber": "+1-202-555-0156",
+
     "email": "james.taylor@example.com",
+    "productName": "Butterfly Pea Tea",
+    "quantity": "3",
     "avatar": "../images/userImage.png",
     "gender": "Male",
     "dateOfBirth": "1993-06-27",
@@ -100,10 +128,14 @@
   {
     "id": 8,
     "userName": "Sophia Martinez",
+
+    "profileImage": "image add",
     "organizationName": "Hooli",
     "joiningDate": "2022-06-14",
-    "contactNumber": "+1-202-555-0189",
+
     "email": "sophia.martinez@example.com",
+    "productName": "Butterfly Pea Tea",
+    "quantity": "3",
     "avatar": "../images/userImage.png",
     "gender": "Female",
     "dateOfBirth": "1991-04-30",
@@ -114,10 +146,13 @@
   {
     "id": 9,
     "userName": "William Anderson",
+    "profileImage": "image add",
     "organizationName": "Wonka Industries",
     "joiningDate": "2023-03-19",
-    "contactNumber": "+1-202-555-0109",
+
     "email": "william.anderson@example.com",
+    "productName": "Butterfly Pea Tea",
+    "quantity": "3",
     "avatar": "../images/userImage.png",
     "gender": "Male",
     "dateOfBirth": "1986-02-11",
@@ -128,10 +163,13 @@
   {
     "id": 10,
     "userName": "Olivia Harris",
+    "profileImage": "image add",
     "organizationName": "Duff Beer Inc",
     "joiningDate": "2022-09-29",
-    "contactNumber": "+1-202-555-0167",
+
     "email": "olivia.harris@example.com",
+    "productName": "Butterfly Pea Tea",
+    "quantity": "3",
     "avatar": "../images/userImage.png",
     "gender": "Female",
     "dateOfBirth": "1994-11-20",
@@ -142,10 +180,13 @@
   {
     "id": 11,
     "userName": "David Clark",
+    "profileImage": "image add",
     "organizationName": "Prestige Worldwide",
     "joiningDate": "2021-12-05",
-    "contactNumber": "+1-202-555-0114",
+
     "email": "david.clark@example.com",
+    "productName": "Butterfly Pea Tea",
+    "quantity": "3",
     "avatar": "../images/userImage.png",
     "gender": "Male",
     "dateOfBirth": "1976-03-16",
@@ -156,10 +197,13 @@
   {
     "id": 12,
     "userName": "Isabella Lewis",
+    "profileImage": "image add",
     "organizationName": "Soylent Inc",
     "joiningDate": "2022-08-21",
-    "contactNumber": "+1-202-555-0178",
+
     "email": "isabella.lewis@example.com",
+    "productName": "Butterfly Pea Tea",
+    "quantity": "3",
     "avatar": "../images/userImage.png",
     "gender": "Female",
     "dateOfBirth": "1995-01-07",
