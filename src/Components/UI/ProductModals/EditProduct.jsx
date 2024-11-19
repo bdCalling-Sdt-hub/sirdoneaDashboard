@@ -1,13 +1,13 @@
 /* eslint-disable react/prop-types */
 // EditProductForm.js
-import { useState, useEffect } from "react";
-import { Input, Select, Button, Upload, Checkbox } from "antd";
 import {
-  SaveOutlined,
-  UploadOutlined,
   CloseOutlined,
   PlusOutlined,
+  SaveOutlined,
+  UploadOutlined,
 } from "@ant-design/icons";
+import { Button, Input, Select, Upload } from "antd";
+import { useEffect, useState } from "react";
 
 const { TextArea } = Input;
 const { Option } = Select;
@@ -54,7 +54,7 @@ const EditProductForm = ({ initialValues, onSubmit }) => {
     <div className="p-5 bg-[#FFEFD9]">
       {/* Category and Sub Category */}
       <div className="grid grid-cols-2 gap-4">
-        <Select
+        {/* <Select
           placeholder="Category"
           value={productDetails.category}
           onChange={(value) => handleChange("category", value)}
@@ -63,8 +63,8 @@ const EditProductForm = ({ initialValues, onSubmit }) => {
           <Option value="coffee">Coffee</Option>
           <Option value="tea">Tea</Option>
           <Option value="juice">Juice</Option>
-        </Select>
-        <Select
+        </Select> */}
+        {/* <Select
           placeholder="Sub Category"
           value={productDetails.subCategory}
           onChange={(value) => handleChange("subCategory", value)}
@@ -72,7 +72,7 @@ const EditProductForm = ({ initialValues, onSubmit }) => {
         >
           <Option value="black-coffee">Black Coffee</Option>
           <Option value="hot-coffee">Hot Coffee</Option>
-        </Select>
+        </Select> */}
       </div>
       <Input
         placeholder="Product Type"
@@ -81,7 +81,7 @@ const EditProductForm = ({ initialValues, onSubmit }) => {
         className="w-full h-10 my-2"
       />
       {/* Product Type and Price */}
-      <div className="flex gap-5 mt-2">
+      {/* <div className="flex gap-5 mt-2">
         <Input
           placeholder="Product Price"
           type="number"
@@ -89,7 +89,6 @@ const EditProductForm = ({ initialValues, onSubmit }) => {
           onChange={(e) => handleChange("price", e.target.value)}
           className="w-56 h-10 mb-4"
         />{" "}
-        {/* Product Size */}
         <div className="flex items-center space-x-2 mb-4">
           <span>
             Product Size <span className="text-gray-400">(Optional)</span>:
@@ -109,44 +108,21 @@ const EditProductForm = ({ initialValues, onSubmit }) => {
             </Checkbox>
           ))}
         </div>
-      </div>
+      </div> */}
 
       <div className="flex justify-between">
         {/* Cover Image */}
-        <div className="flex flex-col mt-4">
-          <label className="font-bold">Cover Image</label>
-          <Upload
-            className="w-full"
-            listType="picture-card"
-            showUploadList={false}
-            beforeUpload={() => false}
-            onChange={(info) => handleChange("coverImage", info.file)}
-          >
-            {productDetails.coverImage ? (
-              <img
-                src={URL.createObjectURL(productDetails.coverImage)}
-                alt="cover"
-                style={{ width: "100%" }}
-              />
-            ) : (
-              <div>
-                <UploadOutlined />
-                <div>Click to upload</div>
-              </div>
-            )}
-          </Upload>
-        </div>
 
         {/* Colors Section */}
         <div className="mt-4">
-          <label className="font-bold">Colors</label>
+          {/* <label className="font-bold">Colors</label> */}
           <div className="flex space-x-2">
-            <Input
+            {/* <Input
               placeholder="Add color"
               value={colorInput}
               onChange={(e) => setColorInput(e.target.value)}
               className="w-1/2"
-            />
+            /> */}
             <Button
               className="bg-[#B2DAC4] text-[#1b7743]"
               onClick={handleAddColor}
@@ -171,6 +147,30 @@ const EditProductForm = ({ initialValues, onSubmit }) => {
         </div>
       </div>
 
+      {/* cover image */}
+      <div className=" mt-4">
+        <label className="font-bold">Cover Image</label>
+        <Upload
+          className="w-96"
+          listType="picture-card"
+          showUploadList={false}
+          beforeUpload={() => false}
+          onChange={(info) => handleChange("coverImage", info.file)}
+        >
+          {productDetails.coverImage ? (
+            <img
+              src={URL.createObjectURL(productDetails.coverImage)}
+              alt="cover"
+              style={{ width: "100%" }}
+            />
+          ) : (
+            <div>
+              <UploadOutlined />
+              <div>Click to upload</div>
+            </div>
+          )}
+        </Upload>
+      </div>
       {/* Product's Images */}
       <div className="flex flex-col mt-4">
         <label className="font-bold">Product Images</label>

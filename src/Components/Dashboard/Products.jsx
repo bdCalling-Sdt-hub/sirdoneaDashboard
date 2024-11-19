@@ -1,23 +1,19 @@
-import { useEffect, useState } from "react";
-import axios from "axios";
+import { EllipsisOutlined, EyeOutlined, PlusOutlined } from "@ant-design/icons";
 import {
-  Table,
   Button,
-  Input,
-  Select,
-  Switch,
   ConfigProvider,
+  Input,
   Modal,
   Popover,
+  Select,
+  Switch,
+  Table,
   Tooltip,
 } from "antd";
-import {
-  EyeOutlined,
-  PlusOutlined,
-  EllipsisOutlined,
-  EditOutlined,
-  DeleteOutlined,
-} from "@ant-design/icons";
+import axios from "axios";
+import { useEffect, useState } from "react";
+import { GrDownload } from "react-icons/gr";
+import { IoSearchOutline } from "react-icons/io5";
 import AddProductForm from "../UI/ProductModals/CreateProduct";
 import EditProductForm from "../UI/ProductModals/EditProduct";
 import ProductDetailsModal from "../UI/ProductModals/ProductDetailsModal";
@@ -83,16 +79,16 @@ const Products = () => {
       key: "price",
       render: (price) => `$${price}`,
     },
-    {
-      title: "Category",
-      dataIndex: "category",
-      key: "category",
-    },
-    {
-      title: "Sub Category",
-      dataIndex: "subCategory",
-      key: "subCategory",
-    },
+    // {
+    //   title: "Category",
+    //   dataIndex: "category",
+    //   key: "category",
+    // },
+    // {
+    //   title: "Sub Category",
+    //   dataIndex: "subCategory",
+    //   key: "subCategory",
+    // },
     {
       title: "Quantity",
       dataIndex: "quantity",
@@ -115,17 +111,14 @@ const Products = () => {
             content={
               <div className="flex flex-col space-y-2">
                 <Button
-                  icon={<EditOutlined />}
                   onClick={() => handleEdit(record)}
-                  className="flex items-center space-x-2"
+                  className="flex items-center space-x-2 bg-[#32ADE6] font-semibold"
                 >
                   Edit
                 </Button>
                 <Button
-                  icon={<DeleteOutlined />}
-                  danger
                   onClick={() => handleDelete(record)}
-                  className="flex items-center space-x-2"
+                  className="flex items-center space-x-2 bg-[#FF3B30] text-white font-semibold"
                 >
                   Delete
                 </Button>
@@ -197,12 +190,18 @@ const Products = () => {
       <div className="flex justify-between bg-[#1b7443] text-white p-4 rounded-lg">
         <h2 className="text-xl font-semibold">Products List</h2>
         <div className="flex flex-col md:flex-row gap-5">
-          <Search
-            placeholder="Search User"
-            className="w-full"
-            style={{ maxWidth: 300 }}
+          {/* <Search placeholder="Search User" /> */}
+          <Input
+            prefix={<IoSearchOutline />}
+            className="px-2 py-2 rounded-md text-gray-400"
+            type="text"
+            placeholder="Search Product"
           />
-          <Select
+
+          <button className="rounded-full bg-white w-10 h-10 md:w-14 flex items-center justify-center">
+            <GrDownload className="text-4xl text-[#1B7443] p-2" />
+          </button>
+          {/* <Select
             placeholder="Sub Category"
             className="w-full"
             style={{ width: 300 }}
@@ -219,7 +218,7 @@ const Products = () => {
             <Option value="coffee">Coffee</Option>
             <Option value="tea">Tea</Option>
             <Option value="juice">Juice</Option>
-          </Select>
+          </Select> */}
         </div>
       </div>
       {/* Product List Table */}

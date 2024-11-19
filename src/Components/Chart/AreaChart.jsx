@@ -1,12 +1,12 @@
 /* eslint-disable no-unused-vars */
 import React from "react";
 import {
-  AreaChart,
   Area,
+  AreaChart,
+  ResponsiveContainer,
+  Tooltip,
   XAxis,
   YAxis,
-  Tooltip,
-  ResponsiveContainer,
 } from "recharts";
 
 const data = [
@@ -40,7 +40,7 @@ const Area_Chart = () => {
             top: 20,
             right: 30,
             left: 0,
-            bottom: 0,
+            bottom: 10,
           }}
         >
           <XAxis dataKey="month" tick={{ ...tickStyle }} tickMargin={6} />

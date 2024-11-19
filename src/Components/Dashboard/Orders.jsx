@@ -1,17 +1,17 @@
-import { useState, useEffect, useMemo } from "react";
 import { SearchOutlined } from "@ant-design/icons";
 import {
-  Input,
   ConfigProvider,
-  Table,
-  Button,
+  Input,
   Modal,
-  Tooltip,
   Select,
+  Table,
   Tag,
+  Tooltip,
 } from "antd";
 import axios from "axios";
 import moment from "moment";
+import { useEffect, useMemo, useState } from "react";
+import { AiOutlineEye } from "react-icons/ai";
 
 const statuses = ["Pending", "Processing", "Shipped", "Delivered", "Canceled"];
 
@@ -142,11 +142,7 @@ export default function Orders() {
             key="date"
             render={(date) => moment(date).format("MM/DD/YYYY")}
           />
-          <Table.Column
-            title="Total Items"
-            dataIndex="totalItems"
-            key="totalItems"
-          />
+          <Table.Column title="Items" dataIndex="totalItems" key="totalItems" />
           <Table.Column
             title="Total"
             dataIndex="totalPrice"
@@ -154,16 +150,16 @@ export default function Orders() {
             render={(price) => `$${price}`}
           />
           <Table.Column
-            title="Order Status"
-            dataIndex="orderStatus"
-            key="orderStatus"
+            title="Status"
+            dataIndex="status"
+            key="status"
             render={(status) => (
               <Tag color={statusColors[status] || "gray"}>{status}</Tag>
             )}
           />
           <Table.Column
             title="Change Status"
-            dataIndex="orderStatus"
+            dataIndex="status"
             key="changeStatus"
             render={(status, record) => (
               <ConfigProvider
@@ -189,11 +185,12 @@ export default function Orders() {
             )}
           />
           <Table.Column
-            title="Action"
+            className="cursor-pointer"
+            title="Details"
             key="action"
             render={(_, record) => (
               <Tooltip title="View Details">
-                <Button
+                {/* <Button
                   onClick={() => showViewModal(record)}
                   style={{
                     background: "white",
@@ -201,9 +198,9 @@ export default function Orders() {
                     color: "#013564",
                     width: "80px",
                   }}
-                >
-                  Details
-                </Button>
+                > */}
+                <AiOutlineEye onClick={() => showViewModal(record)} />
+                {/* </Button> */}
               </Tooltip>
             )}
           />
