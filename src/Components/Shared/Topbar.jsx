@@ -87,7 +87,7 @@ const Topbar = ({ collapsed, setCollapsed }) => {
   );
 
   return (
-    <div className="py-2 mx-[-50px] flex justify-between items-center bg-[#ffffff] rounded-lg">
+    <div className="py-2 mx-[-50px] flex justify-between items-center bg-[#ffffff] rounded-lg ">
       <div className="flex items-center gap-2 text-[#1B7443] ml-4 mt-2 cursor-pointer">
         <GiHamburgerMenu
           onClick={() => setCollapsed(!collapsed)}

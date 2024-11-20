@@ -55,9 +55,9 @@ export default function Users() {
           <p className="text-[#1b7443] font-semibold text-xl">780</p>
         </div>
       </div>
-      <div className="min-h-[90vh] bg-[#1b7443] rounded-lg">
-        <div className="flex items-center justify-between p-3">
-          <h1 className="text-2xl font-bold text-white ">Users List</h1>
+      <div className="bg-white  rounded-tr-lg">
+        <div className="flex items-center justify-between  bg-[#1b7443] p-3 rounded-t-lg">
+          <h1 className="text-2xl font-bold  text-white ">Users List</h1>
           <ConfigProvider
             theme={{
               components: {
@@ -91,12 +91,14 @@ export default function Users() {
           theme={{
             components: {
               Table: {
-                headerBg: "rgb(255,255,255)",
-                colorBgContainer: "rgb(255,255,255)",
-                colorText: "rgb(0,0,0)",
-                borderColor: "rgb(73,72,72)",
-                headerColor: "#1b7443",
-                footerBg: "rgb(255,255,255)",
+                bodySortBg: "rgb(204,148,148)",
+                borderColor: "#E7E7E7",
+                expandIconBg: "rgb(217,194,194)",
+                filterDropdownBg: "rgb(56,191,65)",
+                filterDropdownMenuBg: "rgb(206,111,111)",
+                fixedHeaderSortActiveBg: "rgb(129,78,78)",
+                headerBg: "#C8F0DA",
+                headerColor: "rgb(27,120,67)",
               },
             },
           }}
@@ -107,8 +109,9 @@ export default function Users() {
             pagination={{ pageSize: 10 }}
             rowKey="id"
             scroll={{ x: true }}
+            className="mt-4 "
           >
-            <Table.Column title="ID" dataIndex="id" key="id" />
+            <Table.Column title="SL ID" dataIndex="id" key="id" />
             <Table.Column
               title="Full Name"
               dataIndex="userName"
@@ -165,12 +168,12 @@ export default function Users() {
           <Modal
             title={
               <div className="pt-5 text-center bg-[#ffefd9]">
-                <h2 className="text-[#010515] text-2 xl font-bold ">
+                <h2 className="text-[#1b7743] text-3xl font-bold ">
                   User Details
                 </h2>
                 <p className="text-gray-500 mt-2 font-normal">
                   See all details about{" "}
-                  <span className="font-bold">{currentRecord?.userName}</span>
+                  <span className="">{currentRecord?.userName}</span>
                 </p>
               </div>
             }
@@ -181,18 +184,13 @@ export default function Users() {
             width={450}
           >
             {currentRecord && (
-              <div className="my-4 flex flex-col items-center">
+              <div className="my-4 flex flex-col ">
                 <div className="flex items-center justify-center gap-5">
-                  <img
-                    src={currentRecord.avatar}
-                    alt={currentRecord.userName}
-                    className="w-20 h-20 rounded-full"
-                  />
-                  <p className="text-2xl text-[  ] font-bold">
-                    {currentRecord.userName}
-                  </p>
+                  <img src={currentRecord.avatar} />
                 </div>
-                <p className="font-semibold mt-4 text-xl">User Information</p>
+                <p className="font-semibold mt-4 text-2xl text-[#FEBC60] text-center">
+                  User Information
+                </p>
                 <div className="text-left mt-4 space-y-2">
                   <p>
                     Name:{" "}
@@ -229,12 +227,14 @@ export default function Users() {
                     </span>
                   </p>
                 </div>
-                <button
-                  onClick={handleCancel}
-                  className="bg-[#1b7743] text-white text-lg py-2 px-5 rounded-lg mt-8 w-40"
-                >
-                  Ok
-                </button>
+                <div className="flex justify-center">
+                  <button
+                    onClick={handleCancel}
+                    className="bg-[#1b7743]  text-white text-lg py-2 px-5 rounded-lg mt-8 w-full"
+                  >
+                    Ok
+                  </button>
+                </div>
               </div>
             )}
           </Modal>
