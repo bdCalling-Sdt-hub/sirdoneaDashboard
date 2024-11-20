@@ -1,8 +1,9 @@
 import { SearchOutlined } from "@ant-design/icons";
-import { Button, ConfigProvider, Input, Modal, Table, Tooltip } from "antd";
+import { ConfigProvider, Input, Modal, Table, Tooltip } from "antd";
 import axios from "axios";
 import moment from "moment";
 import { useEffect, useMemo, useState } from "react";
+import { AiOutlineEye } from "react-icons/ai";
 import { AllIcons } from "../../../public/images/AllImages";
 export default function Users() {
   const [searchText, setSearchText] = useState("");
@@ -99,6 +100,8 @@ export default function Users() {
                 fixedHeaderSortActiveBg: "rgb(129,78,78)",
                 headerBg: "#C8F0DA",
                 headerColor: "rgb(27,120,67)",
+                headerSplitColor: "rgb(200,240,218)",
+                fontWeightStrong: 500,
               },
             },
           }}
@@ -109,7 +112,7 @@ export default function Users() {
             pagination={{ pageSize: 10 }}
             rowKey="id"
             scroll={{ x: true }}
-            className="mt-4 "
+            className="mt-4 cursor-pointer"
           >
             <Table.Column title="SL ID" dataIndex="id" key="id" />
             <Table.Column
@@ -136,18 +139,10 @@ export default function Users() {
               render={(_, record) => (
                 <div>
                   <Tooltip title="View Details">
-                    <Button
+                    <AiOutlineEye
+                      className="ml-4"
                       onClick={() => showViewModal(record)}
-                      style={{
-                        background: "white",
-                        border: "1px solid #1b7443",
-                        color: "#1b7443",
-                        width: "80px",
-                        fontWeight: 600,
-                      }}
-                    >
-                      Details
-                    </Button>
+                    />
                   </Tooltip>
                 </div>
               )}

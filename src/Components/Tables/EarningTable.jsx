@@ -5,7 +5,7 @@ import { GoEye } from "react-icons/go";
 const EarningTable = ({ data, loading, showViewModal, pageSize = 0 }) => {
   const columns = [
     {
-      title: "ID",
+      title: "SL ID",
       dataIndex: "id",
       key: "id",
       responsive: ["md"],
@@ -20,6 +20,12 @@ const EarningTable = ({ data, loading, showViewModal, pageSize = 0 }) => {
       dataIndex: "accNumber",
       key: "accNumber",
       render: (accNumber) => `****${accNumber.slice(-4)}`,
+    },
+
+    {
+      title: "Organization",
+      dataIndex: "organizationName",
+      key: "organizationName",
     },
     {
       title: "Total Item",
@@ -36,11 +42,6 @@ const EarningTable = ({ data, loading, showViewModal, pageSize = 0 }) => {
       dataIndex: "amount",
       key: "amount",
       render: (amount) => `$${amount}`,
-    },
-    {
-      title: "Organization Name",
-      dataIndex: "organizationName",
-      key: "organizationName",
     },
 
     {
@@ -59,7 +60,7 @@ const EarningTable = ({ data, loading, showViewModal, pageSize = 0 }) => {
                 }}
                 onClick={() => showViewModal(record)}
               >
-                <GoEye style={{ fontSize: "24px" }} />
+                <GoEye className="ml-4" style={{ fontSize: "24px" }} />
               </Button>
             </Tooltip>
           </Space>
