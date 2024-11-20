@@ -323,7 +323,7 @@ const DashboardLayout = () => {
           />
         </Sider>
         <Layout style={{ background: "#FFEFD9 ", padding: "20px" }}>
-          <Header style={{ background: "#ffffff" }}>
+          <Header className="border border-[#1b7443] bg-white rounded-lg">
             <Topbar collapsed={collapsed} setCollapsed={setCollapsed} />
           </Header>
           <Content>

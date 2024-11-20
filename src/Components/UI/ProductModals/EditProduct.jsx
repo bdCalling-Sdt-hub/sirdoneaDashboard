@@ -15,6 +15,7 @@ const { Option } = Select;
 const EditProductForm = ({ initialValues, onSubmit }) => {
   const [colors, setColors] = useState(initialValues?.colors || []);
   const [colorInput, setColorInput] = useState("");
+  const [colorPrice, setColorPrice] = useState("");
   const [productDetails, setProductDetails] = useState({
     category: initialValues.category || "",
     subCategory: initialValues.subCategory || "",
@@ -32,8 +33,9 @@ const EditProductForm = ({ initialValues, onSubmit }) => {
   }, [initialValues]);
 
   const handleAddColor = () => {
-    if (colorInput && !colors.includes(colorInput)) {
-      setColors([...colors, colorInput]);
+    if (colorInput && colorPrice && !colors.includes(colorInput, colorPrice)) {
+      setColors([...colors, colorInput, colorPrice]);
+      setColorPrice("");
       setColorInput("");
     }
   };
@@ -53,8 +55,8 @@ const EditProductForm = ({ initialValues, onSubmit }) => {
   return (
     <div className="p-5 bg-[#FFEFD9]">
       {/* Category and Sub Category */}
-      <div className="grid grid-cols-2 gap-4">
-        {/* <Select
+      {/* <div className="grid grid-cols-2 gap-4">
+        <Select
           placeholder="Category"
           value={productDetails.category}
           onChange={(value) => handleChange("category", value)}
@@ -63,8 +65,8 @@ const EditProductForm = ({ initialValues, onSubmit }) => {
           <Option value="coffee">Coffee</Option>
           <Option value="tea">Tea</Option>
           <Option value="juice">Juice</Option>
-        </Select> */}
-        {/* <Select
+        </Select>
+        <Select
           placeholder="Sub Category"
           value={productDetails.subCategory}
           onChange={(value) => handleChange("subCategory", value)}
@@ -72,10 +74,11 @@ const EditProductForm = ({ initialValues, onSubmit }) => {
         >
           <Option value="black-coffee">Black Coffee</Option>
           <Option value="hot-coffee">Hot Coffee</Option>
-        </Select> */}
-      </div>
+        </Select>
+      </div> */}
+      <h1 className="font-semibold">Product</h1>
       <Input
-        placeholder="Product Type"
+        placeholder="Capichino black hot coffee"
         value={productDetails.productType}
         onChange={(e) => handleChange("productType", e.target.value)}
         className="w-full h-10 my-2"
@@ -110,31 +113,45 @@ const EditProductForm = ({ initialValues, onSubmit }) => {
         </div>
       </div> */}
 
-      <div className="flex justify-between">
+      <div className="">
         {/* Cover Image */}
 
         {/* Colors Section */}
         <div className="mt-4">
-          {/* <label className="font-bold">Colors</label> */}
-          <div className="flex space-x-2">
-            {/* <Input
-              placeholder="Add color"
-              value={colorInput}
-              onChange={(e) => setColorInput(e.target.value)}
-              className="w-1/2"
-            /> */}
-            <Button
-              className="bg-[#B2DAC4] text-[#1b7743]"
-              onClick={handleAddColor}
-            >
-              Add
-            </Button>
+          <div className="grid  lg:grid-cols-3 gap-12">
+            <div>
+              <h1 className="font-bold">Option</h1>
+              <Input
+                value={colorInput}
+                onChange={(e) => setColorInput(e.target.value)}
+                className="w-60 h-10"
+              />
+            </div>
+
+            <div className="">
+              <h1 className="font-bold">Price</h1>
+              <Input
+                value={colorPrice}
+                onChange={(e) => setColorPrice(e.target.value)}
+                className="w-60 h-10"
+              />
+            </div>
+
+            <div className="mt-6">
+              <Button
+                className="bg-[#B2DAC4] text-[#1b7743] h-10"
+                style={{ width: "200px" }}
+                onClick={handleAddColor}
+              >
+                Add
+              </Button>
+            </div>
           </div>
           <div className="flex flex-wrap gap-2 mt-2">
             {colors.map((color) => (
               <div
                 key={color}
-                className="flex items-center bg-gray-200 px-2 py-1 rounded-lg text-sm"
+                className="flex items-center bg-white px-2 py-1 rounded-lg text-sm"
               >
                 {color}
                 <CloseOutlined

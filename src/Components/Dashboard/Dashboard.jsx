@@ -30,7 +30,7 @@ const Dashboard = () => {
   }, []);
 
   return (
-    <div className="w-full min-h-[90vh] px-1 sm:px-2 lg:px-2">
+    <div className="w-full min-h-[90vh] px-1 sm:px-2 lg:px-2 ">
       <div>
         <div className="flex flex-col gap-5">
           {/* Card Items */}
@@ -198,7 +198,7 @@ const Dashboard = () => {
                       Last one month
                     </button>
                   </div>
-                  <div className="lg:flex justify-center items-center">
+                  <div className="flex flex-col md:flex-row md:flex justify-center items-center mt-8 md:mt-0 mb-6">
                     <div>
                       <p className="text-[#656565]">Top selling</p>
                       <h4 className="font-semibold">Butterfly Tea-58%</h4>
@@ -219,8 +219,8 @@ const Dashboard = () => {
                   </div>
                   <div className="flex lg:flex-col xl:flex-row items-center justify-between mx-6 gap-7">
                     <div>
-                      <p className="text-lg">Earning</p>
-                      <p className="text-2xl font-bold">$ 3500.55</p>
+                      <p className="text-md md:text-lg">Earning</p>
+                      <p className="text-md md:text-2xl font-bold">$ 3500.55</p>
                     </div>
                     <div>
                       <div className="flex justify-start items-center gap-1">
