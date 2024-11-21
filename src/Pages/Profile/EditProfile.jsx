@@ -242,6 +242,10 @@ const EditProfile = () => {
                     hoverBg: "#B2DAC4",
                     activeBg: "#B2DAC4",
                   },
+                  Select: {
+                    optionSelectedBg: "rgb(254,188,96)",
+                    optionActiveBg: "rgb(255,217,165)",
+                  },
                 },
               }}
             >
@@ -382,7 +386,7 @@ const EditProfile = () => {
                   block
                   form="editProfileForm"
                   htmlType="submit"
-                  className="bg-[#1b7443] text-white h-12 py-5 rounded-xl font-semibold text-lg w-full"
+                  className="bg-[#1b7443] text-white h-12 py-5 rounded-xl font-semibold text-lg"
                 >
                   Save Changes
                 </Button>
