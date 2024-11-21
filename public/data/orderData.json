@@ -6,7 +6,7 @@
     "date": "2024-11-12",
     "totalItems": 3,
     "totalPrice": 150.0,
-    "orderStatus": "Shipped",
+    "status": "Shipped",
     "location": "123 Main St, Washington, DC",
     "productList": [
       {
@@ -36,7 +36,7 @@
     "date": "2024-11-10",
     "totalItems": 2,
     "totalPrice": 80.0,
-    "orderStatus": "Pending",
+    "status": "Pending",
     "location": "456 Oak Ave, Arlington, VA",
     "productList": [
       {
@@ -60,7 +60,7 @@
     "date": "2024-11-09",
     "totalItems": 3,
     "totalPrice": 240.0,
-    "orderStatus": "Delivered",
+    "status": "Delivered",
     "location": "789 Maple Rd, Bethesda, MD",
     "productList": [
       {
@@ -84,7 +84,7 @@
     "date": "2024-11-08",
     "totalItems": 1,
     "totalPrice": 60.0,
-    "orderStatus": "Canceled",
+    "status": "Canceled",
     "location": "321 Birch Ln, Alexandria, VA",
     "productList": [
       {
@@ -102,7 +102,7 @@
     "date": "2024-11-07",
     "totalItems": 2,
     "totalPrice": 180.0,
-    "orderStatus": "Processing",
+    "status": "Processing",
     "location": "555 Pine St, Reston, VA",
     "productList": [
       {

@@ -47,9 +47,7 @@ const ViewEarningModal = ({
           <div className="text-left space-y-2">
             <p>
               Amount:{" "}
-              <span className="font-semibold text-lg">
-                ${currentRecord.amount}
-              </span>
+              <span className="font-semibold">${currentRecord.amount}</span>
             </p>
             <p>
               Serial ID:<strong> {currentRecord.id}</strong>

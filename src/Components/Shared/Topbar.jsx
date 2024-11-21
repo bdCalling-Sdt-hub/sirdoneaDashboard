@@ -1,8 +1,8 @@
 import { BellFilled, BellOutlined, UserOutlined } from "@ant-design/icons";
 import { Badge, ConfigProvider, Dropdown, Grid } from "antd";
-import { Link } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { GiHamburgerMenu } from "react-icons/gi";
+import { Link } from "react-router-dom";
 
 const notifications = [
   {
@@ -87,7 +87,7 @@ const Topbar = ({ collapsed, setCollapsed }) => {
   );
 
   return (
-    <div className="py-2 mx-[-50px] flex justify-between items-center bg-[#ffffff] rounded-xl">
+    <div className="py-2 mx-[-50px] flex justify-between items-center bg-[#ffffff] rounded-lg ">
       <div className="flex items-center gap-2 text-[#1B7443] ml-4 mt-2 cursor-pointer">
         <GiHamburgerMenu
           onClick={() => setCollapsed(!collapsed)}

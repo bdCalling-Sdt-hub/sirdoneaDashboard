@@ -1,103 +1,382 @@
 /* eslint-disable react/prop-types */
-// AddProductForm.js
-import { useState } from "react";
-import { Input, Select, Button, Upload, Checkbox } from "antd";
+import { useState, useEffect } from "react";
+import {
+  Input,
+  Select,
+  Button,
+  Upload,
+  ConfigProvider,
+  message,
+  Table,
+} from "antd";
 import { UploadOutlined, PlusOutlined } from "@ant-design/icons";
 
 const { TextArea } = Input;
 const { Option } = Select;
 
 const AddProductForm = ({ onSubmit }) => {
-  const [colors, setColors] = useState([]);
   const [colorInput, setColorInput] = useState("");
+  const [productType, setProductType] = useState(null);
+  const [teaOption, setTeaOption] = useState("");
+  const [price, setPrice] = useState("");
+  const [quantity, setQuantity] = useState("");
+  const [productName, setProductName] = useState("");
 
-  const handleAddColor = () => {
-    if (colorInput && !colors.includes(colorInput)) {
-      setColors([...colors, colorInput]);
-      setColorInput("");
+  const [teaItems, setTeaItems] = useState([]);
+  const [tShirtItems, setTShirtItems] = useState([]);
+  const [mugItems, setMugItems] = useState([]);
+  const [toteItems, setToteItems] = useState([]);
+
+  useEffect(() => {
+    console.log("Mug Items:", mugItems);
+    console.log("Tote Items:", toteItems);
+  }, [mugItems, toteItems]);
+
+  const handleAddTea = () => {
+    if (productName && teaOption && price && quantity) {
+      const teaItem = { productName, teaOption, price, quantity };
+      setTeaItems([...teaItems, teaItem]);
+      setProductName("");
+      setTeaOption("");
+      setPrice("");
+      setQuantity("");
+      message.success("Tea item added successfully!");
+    } else {
+      message.error("Please fill all fields for Tea.");
     }
   };
 
-  const handleRemoveColor = (color) => {
-    setColors(colors.filter((c) => c !== color));
+  const handleAddTShirt = () => {
+    if (productName && colorInput && quantity && price) {
+      const tShirtItem = { productName, colorInput, price, quantity };
+      setTShirtItems([...tShirtItems, tShirtItem]);
+      setProductName("");
+      setColorInput("");
+      setQuantity("");
+      setPrice("");
+      message.success("T-shirt item added successfully!");
+    } else {
+      message.error("Please fill all fields for T-shirt.");
+    }
   };
+
+  const handleSubmit = () => {
+    // Prepare product data to send to parent component
+    const productData = {
+      teaItems,
+      tShirtItems,
+      mugItems,
+      toteItems,
+    };
+
+    // Call the onSubmit function passed as prop to update the parent
+    onSubmit(productData);
+
+    console.log(productData);
+
+    // Reset form fields
+    setProductName("");
+    setPrice("");
+    setQuantity("");
+    setProductType(null);
+    setTeaOption("");
+    setColorInput("");
+    setTeaItems([]);
+    setTShirtItems([]);
+    setMugItems([]);
+    setToteItems([]);
+  };
+
+  // Table columns for Tea and T-shirt
+  const teaColumns = [
+    // { title: "Product Name", dataIndex: "productName", key: "productName" },
+    { title: "Option", dataIndex: "teaOption", key: "teaOption" },
+    { title: "Price", dataIndex: "price", key: "price" },
+    { title: "Quantity", dataIndex: "quantity", key: "quantity" },
+  ];
+
+  const tShirtColumns = [
+    // { title: "Product Name", dataIndex: "productName", key: "productName" },
+    { title: "Color", dataIndex: "colorInput", key: "colorInput" },
+    { title: "Size", dataIndex: "size", key: "size" },
+    { title: "Price", dataIndex: "price", key: "price" },
+    { title: "Quantity", dataIndex: "quantity", key: "quantity" },
+  ];
 
   return (
     <div className="p-5">
-      <div className="grid grid-cols-2 gap-4">
-        <Select placeholder="Category" className="w-full h-10">
-          <Option value="coffee">Coffee</Option>
-          <Option value="tea">Tea</Option>
-          <Option value="juice">Juice</Option>
-        </Select>
-        <Select placeholder="Sub Category" className="w-full h-10">
-          <Option value="black-coffee">Black Coffee</Option>
-          <Option value="hot-coffee">Hot Coffee</Option>
-        </Select>
+      <div className="mb-4">
+        <ConfigProvider
+          theme={{
+            components: {
+              Select: {
+                optionSelectedBg: "rgb(254,188,96)",
+                optionActiveBg: "rgb(255,217,165)",
+              },
+            },
+          }}
+        >
+          <Select
+            placeholder="Product Type"
+            className="w-full h-10"
+            onChange={(value) => setProductType(value)}
+          >
+            <Option value="tea">Tea</Option>
+            <Option value="mug">Mug</Option>
+            <Option value="tote">Tote</Option>
+            <Option value="tShirt">T-Shirt</Option>
+          </Select>
+        </ConfigProvider>
       </div>
 
-      <div className="mt-4">
-        <Input placeholder="Product Type" className="w-full h-10 mb-4" />
-        <div className="flex justify-between gap-5">
-          <Input
-            placeholder="Product Price"
-            type="number"
-            className="w-56 h-10  mb-4"
-          />
-          <div className="flex items-center space-x-2 mb-4">
-            Product Size <span className="text-gray-400">(Optional):</span>
-            {["S", "M", "L", "XL", "XXL"].map((size) => (
-              <Checkbox key={size}>{size}</Checkbox>
-            ))}
+      {/* Conditional rendering based on product type */}
+      {productType === "tea" && (
+        <div className="flex flex-col gap-2 my-4">
+          <div>
+            <label className="font-semibold">Product Name</label>
+            <Input
+              className="h-10 text-lg placeholder:text-gray-500"
+              placeholder="Enter tea name"
+              value={productName}
+              onChange={(e) => setProductName(e.target.value)}
+            />
+          </div>
+
+          <div className="flex items-center gap-3 my-2">
+            <div className="flex flex-col">
+              <label className="font-semibold">Options</label>
+              <ConfigProvider
+                theme={{
+                  components: {
+                    Select: {
+                      optionSelectedBg: "rgb(254,188,96)",
+                      optionActiveBg: "rgb(255,217,165)",
+                    },
+                  },
+                }}
+              >
+                <Select
+                  placeholder="Select Options"
+                  className="w-56 h-10"
+                  value={teaOption}
+                  onChange={(value) => setTeaOption(value)}
+                >
+                  <Option value="green">Green</Option>
+                  <Option value="black">Black</Option>
+                  <Option value="herbal">Herbal</Option>
+                </Select>
+              </ConfigProvider>
+            </div>
+            <div>
+              <label className="font-semibold">Price</label>
+              <Input
+                type="number"
+                className="h-10 text-lg placeholder:text-gray-500"
+                placeholder="Enter price"
+                value={price}
+                onChange={(e) => setPrice(e.target.value)}
+                prefix="$"
+              />
+            </div>
+            <div>
+              <label className="font-semibold">Quantity</label>
+              <Input
+                type="number"
+                className="h-10 text-lg placeholder:text-gray-500"
+                placeholder="Enter quantity"
+                value={quantity}
+                onChange={(e) => setQuantity(e.target.value)}
+              />
+            </div>
+          </div>
+
+          <Button
+            className="w-20 bg-[#1b7443] text-white h-10 text-lg"
+            onClick={handleAddTea}
+          >
+            Add
+          </Button>
+
+          {teaItems.length > 0 && (
+            <div className="mt-4">
+              <p className="font-semibold">Added Tea Items</p>
+              <ConfigProvider
+                theme={{
+                  components: {
+                    Table: {
+                      cellFontSize: 14,
+                      padding: 8,
+                    },
+                  },
+                }}
+              >
+                <Table
+                  columns={teaColumns}
+                  dataSource={teaItems}
+                  rowKey="productName"
+                  pagination={false}
+                />
+              </ConfigProvider>
+            </div>
+          )}
+        </div>
+      )}
+
+      {productType === "tShirt" && (
+        <div className="flex flex-col gap-3 my-2">
+          <div>
+            <label className="font-semibold">Product Name</label>
+            <Input
+              className="h-10"
+              placeholder="Enter product name"
+              value={productName}
+              onChange={(e) => setProductName(e.target.value)}
+            />
+          </div>
+
+          <div className="flex items-center gap-3">
+            <div>
+              <label className="font-semibold">Color</label>
+              <ConfigProvider
+                theme={{
+                  components: {
+                    Select: {
+                      optionSelectedBg: "rgb(254,188,96)",
+                      optionActiveBg: "rgb(255,217,165)",
+                    },
+                  },
+                }}
+              >
+                <Select
+                  placeholder="Select color"
+                  className="w-48 h-10"
+                  value={colorInput}
+                  onChange={(value) => setColorInput(value)}
+                >
+                  <Option value="red">Red</Option>
+                  <Option value="blue">Blue</Option>
+                  <Option value="black">Black</Option>
+                </Select>
+              </ConfigProvider>
+            </div>
+
+            <div>
+              <label className="font-semibold">Size</label>{" "}
+              <ConfigProvider
+                theme={{
+                  components: {
+                    Select: {
+                      optionSelectedBg: "rgb(254,188,96)",
+                      optionActiveBg: "rgb(255,217,165)",
+                    },
+                  },
+                }}
+              >
+                <Select placeholder="Select size" className="w-48 h-10">
+                  <Option value="s">Small</Option>
+                  <Option value="m">Medium</Option>
+                  <Option value="l">Large</Option>
+                </Select>
+              </ConfigProvider>
+            </div>
+
+            <div>
+              <label className="font-semibold">Quantity</label>
+              <Input
+                type="number"
+                className="h-10 placeholder:text-gray-500"
+                placeholder="Enter quantity"
+                value={quantity}
+                onChange={(e) => setQuantity(e.target.value)}
+              />
+            </div>
+
+            <div>
+              <label className="font-semibold">Price</label>
+              <Input
+                type="number"
+                className="w-28 h-10"
+                placeholder="Enter price"
+                value={price}
+                onChange={(e) => setPrice(e.target.value)}
+                prefix="$"
+              />
+            </div>
+          </div>
+
+          <Button
+            className="w-20 bg-[#1b7443] text-white h-10 text-lg"
+            onClick={handleAddTShirt}
+          >
+            Add
+          </Button>
+
+          {tShirtItems.length > 0 && (
+            <div className="mt-4">
+              <p className="font-semibold">Added T-Shirt Items</p>
+              <ConfigProvider
+                theme={{
+                  components: {
+                    Table: {
+                      cellFontSize: 14,
+                      padding: 8,
+                    },
+                  },
+                }}
+              >
+                {" "}
+                <Table
+                  columns={tShirtColumns}
+                  dataSource={tShirtItems}
+                  rowKey="productName"
+                  pagination={false}
+                />
+              </ConfigProvider>
+            </div>
+          )}
+        </div>
+      )}
+
+      {/* Mug and Tote - No Add Button, No Table */}
+      {(productType === "mug" || productType === "tote") && (
+        <div className="flex flex-col gap-2 my-4">
+          <div>
+            <label className="font-semibold">Product Name</label>
+            <Input
+              placeholder="Enter product name"
+              className="h-10 placeholder:text-gray-500"
+              value={productName}
+              onChange={(e) => setProductName(e.target.value)}
+            />
+          </div>
+          <div>
+            <label className="font-semibold">Price</label>
+            <Input
+              placeholder="Enter price"
+              type="number"
+              className="h-10"
+              value={price}
+              onChange={(e) => setPrice(e.target.value)}
+              prefix="$"
+            />
           </div>
         </div>
-      </div>
+      )}
 
-      <div className="flex justify-between">
-        <div className="flex flex-col mt-4">
-          <label>Cover Image</label>
-          <Upload className="w-full" listType="picture-card">
+      <div className="mt-2">
+        <label className="font-semibold">Cover Image</label>
+        <div className="flex flex-col items-center bg-gray-200">
+          <Upload className="" listType="picture-card">
             <div>
               <UploadOutlined />
               <div>Click to upload</div>
             </div>
           </Upload>
         </div>
-
-        <div className="mt-4">
-          <label>Colors</label>
-          <div className="flex space-x-2">
-            <Input
-              placeholder="Add color"
-              value={colorInput}
-              onChange={(e) => setColorInput(e.target.value)}
-              className="w-1/2"
-            />
-            <Button
-              className="bg-[#B2DAC4] text-[#1b7743]"
-              onClick={handleAddColor}
-            >
-              Add
-            </Button>
-          </div>
-          <div className="flex flex-wrap gap-2 mt-2">
-            {colors.map((color) => (
-              <span key={color} className="bg-gray-200 px-2 py-1 rounded">
-                {color}{" "}
-                <span
-                  onClick={() => handleRemoveColor(color)}
-                  className="text-red-500 cursor-pointer"
-                >
-                  ×
-                </span>
-              </span>
-            ))}
-          </div>
-        </div>
       </div>
 
       <div className="flex flex-col mt-4">
-        <label>Product Images</label>
+        <label className="font-semibold">Product Images</label>
         <Upload className="w-full" listType="picture-card" multiple>
           <div>
             <PlusOutlined />
@@ -107,15 +386,19 @@ const AddProductForm = ({ onSubmit }) => {
       </div>
 
       <div className="mt-4">
-        <label>Product Details</label>
-        <TextArea placeholder="Enter product details..." rows={4} />
+        <label className="font-semibold">Product Details</label>
+        <TextArea
+          className="placeholder:text-gray-500"
+          placeholder="Enter product details..."
+          rows={4}
+        />
       </div>
 
       <Button
-        className="mt-6 w-full bg-[#1b7443] text-white h-12 text-lg"
-        onClick={onSubmit}
+        className="mt-6 w-64 bg-[#1b7443] text-white h-12 text-lg mx-64"
+        onClick={handleSubmit}
       >
-        Add Product
+        Save
       </Button>
     </div>
   );

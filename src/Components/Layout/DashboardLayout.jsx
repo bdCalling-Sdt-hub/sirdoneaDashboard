@@ -1,20 +1,19 @@
-import Topbar from "../Shared/Topbar";
 import dashboardLogo from "../../../public/images/dashboard-logo/dashboard.svg";
 import earning from "../../../public/images/dashboard-logo/earning.svg";
-import setting from "../../../public/images/dashboard-logo/setting.svg";
 import logout from "../../../public/images/dashboard-logo/logout.svg";
+import setting from "../../../public/images/dashboard-logo/setting.svg";
+import Topbar from "../Shared/Topbar";
 
-import { Link, NavLink, Outlet, useLocation } from "react-router-dom";
 import { Layout, Menu } from "antd";
 import Sider from "antd/es/layout/Sider";
 import { Content, Header } from "antd/es/layout/layout";
 import { useEffect, useState } from "react";
-import { AllImages } from "../../../public/images/AllImages";
 import { CgMenuCake } from "react-icons/cg";
-import { BiCategoryAlt } from "react-icons/bi";
-import { SlHandbag } from "react-icons/sl";
 import { FaRegUser } from "react-icons/fa6";
 import { HiOutlineUserGroup } from "react-icons/hi";
+import { SlHandbag } from "react-icons/sl";
+import { Link, NavLink, Outlet, useLocation } from "react-router-dom";
+import { AllImages } from "../../../public/images/AllImages";
 
 const DashboardLayout = () => {
   const location = useLocation();
@@ -62,23 +61,23 @@ const DashboardLayout = () => {
       icon: <CgMenuCake />,
       label: <NavLink to="orders">Orders</NavLink>,
     },
-    {
-      key: "categories",
-      icon: <BiCategoryAlt />,
-      label: <span className="text-base-color">Categories</span>,
-      children: [
-        {
-          key: "main-category",
-          icon: <span>&#8226;</span>,
-          label: <NavLink to="main-category">Main Category</NavLink>,
-        },
-        {
-          key: "sub-category",
-          icon: <span>&#8226;</span>,
-          label: <NavLink to="sub-category">Sub Category</NavLink>,
-        },
-      ],
-    },
+    // {
+    //   key: "categories",
+    //   icon: <BiCategoryAlt />,
+    //   label: <span className="text-base-color">Categories</span>,
+    //   children: [
+    //     {
+    //       key: "main-category",
+    //       icon: <span>&#8226;</span>,
+    //       label: <NavLink to="main-category">Main Category</NavLink>,
+    //     },
+    //     {
+    //       key: "sub-category",
+    //       icon: <span>&#8226;</span>,
+    //       label: <NavLink to="sub-category">Sub Category</NavLink>,
+    //     },
+    //   ],
+    // },
     {
       key: "products",
       icon: <SlHandbag />,
@@ -324,7 +323,7 @@ const DashboardLayout = () => {
           />
         </Sider>
         <Layout style={{ background: "#FFEFD9 ", padding: "20px" }}>
-          <Header style={{ background: "#ffffff" }}>
+          <Header className="border border-[#1b7443] bg-white rounded-lg mb-4 xl:mb-0">
             <Topbar collapsed={collapsed} setCollapsed={setCollapsed} />
           </Header>
           <Content>

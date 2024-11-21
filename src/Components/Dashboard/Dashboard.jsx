@@ -1,11 +1,12 @@
 import { Card, ConfigProvider, Select } from "antd";
 
-import { AllIcons } from "../../../public/images/AllImages";
-import { useEffect, useState } from "react";
 import axios from "axios";
-import UsersTable from "../Tables/UsersTable";
+import { useEffect, useState } from "react";
+import { FaArrowUp } from "react-icons/fa";
+import { AllIcons } from "../../../public/images/AllImages";
 import Area_Chart from "../Chart/AreaChart";
 import EarningsPieChart from "../Chart/EarningsPieChart";
+import InventoryTracking from "../Tables/InventoryTracking";
 
 const Dashboard = () => {
   const [data, setData] = useState([]);
@@ -29,7 +30,7 @@ const Dashboard = () => {
   }, []);
 
   return (
-    <div className="w-full min-h-[90vh] px-1 sm:px-2 lg:px-2">
+    <div className="w-full min-h-[90vh] px-1 sm:px-2 lg:px-2 ">
       <div>
         <div className="flex flex-col gap-5">
           {/* Card Items */}
@@ -71,7 +72,7 @@ const Dashboard = () => {
                 </div>
                 <div className="text-start">
                   <p className="text-xs lg:text-sm xl:text-2xl text-[#1D242D] mb-1">
-                    Total Driver
+                    Total Organization
                   </p>
                   <p className="text-sm lg:text-base xl:text-3xl font-semibold text-[#1B7443]">
                     25
@@ -128,7 +129,7 @@ const Dashboard = () => {
                   theme={{
                     components: {
                       Select: {
-                        fontSize: 16,
+                        fontSize: 18,
                         colorBorder: "#222222",
                       },
                     },
@@ -154,26 +155,17 @@ const Dashboard = () => {
           </div>
         </div>
 
-        <div className="flex flex-col lg:flex-row gap-4 mt-5"></div>
+        {/* <div className="flex flex-col lg:flex-row gap-4 mt-5"></div> */}
 
-        <div className="flex flex-col lg:flex-row gap-3">
-          <div
-            className="rounded flex-1"
-          >
-            <div className="flex justify-between items-center mx-3 ">
-              <p className="text-2xl font-semibold text-base-color">
-                Recent users
-              </p>
-              {/* <div>
-                <Link to="/users">
-                  <p className="text-lg text-base-color underline">view all</p>
-                </Link>
-              </div> */}
-            </div>
-            <UsersTable data={data} loading={loading} />
+        <div className="lg:flex flex-col 2xl:flex-row gap-5">
+          <div>
+            <p className="text-2xl font-semibold text-base-color my-4">
+              Inventory Tracking
+            </p>
+            <InventoryTracking data={data} loading={loading} />
           </div>
           <div>
-            <p className="text-xl font-bold text-black mb-1">Product Sales</p>
+            <p className="text-xl font-bold text-black mt-4 mb-5">Product Sales</p>
             <div className="flex flex-col items-center justify-center">
               <ConfigProvider
                 theme={{
@@ -181,6 +173,7 @@ const Dashboard = () => {
                     Card: {
                       headerBg: "#1B7443",
                       colorTextHeading: "rgb(253,253,253)",
+                      paddingLG: 8,
                     },
                   },
                 }}
@@ -190,18 +183,45 @@ const Dashboard = () => {
                   style={{
                     width: "100%",
                     height: "100%",
-                    border: "2px solid #1B7443",
                     borderRadius: "12px",
                   }}
                 >
-                  <EarningsPieChart />
-                  <div className="flex lg:flex-col xl:flex-row items-center justify-between mx-6 gap-7">
+                  <div className="flex justify-end px-2">
+                    <button className="bg-[#D7FCE8] border border-teal-700 px-2 rounded-md text-lg">
+                      Last one month
+                    </button>
+                  </div>
+                  <div className="flex flex-col md:flex-row md:flex justify-center items-center mt-8 md:mt-0 mb-6">
                     <div>
-                      <p className="text-lg">Earning</p>
-                      <p className="text-2xl font-bold">$ 3500.55</p>
+                      <p className="text-[#656565]">Top selling</p>
+                      <h4 className="font-semibold">Butterfly Tea-58%</h4>
+                      <h1 className="text-[#1B7443] text-2xl font-semibold">
+                        $720.55
+                      </h1>
                     </div>
                     <div>
-                      <p className="text-base text-[#28C66F]">62%</p>
+                      <EarningsPieChart />
+                    </div>
+                    <div>
+                      <p className="text-[#656565]">Low selling</p>
+                      <h4 className="font-semibold">Minty Comfort-38%</h4>
+                      <h1 className="text-[#60CF92] text-2xl font-semibold">
+                        $110.55
+                      </h1>
+                    </div>
+                  </div>
+                  <div className="flex lg:flex-col xl:flex-row items-center justify-between mx-6 gap-7">
+                    <div>
+                      <p className="text-md md:text-base">Earning</p>
+                      <p className="text-md md:text-xl font-bold">$ 3500.55</p>
+                    </div>
+                    <div>
+                      <div className="flex justify-start items-center gap-1">
+                        <p>
+                          <FaArrowUp />
+                        </p>
+                        <p>62%</p>
+                      </div>
                       <p className="text-sm text-[#656565]">
                         More than Last Month
                       </p>

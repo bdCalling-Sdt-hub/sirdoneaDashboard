@@ -1,17 +1,18 @@
-import { useState, useEffect, useMemo } from "react";
 import { SearchOutlined } from "@ant-design/icons";
 import {
-  Input,
   ConfigProvider,
-  Table,
-  Button,
+  Input,
   Modal,
-  Tooltip,
   Select,
+  Table,
   Tag,
+  Tooltip,
 } from "antd";
 import axios from "axios";
 import moment from "moment";
+import { useEffect, useMemo, useState } from "react";
+import { AiOutlineEye } from "react-icons/ai";
+import { GrDownload } from "react-icons/gr";
 
 const statuses = ["Pending", "Processing", "Shipped", "Delivered", "Canceled"];
 
@@ -142,11 +143,7 @@ export default function Orders() {
             key="date"
             render={(date) => moment(date).format("MM/DD/YYYY")}
           />
-          <Table.Column
-            title="Total Items"
-            dataIndex="totalItems"
-            key="totalItems"
-          />
+          <Table.Column title="Items" dataIndex="totalItems" key="totalItems" />
           <Table.Column
             title="Total"
             dataIndex="totalPrice"
@@ -154,16 +151,16 @@ export default function Orders() {
             render={(price) => `$${price}`}
           />
           <Table.Column
-            title="Order Status"
-            dataIndex="orderStatus"
-            key="orderStatus"
+            title="Status"
+            dataIndex="status"
+            key="status"
             render={(status) => (
               <Tag color={statusColors[status] || "gray"}>{status}</Tag>
             )}
           />
           <Table.Column
             title="Change Status"
-            dataIndex="orderStatus"
+            dataIndex="status"
             key="changeStatus"
             render={(status, record) => (
               <ConfigProvider
@@ -189,11 +186,12 @@ export default function Orders() {
             )}
           />
           <Table.Column
-            title="Action"
+            className="cursor-pointer"
+            title="Details"
             key="action"
             render={(_, record) => (
               <Tooltip title="View Details">
-                <Button
+                {/* <Button
                   onClick={() => showViewModal(record)}
                   style={{
                     background: "white",
@@ -201,9 +199,9 @@ export default function Orders() {
                     color: "#013564",
                     width: "80px",
                   }}
-                >
-                  Details
-                </Button>
+                > */}
+                <AiOutlineEye onClick={() => showViewModal(record)} />
+                {/* </Button> */}
               </Tooltip>
             )}
           />
@@ -236,37 +234,45 @@ export default function Orders() {
         >
           {currentRecord && (
             <div className="my-4">
-              <p>
-                Order ID: <strong>#{currentRecord.orderId}</strong>
-              </p>
-              <p>
-                Customer: <strong>{currentRecord.customerName}</strong>
-              </p>
-              <p>
-                Payment Date:{" "}
-                <strong>
-                  {" "}
-                  {moment(currentRecord.date).format("MM/DD/YYYY")}
-                </strong>
-              </p>
-              <p>
-                Organization Name:{" "}
-                <strong> {currentRecord.organizationName}</strong>
-              </p>
-              <p>
-                Order Status:{" "}
-                <Tag color={statusColors[currentRecord.orderStatus]}>
-                  {currentRecord.orderStatus}
-                </Tag>
-              </p>
-              <p>
-                Location: <strong>{currentRecord.location}</strong>
-              </p>
-
-              <table className="table-auto w-full mt-4 border border-collapse">
+              <div className="flex justify-between">
+                <div>
+                  <p>
+                    Order ID: <strong>#{currentRecord.orderId}</strong>
+                  </p>
+                  <p>
+                    Customer: <strong>{currentRecord.customerName}</strong>
+                  </p>
+                  <p>
+                    Payment Date:{" "}
+                    <strong>
+                      {" "}
+                      {moment(currentRecord.date).format("MM/DD/YYYY")}
+                    </strong>
+                  </p>
+                  <p>
+                    Organization Name:{" "}
+                    <strong> {currentRecord.organizationName}</strong>
+                  </p>
+                  <p>
+                    Order Status:{" "}
+                    <Tag color={statusColors[currentRecord.orderStatus]}>
+                      {currentRecord.orderStatus}
+                    </Tag>
+                  </p>
+                  <p>
+                    Location: <strong>{currentRecord.location}</strong>
+                  </p>
+                </div>
+                <div>
+                  <button className="rounded-full bg-white w-10 h-10 md:w-10 flex items-center justify-center border border-[#1B7443]">
+                    <GrDownload className="text-4xl text-[#1B7443] p-2" />
+                  </button>
+                </div>
+              </div>
+              <table className="table-auto w-full mt-4 border border-collapse ">
                 <thead>
                   <tr className="bg-[#FEBC60]">
-                    <th className="border border-[#FFEFD9] px-4 py-2">
+                    <th className="border border-[#FFEFD9] px-4 py-2 rounded-tl-lg">
                       Product Name
                     </th>
                     <th className="border border-[#FFEFD9] px-4 py-2">
@@ -275,12 +281,14 @@ export default function Orders() {
                     <th className="border border-[#FFEFD9] px-4 py-2">
                       Quantity
                     </th>
-                    <th className="border border-[#FFEFD9] px-4 py-2">Price</th>
+                    <th className="border border-[#FFEFD9] px-4 py-2 rounded-tr-lg">
+                      Price
+                    </th>
                   </tr>
                 </thead>
                 <tbody>
                   {currentRecord.productList.map((product, index) => (
-                    <tr key={index} className="text-center">
+                    <tr key={index} className="text-center bg-[#F2F2F7]">
                       <td className="border border-[#FFEFD9] px-4 py-2">
                         {product.productName}
                       </td>
@@ -298,10 +306,13 @@ export default function Orders() {
                 </tbody>
                 <tfoot>
                   <tr className="bg-green-200 font-bold">
-                    <td colSpan="3" className="border px-4 py-2 text-right">
+                    <td
+                      colSpan="3"
+                      className="border px-4 py-2 text-right text-[#1B7443] "
+                    >
                       Total Price
                     </td>
-                    <td className="border border-[#FFEFD9] px-4 py-2">
+                    <td className="border border-[#FFEFD9] px-4 py-2 text-[#1B7443] ">
                       ${currentRecord.totalPrice.toFixed(2)}
                     </td>
                   </tr>

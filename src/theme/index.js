@@ -9,13 +9,14 @@ export const mainTheme = {
       itemSelectedBg: "#1B7443",
       itemSelectedColor: "white",
     },
-    
+
     Form: {
       colorError: "#F5382C",
     },
     Input: {
       colorIcon: "#0C0C0C",
-      colorTextPlaceholder: "#0C0C0C"
+      colorTextPlaceholder: "#0C0C0C",
+      text: "#ffffff",
     },
     Checkbox: {
       colorPrimary: "#2B4257",

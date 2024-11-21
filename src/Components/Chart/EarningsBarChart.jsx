@@ -1,5 +1,5 @@
-import React, { useState } from "react";
-import { Bar, BarChart, Cell, Legend, Tooltip, XAxis, YAxis } from "recharts";
+import { useState } from "react";
+import { Bar, BarChart, Cell, Tooltip, XAxis, YAxis } from "recharts";
 
 const data = [
   { name: "Jan", uv: 4000, pv: 2400 },
