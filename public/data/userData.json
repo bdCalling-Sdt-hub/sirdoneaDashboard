@@ -18,7 +18,7 @@
     "totalSpent": 1500
   },
   {
-    "id": 2,
+    "id": 1,
     "userName": "Jane Smith",
 
     "profileImage": "image add",
@@ -36,7 +36,7 @@
     "totalSpent": 2300
   },
   {
-    "id": 3,
+    "id": 1,
     "userName": "Mike Johnson",
 
     "profileImage": "image add",
@@ -54,7 +54,7 @@
     "totalSpent": 1250
   },
   {
-    "id": 4,
+    "id": 1,
     "userName": "Emily Davis",
 
     "profileImage": "image add",
@@ -72,7 +72,7 @@
     "totalSpent": 900
   },
   {
-    "id": 5,
+    "id": 1,
     "userName": "Chris Wilson",
 
     "profileImage": "image add",
@@ -90,7 +90,7 @@
     "totalSpent": 1600
   },
   {
-    "id": 6,
+    "id": 1,
     "userName": "Laura Brown",
 
     "profileImage": "image add",
@@ -108,7 +108,7 @@
     "totalSpent": 2100
   },
   {
-    "id": 7,
+    "id": 1,
     "userName": "James Taylor",
 
     "profileImage": "image add",
@@ -126,7 +126,7 @@
     "totalSpent": 800
   },
   {
-    "id": 8,
+    "id": 1,
     "userName": "Sophia Martinez",
 
     "profileImage": "image add",
@@ -144,7 +144,7 @@
     "totalSpent": 1750
   },
   {
-    "id": 9,
+    "id": 1,
     "userName": "William Anderson",
     "profileImage": "image add",
     "organizationName": "Wonka Industries",

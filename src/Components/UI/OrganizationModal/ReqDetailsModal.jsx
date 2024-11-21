@@ -1,8 +1,8 @@
 /* eslint-disable react/prop-types */
 // RequestDetailsModal.js
-import React from "react";
-import { Modal, Button } from "antd";
+
 import { ArrowLeftOutlined } from "@ant-design/icons";
+import { Button, Modal } from "antd";
 
 const RequestDetailsModal = ({ visible, onClose, data }) => {
   return (

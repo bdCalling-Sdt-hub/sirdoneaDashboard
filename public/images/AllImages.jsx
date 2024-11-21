@@ -7,14 +7,15 @@ import updatePass from "./authImages/updatePass.png";
 
 // Main Images
 
+import PDFImage from "./pdfImage.png";
 import profile from "./profileImage.png";
 import userImage from "./userImage.png";
-import PDFImage from "./pdfImage.png";
 
 // Icons
-import user from "./icons/user.png";
-import org from "./icons/org.png";
 import coins from "./icons/Coins.png";
+import org from "./icons/org.png";
+import user from "./icons/user.png";
+import victor from "./icons/Vector.png";
 
 export const AllImages = {
   logo,
@@ -33,4 +34,5 @@ export const AllIcons = {
   user,
   org,
   coins,
+  victor,
 };
