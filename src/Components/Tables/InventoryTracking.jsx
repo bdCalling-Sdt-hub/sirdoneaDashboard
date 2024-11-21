@@ -1,7 +1,7 @@
 /* eslint-disable react/prop-types */
-import { Table } from "antd";
+import { ConfigProvider, Table } from "antd";
 
-const UsersTable = ({ data, loading, pageSize = 0 }) => {
+const InventoryTracking = ({ data, loading, pageSize = 0 }) => {
   const columns = [
     {
       title: "S. ID",
@@ -54,16 +54,26 @@ const UsersTable = ({ data, loading, pageSize = 0 }) => {
   ];
   return (
     <div>
-      <Table
-        columns={columns}
-        dataSource={data}
-        loading={loading}
-        pagination={pageSize > 0 ? { pageSize } : false}
-        rowKey="id"
-        scroll={{ x: true }}
-      />
+      <ConfigProvider
+        theme={{
+          components: {
+            Table: {
+              cellFontSize: 17,
+            },
+          },
+        }}
+      >
+        <Table
+          columns={columns}
+          dataSource={data}
+          loading={loading}
+          pagination={pageSize > 0 ? { pageSize } : false}
+          rowKey="id"
+          scroll={{ x: true }}
+        />
+      </ConfigProvider>
     </div>
   );
 };
 
-export default UsersTable;
+export default InventoryTracking;

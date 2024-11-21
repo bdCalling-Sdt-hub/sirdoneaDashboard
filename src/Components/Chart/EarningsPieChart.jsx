@@ -52,8 +52,8 @@ export default function EarningsPieChart() {
   };
 
   return (
-    <div className="mt-10">
-      <PieChart width={300} height={250}>
+    <div className="mt-1">
+      <PieChart width={250} height={200}>
         <Pie
           data={[{ name: "Center", value: 1 }]}
           dataKey="value"

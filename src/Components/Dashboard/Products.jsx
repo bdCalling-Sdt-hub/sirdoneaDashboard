@@ -166,8 +166,15 @@ const Products = () => {
     setSelectedProduct(null);
   };
 
-  const handleAddSubmit = () => {
-    // Submit new product data
+  const handleAddProduct = (productData) => {
+    const allItems = [
+      ...productData.teaItems,
+      ...productData.tShirtItems,
+      ...productData.mugItems,
+      ...productData.toteItems,
+    ];
+
+    setData(allItems);
     setIsAddModalVisible(false);
   };
 
@@ -262,8 +269,7 @@ const Products = () => {
           centered
           width={800}
         >
-          <AddProductForm onSubmit={handleAddSubmit} />{" "}
-          {/* AddProductForm component renders inside the modal */}
+          <AddProductForm onSubmit={handleAddProduct} />
         </Modal>
 
         {/* Edit Product Modal */}

@@ -6,7 +6,7 @@ import { FaArrowUp } from "react-icons/fa";
 import { AllIcons } from "../../../public/images/AllImages";
 import Area_Chart from "../Chart/AreaChart";
 import EarningsPieChart from "../Chart/EarningsPieChart";
-import UsersTable from "../Tables/UsersTable";
+import InventoryTracking from "../Tables/InventoryTracking";
 
 const Dashboard = () => {
   const [data, setData] = useState([]);
@@ -157,22 +157,15 @@ const Dashboard = () => {
 
         {/* <div className="flex flex-col lg:flex-row gap-4 mt-5"></div> */}
 
-        <div className="lg:flex flex-col 2xl:flex-row gap-3 ">
-          <div className="rounded flex-1">
-            <div className="flex justify-between items-center mx-3 ">
-              <p className="text-2xl font-semibold text-base-color my-6">
-                Inventory Tracking
-              </p>
-              {/* <div>
-                <Link to="/users">
-                  <p className="text-lg text-base-color underline">view all</p>
-                </Link>
-              </div> */}
-            </div>
-            <UsersTable data={data} loading={loading} />
+        <div className="lg:flex flex-col 2xl:flex-row gap-5">
+          <div>
+            <p className="text-2xl font-semibold text-base-color my-4">
+              Inventory Tracking
+            </p>
+            <InventoryTracking data={data} loading={loading} />
           </div>
           <div>
-            <p className="text-xl font-bold text-black  my-6">Product Sales</p>
+            <p className="text-xl font-bold text-black mt-4 mb-5">Product Sales</p>
             <div className="flex flex-col items-center justify-center">
               <ConfigProvider
                 theme={{
@@ -180,6 +173,7 @@ const Dashboard = () => {
                     Card: {
                       headerBg: "#1B7443",
                       colorTextHeading: "rgb(253,253,253)",
+                      paddingLG: 8,
                     },
                   },
                 }}
@@ -189,12 +183,11 @@ const Dashboard = () => {
                   style={{
                     width: "100%",
                     height: "100%",
-
                     borderRadius: "12px",
                   }}
                 >
                   <div className="flex justify-end px-2">
-                    <button className="bg-[#D7FCE8] border border-teal-700 px-2 rounded-md text-xl">
+                    <button className="bg-[#D7FCE8] border border-teal-700 px-2 rounded-md text-lg">
                       Last one month
                     </button>
                   </div>
@@ -219,15 +212,15 @@ const Dashboard = () => {
                   </div>
                   <div className="flex lg:flex-col xl:flex-row items-center justify-between mx-6 gap-7">
                     <div>
-                      <p className="text-md md:text-lg">Earning</p>
-                      <p className="text-md md:text-2xl font-bold">$ 3500.55</p>
+                      <p className="text-md md:text-base">Earning</p>
+                      <p className="text-md md:text-xl font-bold">$ 3500.55</p>
                     </div>
                     <div>
                       <div className="flex justify-start items-center gap-1">
                         <p>
                           <FaArrowUp />
                         </p>
-                        <p className="text-base ">62%</p>
+                        <p>62%</p>
                       </div>
                       <p className="text-sm text-[#656565]">
                         More than Last Month
