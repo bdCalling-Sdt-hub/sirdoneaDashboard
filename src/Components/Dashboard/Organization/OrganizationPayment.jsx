@@ -1,10 +1,11 @@
-// PaymentTable.js
 import { EyeOutlined } from "@ant-design/icons";
 import { Button, ConfigProvider, Input, Table, Tag, Tooltip } from "antd";
 import axios from "axios";
 import { useEffect, useState } from "react";
 import { GrDownload } from "react-icons/gr";
-import DirectDepositModal from "../../UI/PaymentModal/DirectDepositModal";
+import CheckPayoutModal from "../../UI/OrganizationPaymentModal/CheckPayoutModal"; // Import the CheckPayoutModal
+import DirectDepositModal from "../../UI/OrganizationPaymentModal/DirectDepositModal";
+import PayNowModal from "../../UI/OrganizationPaymentModal/PayNowModal";
 
 const OrganizationPayment = () => {
   const [data, setData] = useState([]);
@@ -12,6 +13,23 @@ const OrganizationPayment = () => {
   const [isModalVisible, setIsModalVisible] = useState(false);
   const [selectedRecord, setSelectedRecord] = useState(null);
 
+  // Actions modal state
+  const [isActionVisible, setActionVisible] = useState(false);
+  const [selectedAction, setSelectedAction] = useState(null);
+
+  // Show actions modal
+  const showActionsModal = (record) => {
+    setSelectedAction(record); // Set the selected record
+    setActionVisible(true); // Show the modal
+  };
+
+  // Close actions modal
+  const closeActionsModal = () => {
+    setActionVisible(false); // Hide the modal
+    setSelectedAction(null); // Clear the selected action
+  };
+
+  // Show detailed modal based on payout option or status
   const showDetailsModal = (record) => {
     setSelectedRecord(record);
     setIsModalVisible(true);
@@ -25,7 +43,7 @@ const OrganizationPayment = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await axios.get("/data/paymentData.json"); // Adjust the path as needed
+        const response = await axios.get("/data/paymentData.json"); // Fetch your data
         setData(response.data);
       } catch (error) {
         console.error("Error fetching data:", error);
@@ -67,11 +85,6 @@ const OrganizationPayment = () => {
       dataIndex: "sells",
       key: "sells",
     },
-    // {
-    //   title: "Per.(%)",
-    //   dataIndex: "percentage",
-    //   key: "percentage",
-    // },
     {
       title: "Payment",
       dataIndex: "payment",
@@ -104,8 +117,9 @@ const OrganizationPayment = () => {
       key: "action",
       render: (_, record) => (
         <Tag
-          color={record.status === "Completed" ? "red" : "#1b7443"}
+          color={record.status === "Pay Now" ? "red" : "#1b7443"}
           className="px-3 py-1 rounded-lg cursor-pointer"
+          onClick={() => showActionsModal(record)} // Open actions modal when status is "Pay Now"
         >
           <div>{record.status}</div>
         </Tag>
@@ -114,7 +128,7 @@ const OrganizationPayment = () => {
   ];
 
   return (
-    <div className=" min-h-screen bg-[#FAF8F5]">
+    <div className="min-h-screen bg-[#FAF8F5]">
       {/* Header and Search */}
       <div className="bg-[#1b7443] rounded-t-lg p-4 flex justify-between items-center">
         <h2 className="text-white text-lg font-semibold">Payment</h2>
@@ -153,13 +167,34 @@ const OrganizationPayment = () => {
           scroll={{ x: true }}
         />
       </ConfigProvider>
-      {selectedRecord && (
-        <DirectDepositModal
-          visible={isModalVisible}
-          onClose={closeModal}
-          data={selectedRecord}
-        />
-      )}
+
+      {/* Show PayNowModal if selectedAction's status is "Pay Now" */}
+      {selectedAction &&
+        isActionVisible &&
+        selectedAction.status === "Pay Now" && (
+          <PayNowModal
+            visible={isActionVisible}
+            onClose={closeActionsModal}
+            data={selectedAction}
+          />
+        )}
+
+      {/* Show other modals for other payout options */}
+      {selectedRecord &&
+        isModalVisible &&
+        (selectedRecord.payoutOption === "Check Payout" ? (
+          <CheckPayoutModal
+            visible={isModalVisible}
+            onClose={closeModal}
+            data={selectedRecord}
+          />
+        ) : (
+          <DirectDepositModal
+            visible={isModalVisible}
+            onClose={closeModal}
+            data={selectedRecord}
+          />
+        ))}
     </div>
   );
 };

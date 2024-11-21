@@ -7,3 +7,19 @@
 * {
   font-family: "Roboto", sans-serif;
 }
+
+/* Add this to your styles.css or a global stylesheet */
+input:focus {
+  outline: none; /* Removes the default outline */
+  border: none; /* Removes the border on focus */
+}
+
+input {
+  padding: 4px;
+}
+
+/* Override modal content background */
+.custom-modal .ant-modal-content {
+  background-color: rgb(255, 239, 217); /* Change the background color */
+  border-radius: 8px; /* Optional: Add border radius to modal content */
+}

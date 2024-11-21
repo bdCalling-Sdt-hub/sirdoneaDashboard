@@ -1,16 +1,8 @@
 import { Button, Modal } from "antd";
 
-export default function CheckPayoutModal({ onClose, visible, data }) {
+export default function DirectDepositModal({ onClose, visible, data }) {
   return (
-    <Modal
-      visible={visible}
-      footer={null}
-      width={400}
-      className="rounded-lg"
-      cancelButtonProps={{
-        disabled: true,
-      }}
-    >
+    <Modal visible={visible} footer={null} width={400} className="rounded-lg">
       <div className="ml-8 px-6">
         <h1 className="text-[#1B7443] text-md font-semibold">
           Direct Deposit/ACH Information
@@ -36,7 +28,7 @@ export default function CheckPayoutModal({ onClose, visible, data }) {
       <div className="flex justify-between mt-6">
         <Button
           onClick={() => onClose()}
-          className="bg-red-500 text-white px-6 py-2 rounded-md"
+          className="bg-[#FBA19C] text-[#FF0E00] px-6 py-2 rounded-md"
         >
           Cancel
         </Button>
