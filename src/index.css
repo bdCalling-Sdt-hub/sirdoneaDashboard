@@ -23,3 +23,7 @@ input {
   background-color: rgb(255, 239, 217); /* Change the background color */
   border-radius: 8px; /* Optional: Add border radius to modal content */
 }
+
+.custom-modal-bg .ant-modal-content {
+  background-color: rgb(159, 172, 172);
+}

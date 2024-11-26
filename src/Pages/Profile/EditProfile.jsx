@@ -209,7 +209,7 @@ const EditProfile = () => {
 
   return (
     <div className="p-4 lg:p-8 min-h-screen">
-      <div className="flex justify-between items-center mb-8 xl:mx-40">
+      <div className=" mb-8 ">
         <div className="flex items-center">
           <LeftOutlined
             className="text-black text-xl mr-4 cursor-pointer"
@@ -220,20 +220,15 @@ const EditProfile = () => {
           </h2>
         </div>
       </div>
-      <div className="bg-white rounded-lg shadow-lg p-6 xl:mx-40">
-        <div className="flex items-center justify-between gap-20 mx-48">
-          <div className="flex flex-col items-center">
-            <img
-              className="rounded-full"
-              src="https://i.ibb.co.com/xJdQCTG/download.jpg"
-              alt="pic"
-            />
-            <h3 className="xl:text-lg font-bold">Admin</h3>
+      <div className="bg-white rounded-lg shadow-lg p-6 ">
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 lg:gap-20">
+          <div className="col-span-1 flex flex-col items-center justify-center text-center">
             <h2 className="text-xl lg:text-2xl font-bold">
               {profileData.fullName}
             </h2>
+            <h3 className="xl:text-lg font-bold">Admin</h3>
           </div>
-          <div className="flex-1">
+          <div className="col-span-2">
             <ConfigProvider
               theme={{
                 components: {

@@ -1,5 +1,6 @@
-import React, { useState } from "react";
+/* eslint-disable react/prop-types */
 import { Modal, Table } from "antd";
+import React from "react";
 
 export default function OrderDetailsModal({ visible, onClose, order }) {
   const columns = [
@@ -31,10 +32,7 @@ export default function OrderDetailsModal({ visible, onClose, order }) {
     },
   ];
 
-  const total = order.productList.reduce(
-    (sum, item) => sum + item.price,
-    0
-  );
+  const total = order.productList.reduce((sum, item) => sum + item.price, 0);
 
   return (
     <Modal
@@ -48,19 +46,31 @@ export default function OrderDetailsModal({ visible, onClose, order }) {
       closeIcon={<span style={{ fontSize: "18px", color: "#000" }}>✕</span>}
     >
       <div style={{ padding: "20px", textAlign: "center" }}>
-        <h2 style={{ color: "#226622", fontWeight: "bold" }}>Order's Details</h2>
+        <h2 style={{ color: "#226622", fontWeight: "bold" }}>
+          Order&apos;s Details
+        </h2>
         <div style={{ textAlign: "left", marginTop: "10px" }}>
-          <p><strong>Order ID:</strong> #{order.orderId}</p>
-          <p><strong>Customer:</strong> {order.customerName}</p>
-          <p><strong>Payment's Date:</strong> {order.date}</p>
-          <p><strong>Organization Name:</strong> {order.organizationName}</p>
           <p>
-            <strong>Order's Status:</strong>{" "}
+            <strong>Order ID:</strong> #{order.orderId}
+          </p>
+          <p>
+            <strong>Customer:</strong> {order.customerName}
+          </p>
+          <p>
+            <strong>Payment&apos;s Date:</strong> {order.date}
+          </p>
+          <p>
+            <strong>Organization Name:</strong> {order.organizationName}
+          </p>
+          <p>
+            <strong>Order&apos;s Status:</strong>{" "}
             <span style={{ color: "orange", fontWeight: "bold" }}>
               {order.orderStatus}
             </span>
           </p>
-          <p><strong>Location:</strong> {order.location}</p>
+          <p>
+            <strong>Location:</strong> {order.location}
+          </p>
         </div>
 
         <Table
@@ -72,10 +82,17 @@ export default function OrderDetailsModal({ visible, onClose, order }) {
           bordered
           summary={() => (
             <Table.Summary.Row style={{ backgroundColor: "#e1f2e6" }}>
-              <Table.Summary.Cell colSpan={3} align="center" style={{ fontWeight: "bold" }}>
+              <Table.Summary.Cell
+                colSpan={3}
+                align="center"
+                style={{ fontWeight: "bold" }}
+              >
                 Total Price
               </Table.Summary.Cell>
-              <Table.Summary.Cell align="center" style={{ fontWeight: "bold", color: "#226622" }}>
+              <Table.Summary.Cell
+                align="center"
+                style={{ fontWeight: "bold", color: "#226622" }}
+              >
                 ${total.toFixed(2)}
               </Table.Summary.Cell>
             </Table.Summary.Row>
