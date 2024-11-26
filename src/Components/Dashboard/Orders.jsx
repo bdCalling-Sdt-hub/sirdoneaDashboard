@@ -225,7 +225,7 @@ export default function Orders() {
           title={
             <div className="pt-5 text-center bg-[#FFEFD9]">
               <h2 className="text-[#1b7443] text-3xl font-bold">
-                Order Details
+                Order's Details
               </h2>
             </div>
           }
@@ -237,33 +237,32 @@ export default function Orders() {
         >
           {currentRecord && (
             <div className="my-4">
-              <div className="flex justify-between">
+              <div className="flex justify-between leading-7">
                 <div>
                   <p>
-                    Order ID: <strong>#{currentRecord.orderId}</strong>
+                    <strong> Order ID: #</strong>
+                    {currentRecord.orderId}
                   </p>
                   <p>
-                    Customer: <strong>{currentRecord.customerName}</strong>
+                    <strong> Customer: </strong>
+                    {currentRecord.customerName}
                   </p>
                   <p>
-                    Payment Date:{" "}
-                    <strong>
-                      {" "}
-                      {moment(currentRecord.date).format("MM/DD/YYYY")}
-                    </strong>
+                    <strong> Payment Date: </strong>
+                    {moment(currentRecord.date).format("MM/DD/YYYY")}
                   </p>
                   <p>
-                    Organization Name:{" "}
-                    <strong> {currentRecord.organizationName}</strong>
+                    <strong>Organization Name: </strong>
+                    {currentRecord.organizationName}
                   </p>
                   <p>
-                    Order Status:{" "}
+                    <strong> Order Status: </strong>
                     <Tag color={statusColors[currentRecord.orderStatus]}>
                       {currentRecord.orderStatus}
                     </Tag>
                   </p>
                   <p>
-                    Location: <strong>{currentRecord.location}</strong>
+                    <strong>Location: </strong> {currentRecord.location}
                   </p>
                 </div>
                 <div>

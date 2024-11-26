@@ -4,6 +4,7 @@ import { Button, ConfigProvider, Input, Table, Tag, Tooltip } from "antd";
 import axios from "axios";
 import { useEffect, useState } from "react";
 import { GrDownload } from "react-icons/gr";
+import DeleteModal from "../../UI/OrganizationModal/DeleteModal";
 import RequestDetailsModal from "../../UI/OrganizationModal/ReqDetailsModal";
 
 const OrganizationRequest = () => {
@@ -11,6 +12,18 @@ const OrganizationRequest = () => {
   const [loading, setLoading] = useState(true);
   const [isModalVisible, setIsModalVisible] = useState(false);
   const [selectedRecord, setSelectedRecord] = useState(null);
+  const [deleteVisible, setDeleteVisible] = useState(false);
+  const [selectedDelete, setSelectDelete] = useState(null);
+
+  // open handle delete
+  const handleDelete = (record) => {
+    setDeleteVisible(true);
+    setSelectDelete(record);
+  };
+  const handleDeleteClose = () => {
+    setDeleteVisible(false);
+    setSelectDelete(null);
+  };
 
   const showDetailsModal = (record) => {
     setSelectedRecord(record);
@@ -116,6 +129,7 @@ const OrganizationRequest = () => {
               icon={<DeleteOutlined />}
               shape="circle"
               className="text-red-500"
+              onClick={() => handleDelete(record)}
             />
           </Tooltip>
         </div>
@@ -172,6 +186,14 @@ const OrganizationRequest = () => {
           scroll={{ x: true }}
         />
       </ConfigProvider>
+
+      {deleteVisible && (
+        <DeleteModal
+          visible={deleteVisible}
+          onClose={handleDeleteClose}
+          data={selectedDelete}
+        />
+      )}
 
       {selectedRecord && (
         <RequestDetailsModal

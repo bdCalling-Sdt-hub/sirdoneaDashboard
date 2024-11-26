@@ -2,6 +2,7 @@
   {
     "id": 1,
     "userName": "John Doe",
+    "image": "/public/images/user-img.png",
 
     "profileImage": "image add",
     "organizationName": "Acme Corp",
@@ -20,6 +21,7 @@
   {
     "id": 1,
     "userName": "Jane Smith",
+    "image": "/public/images/user-img.png",
 
     "profileImage": "image add",
     "organizationName": "Globex Inc",
@@ -38,6 +40,7 @@
   {
     "id": 1,
     "userName": "Mike Johnson",
+    "image": "/public/images/user-img.png",
 
     "profileImage": "image add",
     "organizationName": "Initech",
@@ -56,6 +59,7 @@
   {
     "id": 1,
     "userName": "Emily Davis",
+    "image": "/public/images/user-img.png",
 
     "profileImage": "image add",
     "organizationName": "Umbrella Corp",
@@ -74,6 +78,7 @@
   {
     "id": 1,
     "userName": "Chris Wilson",
+    "image": "/public/images/user-img.png",
 
     "profileImage": "image add",
     "organizationName": "Stark Industries",
@@ -92,6 +97,7 @@
   {
     "id": 1,
     "userName": "Laura Brown",
+    "image": "/public/images/user-img.png",
 
     "profileImage": "image add",
     "organizationName": "Wayne Enterprises",
@@ -110,6 +116,7 @@
   {
     "id": 1,
     "userName": "James Taylor",
+    "image": "/public/images/user-img.png",
 
     "profileImage": "image add",
     "organizationName": "Oscorp",
@@ -128,6 +135,7 @@
   {
     "id": 1,
     "userName": "Sophia Martinez",
+    "image": "/public/images/user-img.png",
 
     "profileImage": "image add",
     "organizationName": "Hooli",
@@ -146,6 +154,7 @@
   {
     "id": 1,
     "userName": "William Anderson",
+    "image": "/public/images/user-img.png",
     "profileImage": "image add",
     "organizationName": "Wonka Industries",
     "joiningDate": "2023-03-19",
@@ -163,6 +172,7 @@
   {
     "id": 10,
     "userName": "Olivia Harris",
+    "image": "/public/images/user-img.png",
     "profileImage": "image add",
     "organizationName": "Duff Beer Inc",
     "joiningDate": "2022-09-29",
@@ -180,6 +190,7 @@
   {
     "id": 11,
     "userName": "David Clark",
+    "image": "/public/images/user-img.png",
     "profileImage": "image add",
     "organizationName": "Prestige Worldwide",
     "joiningDate": "2021-12-05",
@@ -197,6 +208,7 @@
   {
     "id": 12,
     "userName": "Isabella Lewis",
+    "image": "/public/images/user-img.png",
     "profileImage": "image add",
     "organizationName": "Soylent Inc",
     "joiningDate": "2022-08-21",
