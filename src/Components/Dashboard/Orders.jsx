@@ -253,7 +253,7 @@ export default function Orders() {
           title={
             <div className="pt-5 text-center bg-[#FFEFD9]">
               <h2 className="text-[#1b7443] text-3xl font-bold">
-                Order's Details
+                Order&apos;s Details
               </h2>
             </div>
           }

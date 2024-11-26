@@ -1,36 +1,51 @@
 /* eslint-disable react/prop-types */
-// RequestDetailsModal.js
-
 import { Button, Input, Modal } from "antd";
+import { useState } from "react";
 
-const DeleteModal = ({ visible, onClose, data }) => {
+const ReasonModal = ({ visible, onClose }) => {
+  const [reason, setReason] = useState("");
+
+  // Handle the reason input change
+  const handleReasonChange = (e) => {
+    setReason(e.target.value);
+  };
+
+  const handleCancel = () => {
+    setReason("");
+    onClose();
+  };
+  const handleSubmit = () => {
+    // if (reason.trim() === "") {
+    //   alert("Please provide a reason before submitting.");
+    //   return;
+    // }
+    console.log("Reason for deletion:", reason);
+    onClose();
+  };
+
   return (
     <Modal
-      visible={visible}
-      onCancel={onClose}
+      open={visible}
+      onCancel={handleCancel}
       footer={null}
       centered
       width={600}
       className="custom-modal-bg"
-      bodyStyle={{
-        padding: "20px",
-        borderRadius: "10px",
-      }}
     >
-      <div className="flex flex-col items-center ">
-        {/* Textarea */}
+      <div className="flex flex-col items-center">
+        {/* Textarea for reason */}
         <Input.TextArea
           className="bg-[#DEF2E7]"
           rows={5}
           placeholder="Write a reason"
-          //   value={reason}
-          //   onChange={(e) => setReason(e.target.value)}
+          value={reason}
+          onChange={handleReasonChange}
         />
 
         {/* Buttons */}
-        <div className="flex justify-around w-full  mt-5">
+        <div className="flex justify-around w-full mt-5">
           <Button
-            // onClick={handleCancel}
+            onClick={handleCancel}
             style={{
               backgroundColor: "#FFB8B8",
               color: "red",
@@ -43,7 +58,7 @@ const DeleteModal = ({ visible, onClose, data }) => {
             Cancel
           </Button>
           <Button
-            // onClick={handleSubmit}
+            onClick={handleSubmit}
             style={{
               backgroundColor: "#1B7443",
               color: "white",
@@ -61,4 +76,4 @@ const DeleteModal = ({ visible, onClose, data }) => {
   );
 };
 
-export default DeleteModal;
+export default ReasonModal;

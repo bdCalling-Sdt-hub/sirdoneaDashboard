@@ -6,11 +6,11 @@ import {
   SaveOutlined,
   UploadOutlined,
 } from "@ant-design/icons";
-import { Button, Input, Select, Upload } from "antd";
+import { Button, Input, Upload } from "antd";
 import { useEffect, useState } from "react";
 
 const { TextArea } = Input;
-const { Option } = Select;
+// const { Option } = Select;
 
 const EditProductForm = ({ initialValues, onSubmit }) => {
   const [colors, setColors] = useState(initialValues?.colors || []);

@@ -9,7 +9,8 @@ import DirectDepositModal from "../../UI/OrganizationPaymentModal/DirectDepositM
 import PayNowModal from "../../UI/OrganizationPaymentModal/PayNowModal";
 
 const OrganizationPayment = () => {
-  const [data, setData] = useState([]);
+  const [data, setData] = useState([]); // Raw data
+  const [filteredData, setFilteredData] = useState([]); // Filtered data based on search
   const [loading, setLoading] = useState(true);
   const [isModalVisible, setIsModalVisible] = useState(false);
   const [selectedRecord, setSelectedRecord] = useState(null);
@@ -18,9 +19,11 @@ const OrganizationPayment = () => {
   const [isActionVisible, setActionVisible] = useState(false);
   const [selectedAction, setSelectedAction] = useState(null);
 
-  // details modal state
+  // Details modal state
   const [isDetailsModalVisible, setIsDetailsModalVisible] = useState(false);
   const [selectedDetailsRecord, setSelectedDetailsRecord] = useState(null);
+
+  const [searchTerm, setSearchTerm] = useState(""); // State to store search term
 
   // Show actions modal
   const showActionsModal = (record) => {
@@ -45,7 +48,7 @@ const OrganizationPayment = () => {
     setSelectedRecord(null);
   };
 
-  // show details modal
+  // Show details modal
   const showDetailsModal = (record) => {
     setSelectedDetailsRecord(record); // Store the clicked record's data
     setIsDetailsModalVisible(true); // Show the modal
@@ -56,11 +59,13 @@ const OrganizationPayment = () => {
     setSelectedDetailsRecord(null); // Clear the selected record
   };
 
+  // Fetching data
   useEffect(() => {
     const fetchData = async () => {
       try {
         const response = await axios.get("/data/paymentData.json"); // Fetch your data
         setData(response.data);
+        setFilteredData(response.data); // Initially, show all data
       } catch (error) {
         console.error("Error fetching data:", error);
       } finally {
@@ -69,6 +74,26 @@ const OrganizationPayment = () => {
     };
     fetchData();
   }, []);
+
+  // Handle the search input change
+  const handleSearch = (value) => {
+    setSearchTerm(value); // Update search term
+
+    if (value.trim() === "") {
+      setFilteredData(data); // Show all data if search is empty
+    } else {
+      // Perform case-insensitive search on relevant fields
+      const lowercasedValue = value.toLowerCase();
+      const filtered = data.filter((record) => {
+        return (
+          record.founderName.toLowerCase().includes(lowercasedValue) ||
+          record.eventName.toLowerCase().includes(lowercasedValue) ||
+          record.target.toLowerCase().includes(lowercasedValue)
+        );
+      });
+      setFilteredData(filtered); // Update filtered data
+    }
+  };
 
   const columns = [
     {
@@ -161,6 +186,8 @@ const OrganizationPayment = () => {
             placeholder="Search User"
             className="w-64"
             style={{ borderRadius: "5px" }}
+            value={searchTerm} // Bind the search term state
+            onChange={(e) => handleSearch(e.target.value)} // Handle search input change
           />
           <button className="rounded-full bg-white w-10 h-10 md:w-10 flex items-center justify-center">
             <GrDownload className="text-4xl text-[#1B7443] p-2" />
@@ -183,7 +210,7 @@ const OrganizationPayment = () => {
       >
         <Table
           columns={columns}
-          dataSource={data}
+          dataSource={filteredData} // Display the filtered data
           pagination={{ pageSize: 8 }}
           loading={loading}
           rowKey="id"
@@ -192,7 +219,7 @@ const OrganizationPayment = () => {
         />
       </ConfigProvider>
 
-      {/* details modal actions */}
+      {/* Details modal actions */}
       {isDetailsModalVisible && selectedDetailsRecord && (
         <OrgPayment
           visible={isDetailsModalVisible}
