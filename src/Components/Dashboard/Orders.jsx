@@ -73,9 +73,9 @@ export default function Orders() {
   };
 
   return (
-    <div className="min-h-[90vh] bg-[#1b7443] rounded-lg">
-      <div className="flex items-center justify-between p-3">
-        <h1 className="text-2xl font-bold text-white">Orders List</h1>
+    <div className="min-h-screen rounded-lg">
+      <div className="flex items-center justify-between p-3 bg-[#1b7443] rounded">
+        <h1 className="text-2xl font-bold text-white ">Orders List</h1>
         <ConfigProvider
           theme={{
             components: {
@@ -200,7 +200,10 @@ export default function Orders() {
                     width: "80px",
                   }}
                 > */}
-                <AiOutlineEye onClick={() => showViewModal(record)} />
+                <AiOutlineEye
+                  className="text-lg"
+                  onClick={() => showViewModal(record)}
+                />
                 {/* </Button> */}
               </Tooltip>
             )}

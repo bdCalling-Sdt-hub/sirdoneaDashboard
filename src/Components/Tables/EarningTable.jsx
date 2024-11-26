@@ -1,6 +1,6 @@
 /* eslint-disable react/prop-types */
 import { Button, Space, Table, Tooltip } from "antd";
-import { GoEye } from "react-icons/go";
+import { AiOutlineEye } from "react-icons/ai";
 
 const EarningTable = ({ data, loading, showViewModal, pageSize = 0 }) => {
   const columns = [
@@ -60,7 +60,7 @@ const EarningTable = ({ data, loading, showViewModal, pageSize = 0 }) => {
                 }}
                 onClick={() => showViewModal(record)}
               >
-                <GoEye className="ml-4" style={{ fontSize: "24px" }} />
+                <AiOutlineEye className="ml-6" style={{ fontSize: "18px" }} />
               </Button>
             </Tooltip>
           </Space>

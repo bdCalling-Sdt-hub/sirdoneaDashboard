@@ -131,13 +131,15 @@ const Dashboard = () => {
                       Select: {
                         fontSize: 18,
                         colorBorder: "#222222",
+                        optionSelectedBg: "rgb(254,188,96)",
+                        optionActiveBg: "rgb(255,217,165)",
                       },
                     },
                   }}
                 >
                   <Select
                     defaultValue="2024"
-                    style={{ width: 80 }}
+                    style={{ width: 100 }}
                     options={[
                       { value: "2024", label: "2024" },
                       { value: "2023", label: "2023" },
@@ -165,7 +167,9 @@ const Dashboard = () => {
             <InventoryTracking data={data} loading={loading} />
           </div>
           <div>
-            <p className="text-xl font-bold text-black mt-4 mb-5">Product Sales</p>
+            <p className="text-xl font-bold text-black mt-4 mb-5">
+              Product Sales
+            </p>
             <div className="flex flex-col items-center justify-center">
               <ConfigProvider
                 theme={{

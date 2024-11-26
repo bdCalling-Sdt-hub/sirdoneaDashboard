@@ -11,8 +11,11 @@ const InventoryTracking = ({ data, loading, pageSize = 0 }) => {
     },
     {
       title: "Profile Image",
-      dataIndex: "profileImage",
-      key: "profileImage",
+      dataIndex: "avatar",
+      key: "avatar",
+      render: (avatar) => (
+        <img src={avatar} alt="Product Image" className="size-8 rounded-full" />
+      ),
     },
 
     {

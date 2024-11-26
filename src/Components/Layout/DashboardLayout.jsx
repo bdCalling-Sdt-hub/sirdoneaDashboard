@@ -119,14 +119,14 @@ const DashboardLayout = () => {
           key: "organization-request",
           icon: <span>&#8226;</span>,
           label: (
-            <NavLink to="organization-request">Organization Request</NavLink>
+            <NavLink to="organization-request">Organi. Request</NavLink>
           ),
         },
         {
           key: "organization-payment",
           icon: <span>&#8226;</span>,
           label: (
-            <NavLink to="organization-payment">Organization Payment</NavLink>
+            <NavLink to="organization-payment">Organi. Payment</NavLink>
           ),
         },
       ],

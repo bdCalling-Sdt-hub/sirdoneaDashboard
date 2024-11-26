@@ -20,7 +20,7 @@ const ViewEarningModal = ({
           <h2 className="text-[#1b7443] text-2xl font-semibold">
             User payment details
           </h2>
-          <hr className="mt-2 border-t border-[#1b7443]" />
+          <hr className="mt-2 border-t border-[#B2DAC4]" />
         </div>
       }
       open={isViewModalVisible}
@@ -30,45 +30,32 @@ const ViewEarningModal = ({
       className="lg:min-w-[400px]"
     >
       {currentRecord && (
-        <div className="flex flex-col items-center p-5">
-          <div className="text-center mb-5">
+        <div className="flex flex-col p-5">
+          <div className="flex items-center justify-center gap-8">
             <img
               src={
                 currentRecord.avatar || "../../../public/images/userImage.png"
               }
               alt="avatar"
-              className="w-16 h-16 rounded-full mx-auto mb-2"
+              className="w-32 h-32   mb-2"
             />
             <h1 className="text-lg font-semibold">{currentRecord.userName}</h1>
           </div>
-          <h3 className="text-[#1b7443] font-semibold text-lg mb-2">
+          <h3 className="text-[#1b7443] font-semibold text-2xl mb-2 mt-6 text-center">
             Information
           </h3>
-          <div className="text-left space-y-2">
+          <div className="ml-8 space-y-2 text-[#000000]">
             <p>
-              Amount:{" "}
-              <span className="font-semibold">${currentRecord.amount}</span>
+              Amount: <span className="">${currentRecord.amount}</span>
             </p>
+            <p>Serial ID {currentRecord.id}</p>
+            <p>Email:{currentRecord.email}</p>
             <p>
-              Serial ID:<strong> {currentRecord.id}</strong>
+              User Bank Account: ****
+              {currentRecord.accNumber.slice(-4)}
             </p>
-            <p>
-              Email: <strong>{currentRecord.email}</strong>
-            </p>
-            <p>
-              User Bank Account:{" "}
-              <strong>
-                ****
-                {currentRecord.accNumber.slice(-4)}
-              </strong>
-            </p>
-            <p>
-              Time & Date: <strong>{currentRecord.time}</strong>
-            </p>
-            <p>
-              Payment Method:{" "}
-              <strong>{currentRecord.paymentMethod || "N/A"}</strong>
-            </p>
+            <p>Time & Date:{currentRecord.time}</p>
+            <p>Payment Method: {currentRecord.paymentMethod || "N/A"}</p>
           </div>
         </div>
       )}

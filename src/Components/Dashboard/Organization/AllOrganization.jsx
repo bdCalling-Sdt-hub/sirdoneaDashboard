@@ -1,7 +1,8 @@
-import { useState, useEffect } from "react";
-import { Table, Input, Button, Tag, Tooltip, ConfigProvider } from "antd";
 import { EyeOutlined } from "@ant-design/icons";
+import { Button, ConfigProvider, Input, Table, Tag, Tooltip } from "antd";
 import axios from "axios";
+import { useEffect, useState } from "react";
+import { GrDownload } from "react-icons/gr";
 import OrganizationDetails from "../../UI/OrganizationModal/OrgDetails";
 
 const OrganizationTable = () => {
@@ -27,7 +28,7 @@ const OrganizationTable = () => {
 
   const columns = [
     {
-      title: "S.ID",
+      title: "SL ID",
       dataIndex: "id",
       key: "id",
     },
@@ -41,13 +42,9 @@ const OrganizationTable = () => {
       dataIndex: "organization",
       key: "organization",
     },
+
     {
-      title: "Fundraiser Code",
-      dataIndex: "fundraiserCode",
-      key: "fundraiserCode",
-    },
-    {
-      title: "Starting Date",
+      title: "Start Date",
       dataIndex: "startDate",
       key: "startDate",
     },
@@ -65,6 +62,11 @@ const OrganizationTable = () => {
       title: "Actual",
       dataIndex: "sells",
       key: "sells",
+    },
+    {
+      title: "Code",
+      dataIndex: "code",
+      key: "code",
     },
     {
       title: "Details",
@@ -104,15 +106,20 @@ const OrganizationTable = () => {
   };
 
   return (
-    <div className="min-h-screen">
+    <div className="min-h-screen bg-white rounded-tr-lg">
       {/* Header and Search */}
-      <div className="bg-[#1b7443] rounded-t-lg p-4 flex justify-between items-center">
+      <div className="bg-[#1b7443]  p-4 flex justify-between ">
         <h2 className="text-white text-lg font-semibold">All Organization</h2>
-        <Input.Search
-          placeholder="Search User"
-          className="w-64"
-          style={{ borderRadius: "5px" }}
-        />
+        <div className="flex items-center flex-col md:flex-row gap-5">
+          <Input.Search
+            placeholder="Search User"
+            className="w-64"
+            style={{ borderRadius: "5px" }}
+          />
+          <button className="rounded-full bg-white w-10 h-10 md:w-10 flex items-center justify-center">
+            <GrDownload className="text-4xl text-[#1B7443] p-2" />
+          </button>
+        </div>
       </div>
 
       {/* Table with Custom Theme */}
@@ -120,8 +127,16 @@ const OrganizationTable = () => {
         theme={{
           components: {
             Table: {
-              headerBg: "white",
-              headerColor: "rgb(27,116,67)",
+              bodySortBg: "rgb(204,148,148)",
+              borderColor: "#E7E7E7",
+              expandIconBg: "rgb(217,194,194)",
+              filterDropdownBg: "rgb(56,191,65)",
+              filterDropdownMenuBg: "rgb(206,111,111)",
+              fixedHeaderSortActiveBg: "rgb(129,78,78)",
+              headerBg: "#C8F0DA",
+              headerColor: "rgb(27,120,67)",
+              headerSplitColor: "rgb(200,240,218)",
+              fontWeightStrong: 500,
             },
           },
         }}
@@ -132,7 +147,8 @@ const OrganizationTable = () => {
           pagination={{ pageSize: 8 }}
           loading={loading}
           rowKey="id"
-          className="bg-white rounded-b-lg shadow-lg"
+          className="bg-white rounded-b-lg shadow-lg mt-4"
+          scroll={{ x: true }}
         />
       </ConfigProvider>
 
