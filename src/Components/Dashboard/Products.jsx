@@ -5,7 +5,6 @@ import {
   Input,
   Modal,
   Popover,
-  // Select,
   Switch,
   Table,
   Tooltip,
@@ -18,16 +17,15 @@ import AddProductForm from "../UI/ProductModals/CreateProduct";
 import EditProductForm from "../UI/ProductModals/EditProduct";
 import ProductDetailsModal from "../UI/ProductModals/ProductDetailsModal";
 
-// const { Search } = Input;
-// const { Option } = Select;
-
 const Products = () => {
-  const [data, setData] = useState([]);
+  const [data, setData] = useState([]); // All products
+  const [filteredData, setFilteredData] = useState([]); // Filtered products based on search
   const [loading, setLoading] = useState(true);
   const [isAddModalVisible, setIsAddModalVisible] = useState(false);
   const [isEditModalVisible, setIsEditModalVisible] = useState(false);
   const [selectedProduct, setSelectedProduct] = useState(null);
   const [isModalVisible, setIsModalVisible] = useState(false);
+  const [searchText, setSearchText] = useState(""); // New state to manage search query
 
   useEffect(() => {
     const fetchData = async () => {
@@ -35,6 +33,7 @@ const Products = () => {
         const response = await axios.get("/data/products.json");
         console.log(response);
         setData(response.data);
+        setFilteredData(response.data); // Initially show all products
       } catch (error) {
         console.error("Error fetching data:", error);
       } finally {
@@ -44,6 +43,21 @@ const Products = () => {
 
     fetchData();
   }, []);
+
+  // Filter products based on search text
+  useEffect(() => {
+    if (searchText.trim() === "") {
+      setFilteredData(data); // If search is empty, show all products
+    } else {
+      const lowercasedSearchText = searchText.toLowerCase();
+      const filtered = data.filter(
+        (product) =>
+          product.product.toLowerCase().includes(lowercasedSearchText) ||
+          product.id.toString().includes(lowercasedSearchText) // You can filter by other fields too (e.g., product id)
+      );
+      setFilteredData(filtered);
+    }
+  }, [searchText, data]);
 
   const showDetailsModal = (product) => {
     setSelectedProduct(product);
@@ -92,16 +106,6 @@ const Products = () => {
       key: "price",
       render: (price) => `$${price}`,
     },
-    // {
-    //   title: "Category",
-    //   dataIndex: "category",
-    //   key: "category",
-    // },
-    // {
-    //   title: "Sub Category",
-    //   dataIndex: "subCategory",
-    //   key: "subCategory",
-    // },
     {
       title: "Quantity",
       dataIndex: "quantity",
@@ -188,6 +192,7 @@ const Products = () => {
     ];
 
     setData(allItems);
+    setFilteredData(allItems); // Update filtered data when new product is added
     setIsAddModalVisible(false);
   };
 
@@ -206,41 +211,28 @@ const Products = () => {
         <PlusOutlined />
         <p>Add Product</p>
       </Button>
+
       {/* Filters */}
-      <div className="flex justify-between bg-[#1b7443] text-white p-4 rounded-lg">
+      <div className="flex items-center justify-between bg-[#1b7443] text-white py-3 px-4 rounded-lg">
         <h2 className="text-xl font-semibold">Products List</h2>
         <div className="flex flex-col md:flex-row gap-5">
-          {/* <Search placeholder="Search User" /> */}
+          {/* Search Input */}
           <Input
             prefix={<IoSearchOutline />}
             className="px-2 py-2 rounded-md text-gray-400"
             type="text"
             placeholder="Search Product"
+            value={searchText}
+            onChange={(e) => setSearchText(e.target.value)} // Update searchText state
           />
 
+          {/* Download Button */}
           <button className="rounded-full bg-white w-10 h-10 md:w-14 flex items-center justify-center">
             <GrDownload className="text-4xl text-[#1B7443] p-2" />
           </button>
-          {/* <Select
-            placeholder="Sub Category"
-            className="w-full"
-            style={{ width: 300 }}
-          >
-            <Option value="black-coffee">Black Coffee</Option>
-            <Option value="hot-coffee">Hot Coffee</Option>
-            <Option value="cool-coffee">Cool Coffee</Option>
-          </Select>
-          <Select
-            placeholder="Category"
-            className="w-full"
-            style={{ width: 300 }}
-          >
-            <Option value="coffee">Coffee</Option>
-            <Option value="tea">Tea</Option>
-            <Option value="juice">Juice</Option>
-          </Select> */}
         </div>
       </div>
+
       {/* Product List Table */}
       <ConfigProvider
         theme={{
@@ -254,13 +246,14 @@ const Products = () => {
       >
         <Table
           columns={columns}
-          dataSource={data}
-          pagination={{ pageSize: 10 }}
+          dataSource={filteredData} // Use filteredData instead of data
+          pagination={{ pageSize: 8 }}
           loading={loading}
           rowKey="id"
           className="bg-white rounded-lg shadow-lg"
         />
       </ConfigProvider>
+
       <ConfigProvider
         theme={{
           components: {
@@ -297,9 +290,9 @@ const Products = () => {
             initialValues={selectedProduct}
             onSubmit={handleEditSubmit}
           />
-          {/* Pass selected record to edit */}
         </Modal>
-      </ConfigProvider>{" "}
+      </ConfigProvider>
+
       {selectedProduct && (
         <ProductDetailsModal
           visible={isModalVisible}
