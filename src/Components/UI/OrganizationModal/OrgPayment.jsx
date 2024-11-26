@@ -37,11 +37,18 @@ const OrgPayment = ({ visible, onClose, data }) => {
 
         <div className="p-6 ">
           <div className="gap-4">
-            <img
-              src={data.image || "../images/default.jpg"}
-              alt="Organization"
-              className="w-32 h-32 object-cover rounded-lg"
-            />
+            <div className="flex justify-between items-center mb-6">
+              <img
+                src={data.image}
+                alt="Event"
+                className="w-40 h-40 rounded-lg object-cover"
+              />
+              <div className="text-right">
+                <p className="text-red-600 font-semibold">
+                  Ending Date: {data.endDate}
+                </p>
+              </div>
+            </div>
             <div>
               <p className="text-lg font-semibold mt-4">
                 Organization Creator: Stiven Hoking
