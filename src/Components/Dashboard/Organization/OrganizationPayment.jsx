@@ -3,6 +3,7 @@ import { Button, ConfigProvider, Input, Table, Tag, Tooltip } from "antd";
 import axios from "axios";
 import { useEffect, useState } from "react";
 import { GrDownload } from "react-icons/gr";
+import OrgPayment from "../../UI/OrganizationModal/OrgPayment";
 import CheckPayoutModal from "../../UI/OrganizationPaymentModal/CheckPayoutModal"; // Import the CheckPayoutModal
 import DirectDepositModal from "../../UI/OrganizationPaymentModal/DirectDepositModal";
 import PayNowModal from "../../UI/OrganizationPaymentModal/PayNowModal";
@@ -17,6 +18,10 @@ const OrganizationPayment = () => {
   const [isActionVisible, setActionVisible] = useState(false);
   const [selectedAction, setSelectedAction] = useState(null);
 
+  // details modal state
+  const [isDetailsModalVisible, setIsDetailsModalVisible] = useState(false);
+  const [selectedDetailsRecord, setSelectedDetailsRecord] = useState(null);
+
   // Show actions modal
   const showActionsModal = (record) => {
     setSelectedAction(record); // Set the selected record
@@ -30,7 +35,7 @@ const OrganizationPayment = () => {
   };
 
   // Show detailed modal based on payout option or status
-  const showDetailsModal = (record) => {
+  const showDirectsModal = (record) => {
     setSelectedRecord(record);
     setIsModalVisible(true);
   };
@@ -38,6 +43,17 @@ const OrganizationPayment = () => {
   const closeModal = () => {
     setIsModalVisible(false);
     setSelectedRecord(null);
+  };
+
+  // show details modal
+  const showDetailsModal = (record) => {
+    setSelectedDetailsRecord(record); // Store the clicked record's data
+    setIsDetailsModalVisible(true); // Show the modal
+  };
+
+  const handleModalClose = () => {
+    setIsDetailsModalVisible(false); // Hide the modal
+    setSelectedDetailsRecord(null); // Clear the selected record
   };
 
   useEffect(() => {
@@ -92,12 +108,16 @@ const OrganizationPayment = () => {
     },
     {
       title: "Payout option",
+      dataIndex: "payoutOption",
       key: "payoutOption",
       render: (_, record) => (
         <Tag
-          color={record.payoutOption === "Check Payout" ? "red" : "#1b7443"}
-          className="px-3 py-1 rounded-lg cursor-pointer"
-          onClick={() => showDetailsModal(record)}
+          className={`px-3 py-1 rounded-lg cursor-pointer font-semibold ${
+            record.payoutOption === "Direct Deposit"
+              ? "bg-[#1b7443] text-white"
+              : "bg-[#B2DAC4] text-[#1b7443]"
+          }`}
+          onClick={() => showDirectsModal(record)}
         >
           {record.payoutOption}
         </Tag>
@@ -106,9 +126,13 @@ const OrganizationPayment = () => {
     {
       title: "Details",
       key: "details",
-      render: () => (
+      render: (_, record) => (
         <Tooltip title="View Details">
-          <Button icon={<EyeOutlined />} shape="circle" />
+          <Button
+            icon={<EyeOutlined />}
+            shape="circle"
+            onClick={() => showDetailsModal(record)}
+          />
         </Tooltip>
       ),
     },
@@ -167,6 +191,15 @@ const OrganizationPayment = () => {
           scroll={{ x: true }}
         />
       </ConfigProvider>
+
+      {/* details modal actions */}
+      {isDetailsModalVisible && selectedDetailsRecord && (
+        <OrgPayment
+          visible={isDetailsModalVisible}
+          onClose={handleModalClose}
+          data={selectedDetailsRecord}
+        />
+      )}
 
       {/* Show PayNowModal if selectedAction's status is "Pay Now" */}
       {selectedAction &&

@@ -1,6 +1,6 @@
 // RequestTable.js
 import { DeleteOutlined, EyeOutlined } from "@ant-design/icons";
-import { Button, ConfigProvider, Input, Table, Tooltip } from "antd";
+import { Button, ConfigProvider, Input, Table, Tag, Tooltip } from "antd";
 import axios from "axios";
 import { useEffect, useState } from "react";
 import { GrDownload } from "react-icons/gr";
@@ -70,6 +70,32 @@ const OrganizationRequest = () => {
       title: "Approve or Deny",
       dataIndex: "approve",
       key: "approve",
+      render: (approve) => {
+        let bgColor = "";
+        let color = "";
+        if (approve === "Approved") {
+          bgColor = "#DEF2E7";
+          color = "#1B7443";
+        } else {
+          bgColor = "#F1F2DE";
+          color = "#9FA800";
+        }
+
+        return (
+          <Tag
+            className="ml-4"
+            style={{
+              backgroundColor: bgColor,
+              border: "none",
+              color: color,
+              fontSize: "16px",
+              padding: "2px 8px",
+            }}
+          >
+            {approve}
+          </Tag>
+        );
+      },
     },
 
     {
@@ -81,7 +107,7 @@ const OrganizationRequest = () => {
             <Button
               icon={<EyeOutlined />}
               shape="circle"
-              className="mr-2"
+              className="-ml-4 mr-2"
               onClick={() => showDetailsModal(record)}
             />
           </Tooltip>

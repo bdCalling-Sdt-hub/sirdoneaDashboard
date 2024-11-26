@@ -1,28 +1,28 @@
 [
   {
     "id": "#1234",
-    "image": "/path/to/image.jpg",
+    "image": "/public/images/Change Picture.png",
     "eventName": "Super Offer",
     "name": "Josef Endrik",
-    "target": "600$",
+    "target": "$600",
     "percentage": "50%",
     "approve": "Approved"
   },
   {
     "id": "#1235",
-    "image": "/path/to/image.jpg",
+    "image": "/public/images/Change Picture.png",
     "eventName": "Dam e kom",
     "name": "Josef Endrik",
-    "target": "600$",
+    "target": "$600",
     "percentage": "50%",
     "approve": "Approved"
   },
   {
     "id": "#1236",
-    "image": "/path/to/image.jpg",
+    "image": "/public/images/Change Picture.png",
     "eventName": "Super Offer",
     "name": "Josef Endrik",
-    "target": "600$",
+    "target": "$600",
     "percentage": "50%",
     "approve": "Deny"
   }

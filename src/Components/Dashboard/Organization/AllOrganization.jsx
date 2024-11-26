@@ -64,6 +64,11 @@ const OrganizationTable = () => {
       key: "sells",
     },
     {
+      title: "Code",
+      dataIndex: "code",
+      key: "code",
+    },
+    {
       title: "Details",
       key: "details",
       render: (_, record) => (
