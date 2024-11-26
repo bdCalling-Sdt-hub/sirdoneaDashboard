@@ -26,6 +26,7 @@ const statusColors = {
 
 export default function Orders() {
   const [searchText, setSearchText] = useState("");
+  const [statusFilter, setStatusFilter] = useState(""); // New state for status filter
   const [data, setData] = useState([]);
   const [loading, setLoading] = useState(true);
   const [isViewModalVisible, setIsViewModalVisible] = useState(false);
@@ -35,7 +36,6 @@ export default function Orders() {
     const fetchData = async () => {
       try {
         const response = await axios.get("/data/orderData.json");
-        console.log(response);
         setData(response.data);
       } catch (error) {
         console.error("Error fetching data:", error);
@@ -47,11 +47,22 @@ export default function Orders() {
   }, []);
 
   const filteredData = useMemo(() => {
-    if (!searchText) return data;
-    return data.filter((item) =>
-      item.customerName.toLowerCase().includes(searchText.toLowerCase())
-    );
-  }, [data, searchText]);
+    let filtered = data;
+
+    // Filter by search text
+    if (searchText) {
+      filtered = filtered.filter((item) =>
+        item.customerName.toLowerCase().includes(searchText.toLowerCase())
+      );
+    }
+
+    // Filter by selected status
+    if (statusFilter) {
+      filtered = filtered.filter((item) => item.status === statusFilter);
+    }
+
+    return filtered;
+  }, [data, searchText, statusFilter]);
 
   const onSearch = (value) => setSearchText(value);
 
@@ -70,6 +81,10 @@ export default function Orders() {
 
   const handleCancel = () => {
     setIsViewModalVisible(false);
+  };
+
+  const handleStatusFilterChange = (value) => {
+    setStatusFilter(value); // Update the status filter
   };
 
   return (
@@ -102,6 +117,32 @@ export default function Orders() {
               color: "#010515",
             }}
           />
+        </ConfigProvider>
+
+        {/* Add Select for Status Filter */}
+        <ConfigProvider
+          theme={{
+            components: {
+              Select: {
+                optionSelectedBg: "rgb(27,116,67)",
+                optionSelectedColor: "rgba(255,255,255,0.88)",
+              },
+            },
+          }}
+        >
+          <Select
+            value={statusFilter}
+            onChange={handleStatusFilterChange}
+            placeholder="Filter by Status"
+            style={{ width: 200, marginLeft: 16 }}
+          >
+            <Select.Option value="">All</Select.Option>
+            {statuses.map((status) => (
+              <Select.Option key={status} value={status}>
+                {status}
+              </Select.Option>
+            ))}
+          </Select>
         </ConfigProvider>
       </div>
 
@@ -191,20 +232,10 @@ export default function Orders() {
             key="action"
             render={(_, record) => (
               <Tooltip title="View Details">
-                {/* <Button
-                  onClick={() => showViewModal(record)}
-                  style={{
-                    background: "white",
-                    border: "1px solid #013564",
-                    color: "#013564",
-                    width: "80px",
-                  }}
-                > */}
                 <AiOutlineEye
                   className="text-lg"
                   onClick={() => showViewModal(record)}
                 />
-                {/* </Button> */}
               </Tooltip>
             )}
           />
