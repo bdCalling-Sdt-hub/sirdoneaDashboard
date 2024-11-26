@@ -1,6 +1,7 @@
 [
   {
     "id": "#1234",
+    "image": "/public/images/Change Picture.png",
     "founderName": "Josef Endrik",
     "eventName": "Super offer",
     "endDate": "10-26-24",
@@ -13,6 +14,7 @@
   },
   {
     "id": "#1235",
+    "image": "/public/images/Change Picture.png",
     "founderName": "Josef Endrik",
     "eventName": "Dam e kom",
     "endDate": "10-10-24",
