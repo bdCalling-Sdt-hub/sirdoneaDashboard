@@ -70,7 +70,7 @@ export default function Earning() {
             data={data}
             loading={loading}
             showViewModal={showViewModal}
-            pageSize={12}
+            pageSize={8}
           />
         </div>
 
