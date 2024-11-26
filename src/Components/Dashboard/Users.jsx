@@ -4,6 +4,7 @@ import axios from "axios";
 import moment from "moment";
 import { useEffect, useMemo, useState } from "react";
 import { AiOutlineEye } from "react-icons/ai";
+import { GrDownload } from "react-icons/gr";
 import { AllIcons } from "../../../public/images/AllImages";
 export default function Users() {
   const [searchText, setSearchText] = useState("");
@@ -69,22 +70,27 @@ export default function Users() {
               },
             }}
           >
-            <Input
-              placeholder="Search User"
-              value={searchText}
-              onChange={(e) => onSearch(e.target.value)}
-              className="text-base font-semibold"
-              prefix={
-                <SearchOutlined className="text-[#2B4257] font-bold text-lg mr-2" />
-              }
-              style={{
-                width: 280,
-                padding: "8px 16px",
-                backgroundColor: "#F3F3F3",
-                border: "1px solid white",
-                color: "#010515",
-              }}
-            />
+            <div className="flex items-center justify-center gap-2">
+              <Input
+                placeholder="Search User"
+                value={searchText}
+                onChange={(e) => onSearch(e.target.value)}
+                className="text-base font-semibold"
+                prefix={
+                  <SearchOutlined className="text-[#2B4257] font-bold text-lg mr-2" />
+                }
+                style={{
+                  width: 280,
+                  padding: "8px 16px",
+                  backgroundColor: "#F3F3F3",
+                  border: "1px solid white",
+                  color: "#010515",
+                }}
+              />
+              <button className="rounded-full bg-white w-10 h-10 md:w-12 flex items-center justify-center">
+                <GrDownload className="text-4xl text-[#1B7443] p-2" />
+              </button>
+            </div>
           </ConfigProvider>
         </div>
 
@@ -109,12 +115,25 @@ export default function Users() {
           <Table
             dataSource={filteredData}
             loading={loading}
-            pagination={{ pageSize: 10 }}
+            pagination={{ pageSize: 6 }}
             rowKey="id"
             scroll={{ x: true }}
             className="mt-4 cursor-pointer"
           >
             <Table.Column title="SL ID" dataIndex="id" key="id" />
+            <Table.Column
+              title="Image"
+              dataIndex="image"
+              key="image"
+              render={(text, record) => (
+                <img
+                  src={record.image}
+                  alt="Image"
+                  style={{ width: 40, height: 40 }}
+                />
+              )}
+            />
+
             <Table.Column
               title="Full Name"
               dataIndex="userName"
@@ -181,7 +200,7 @@ export default function Users() {
             {currentRecord && (
               <div className="my-4 flex flex-col ">
                 <div className="flex items-center justify-center gap-5">
-                  <img src={currentRecord.avatar} />
+                  <img src={currentRecord.image} />
                 </div>
                 <p className="font-semibold mt-4 text-2xl text-[#FEBC60] text-center">
                   User Information
@@ -234,62 +253,6 @@ export default function Users() {
             )}
           </Modal>
         </ConfigProvider>
-
-        {/* Block Confirmation Modal */}
-        {/* <Modal
-        open={isBlockModalVisible}
-        onOk={handleBlock}
-        onCancel={handleCancel}
-        okText="Block"
-        cancelText="Cancel"
-        centered
-        footer={
-          <div className="flex justify-center gap-4 pb-4">
-            <Button onClick={handleCancel} style={{ background: "#ddd" }}>
-              Cancel
-            </Button>
-            <Button
-              type="primary"
-              style={{ background: "#013564" }}
-              onClick={handleBlock}
-            >
-              Block
-            </Button>
-          </div>
-        }
-      >
-        <p className="text-lg font-semibold pt-10 pb-4">
-          Are you sure you want to block this user?
-        </p>
-      </Modal> */}
-
-        {/* Delete Confirmation Modal */}
-        {/* <Modal
-        open={isDeleteModalVisible}
-        onOk={handleDelete}
-        onCancel={handleCancel}
-        okText="Delete"
-        cancelText="Cancel"
-        centered
-        footer={
-          <div className="flex justify-center gap-4 pb-4">
-            <Button onClick={handleCancel} style={{ background: "#ddd" }}>
-              Cancel
-            </Button>
-            <Button
-              type="primary"
-              style={{ background: "red" }}
-              onClick={handleDelete}
-            >
-              Delete
-            </Button>
-          </div>
-        }
-      >
-        <p className="text-lg font-semibold pt-10 pb-4">
-          Are you sure you want to delete this user?
-        </p>
-      </Modal> */}
       </div>
     </>
   );

@@ -6,10 +6,12 @@ import { GrDownload } from "react-icons/gr";
 import OrganizationDetails from "../../UI/OrganizationModal/OrgDetails";
 
 const OrganizationTable = () => {
-  const [data, setData] = useState([]);
+  const [data, setData] = useState([]); // All data from the API
+  const [filteredData, setFilteredData] = useState([]); // Data after applying the search filter
   const [loading, setLoading] = useState(true);
   const [isModalVisible, setIsModalVisible] = useState(false);
   const [selectedRecord, setSelectedRecord] = useState(null);
+  const [searchQuery, setSearchQuery] = useState(""); // State for managing the search input
 
   useEffect(() => {
     const fetchData = async () => {
@@ -17,6 +19,7 @@ const OrganizationTable = () => {
         const response = await axios.get("/public/data/organizationData.json"); // Adjust path if necessary
         console.log(response);
         setData(response.data);
+        setFilteredData(response.data); // Initially show all data
       } catch (error) {
         console.error("Error fetching data:", error);
       } finally {
@@ -42,7 +45,6 @@ const OrganizationTable = () => {
       dataIndex: "organization",
       key: "organization",
     },
-
     {
       title: "Start Date",
       dataIndex: "startDate",
@@ -95,6 +97,25 @@ const OrganizationTable = () => {
     },
   ];
 
+  // Handle the search input change
+  const handleSearch = (value) => {
+    setSearchQuery(value);
+
+    // Filter the data based on the search query
+    const filtered = data.filter((record) => {
+      // Convert all fields to lowercase to make the search case-insensitive
+      return (
+        record.name.toLowerCase().includes(value.toLowerCase()) ||
+        record.organization.toLowerCase().includes(value.toLowerCase()) ||
+        record.id.toString().includes(value.toLowerCase()) ||
+        record.target.toString().includes(value.toLowerCase()) ||
+        record.sells.toString().includes(value.toLowerCase())
+      );
+    });
+
+    setFilteredData(filtered); // Update the filtered data
+  };
+
   const handleDetailsClick = (record) => {
     setSelectedRecord(record); // Set the selected record data
     setIsModalVisible(true); // Open the modal
@@ -108,13 +129,15 @@ const OrganizationTable = () => {
   return (
     <div className="min-h-screen bg-white rounded-tr-lg">
       {/* Header and Search */}
-      <div className="bg-[#1b7443]  p-4 flex justify-between ">
+      <div className="bg-[#1b7443] p-4 flex justify-between">
         <h2 className="text-white text-lg font-semibold">All Organization</h2>
         <div className="flex items-center flex-col md:flex-row gap-5">
           <Input.Search
-            placeholder="Search User"
+            placeholder="Search..."
             className="w-64"
             style={{ borderRadius: "5px" }}
+            value={searchQuery}
+            onChange={(e) => handleSearch(e.target.value)} // Call the handleSearch on change
           />
           <button className="rounded-full bg-white w-10 h-10 md:w-10 flex items-center justify-center">
             <GrDownload className="text-4xl text-[#1B7443] p-2" />
@@ -143,7 +166,7 @@ const OrganizationTable = () => {
       >
         <Table
           columns={columns}
-          dataSource={data}
+          dataSource={filteredData} // Use filtered data here
           pagination={{ pageSize: 8 }}
           loading={loading}
           rowKey="id"

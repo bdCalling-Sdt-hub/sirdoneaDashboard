@@ -60,7 +60,7 @@ const OrganizationDetails = ({ visible, onClose, data }) => {
 
           <div className="text-[#1E1E1E99]">
             <p>
-              Event Overview: Host a “Tea Tasting Extravaganza” where attendees
+              Event Overview: Host a “Tea Tasting Extravaganza” where attendees
               can sample a variety of teas from around the world. This event can
               be held in a cozy café, a community center, or even a beautiful
               garden.

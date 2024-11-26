@@ -28,9 +28,8 @@ const SettingsOtpPage = () => {
             <p className="text-3xl lg:text-[40px] text-secondary-color font-medium mb-8">
               Verify OTP
             </p>
-            <p className="md:text-xl text-base-color">
-              To update your password, check email for OTP being sent. Enter it
-              in designated field to complete reset process.
+            <p className="md:text-xl text-[#3C3C4399]">
+              Please check your email. We have sent a code to contact @gmail.com
             </p>
           </div>
           <Form layout="vertical" className="bg-transparent w-full">
@@ -50,7 +49,7 @@ const SettingsOtpPage = () => {
               <p className=" text-base-color">Didn’t get OTP?</p>
               <Link
                 to="/settings/otp-page"
-                className="text-[#1B7443] hover:text-secondary-color underline"
+                className="text-[#1B7443] font-semibold hover:text-secondary-color underline"
               >
                 Resend
               </Link>

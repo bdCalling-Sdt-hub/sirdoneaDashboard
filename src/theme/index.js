@@ -66,5 +66,14 @@ export const mainTheme = {
       colorPrimary: "rgb(255,255,255)",
       colorPrimaryHover: "rgb(255,255,255)",
     },
+
+    InputTextArea: {
+      backgroundColor: "#e8f5e9", // Light green background (default state)
+      border: "none", // No border by default
+      borderRadius: "2px",
+      fontSize: "16px",
+      padding: "10px",
+      resize: "none", // Disable resizing
+    },
   },
 };

@@ -33,7 +33,7 @@ const AddProductForm = ({ onSubmit }) => {
   }, [mugItems, toteItems]);
 
   const handleAddTea = () => {
-    if (productName && teaOption && price && quantity) {
+    if (teaOption && price && quantity) {
       const teaItem = { productName, teaOption, price, quantity };
       setTeaItems([...teaItems, teaItem]);
       setProductName("");
@@ -47,7 +47,7 @@ const AddProductForm = ({ onSubmit }) => {
   };
 
   const handleAddTShirt = () => {
-    if (productName && colorInput && quantity && price) {
+    if (colorInput && quantity && price) {
       const tShirtItem = { productName, colorInput, price, quantity };
       setTShirtItems([...tShirtItems, tShirtItem]);
       setProductName("");
@@ -61,7 +61,10 @@ const AddProductForm = ({ onSubmit }) => {
   };
 
   const handleSubmit = () => {
-    // Prepare product data to send to parent component
+    if (!productName) {
+      message.error("Please enter a product name.");
+      return;
+    }
     const productData = {
       teaItems,
       tShirtItems,
@@ -368,7 +371,7 @@ const AddProductForm = ({ onSubmit }) => {
 
       <div className="mt-2">
         <label className="font-semibold">Cover Image</label>
-        <div className="flex flex-col items-center bg-gray-200">
+        <div className="flex flex-col items-center bg-gray-200 py-3 rounded-lg">
           <Upload className="" listType="picture-card">
             <div>
               <UploadOutlined />

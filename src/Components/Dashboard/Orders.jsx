@@ -26,6 +26,7 @@ const statusColors = {
 
 export default function Orders() {
   const [searchText, setSearchText] = useState("");
+  const [statusFilter, setStatusFilter] = useState(""); // New state for status filter
   const [data, setData] = useState([]);
   const [loading, setLoading] = useState(true);
   const [isViewModalVisible, setIsViewModalVisible] = useState(false);
@@ -35,7 +36,7 @@ export default function Orders() {
     const fetchData = async () => {
       try {
         const response = await axios.get("/data/orderData.json");
-        console.log(response);
+        console.log(response.data);
         setData(response.data);
       } catch (error) {
         console.error("Error fetching data:", error);
@@ -47,11 +48,22 @@ export default function Orders() {
   }, []);
 
   const filteredData = useMemo(() => {
-    if (!searchText) return data;
-    return data.filter((item) =>
-      item.customerName.toLowerCase().includes(searchText.toLowerCase())
-    );
-  }, [data, searchText]);
+    let filtered = data;
+
+    // Filter by search text
+    if (searchText) {
+      filtered = filtered.filter((item) =>
+        item.organizationName.toLowerCase().includes(searchText.toLowerCase())
+      );
+    }
+
+    // Filter by selected status
+    if (statusFilter) {
+      filtered = filtered.filter((item) => item.status === statusFilter);
+    }
+
+    return filtered;
+  }, [data, searchText, statusFilter]);
 
   const onSearch = (value) => setSearchText(value);
 
@@ -72,37 +84,63 @@ export default function Orders() {
     setIsViewModalVisible(false);
   };
 
+  const handleStatusFilterChange = (value) => {
+    setStatusFilter(value); // Update the status filter
+  };
+
   return (
     <div className="min-h-screen rounded-lg">
       <div className="flex items-center justify-between p-3 bg-[#1b7443] rounded">
         <h1 className="text-2xl font-bold text-white ">Orders List</h1>
-        <ConfigProvider
-          theme={{
-            components: {
-              Input: {
-                colorTextPlaceholder: "rgb(0, 0, 0, 0.5)",
-                colorBgContainer: "white",
+
+        <div className="flex items-center gap-2">
+          {/* Add Select for Status Filter */}
+          <ConfigProvider
+            theme={{
+              components: {
+                Select: {
+                  optionSelectedBg: "rgb(254,188,96)",
+                  optionActiveBg: "rgb(255,217,165)",
+                },
               },
-            },
-          }}
-        >
-          <Input
-            placeholder="Search Orders"
-            value={searchText}
-            onChange={(e) => onSearch(e.target.value)}
-            className="text-base font-semibold"
-            prefix={
-              <SearchOutlined className="text-[#2B4257] font-bold text-lg mr-2" />
-            }
-            style={{
-              width: 280,
-              padding: "8px 16px",
-              backgroundColor: "#F3F3F3",
-              border: "1px solid white",
-              color: "#010515",
             }}
-          />
-        </ConfigProvider>
+          >
+            <Select
+              value={statusFilter}
+              onChange={handleStatusFilterChange}
+              placeholder="Filter by Status"
+              className="w-44 h-10"
+              // style={{ width: 200, marginLeft: 16 }}
+            >
+              <Select.Option value="">All</Select.Option>
+              {statuses.map((status) => (
+                <Select.Option key={status} value={status}>
+                  {status}
+                </Select.Option>
+              ))}
+            </Select>
+          </ConfigProvider>
+          <ConfigProvider
+            theme={{
+              components: {
+                Input: {
+                  colorTextPlaceholder: "rgb(0, 0, 0, 0.3)",
+                  colorBgContainer: "white",
+                },
+              },
+            }}
+          >
+            <Input
+              placeholder="Search by Organization"
+              value={searchText}
+              onChange={(e) => onSearch(e.target.value)}
+              className="text-base font-semibold w-64 h-10 text-[#010515]"
+              prefix={
+                <SearchOutlined className="text-[#2B4257] font-bold text-lg mr-2" />
+              }
+            />
+          </ConfigProvider>
+        </div>
       </div>
 
       <ConfigProvider
@@ -122,7 +160,7 @@ export default function Orders() {
         <Table
           dataSource={filteredData}
           loading={loading}
-          pagination={{ pageSize: 10 }}
+          pagination={{ pageSize: 8 }}
           rowKey="orderId"
           scroll={{ x: true }}
         >
@@ -167,8 +205,8 @@ export default function Orders() {
                 theme={{
                   components: {
                     Select: {
-                      optionSelectedBg: "rgb(27,116,67)",
-                      optionSelectedColor: "rgba(255,255,255,0.88)",
+                      optionSelectedBg: "rgb(254,188,96)",
+                      optionActiveBg: "rgb(255,217,165)",
                     },
                   },
                 }}
@@ -191,20 +229,10 @@ export default function Orders() {
             key="action"
             render={(_, record) => (
               <Tooltip title="View Details">
-                {/* <Button
-                  onClick={() => showViewModal(record)}
-                  style={{
-                    background: "white",
-                    border: "1px solid #013564",
-                    color: "#013564",
-                    width: "80px",
-                  }}
-                > */}
                 <AiOutlineEye
                   className="text-lg"
                   onClick={() => showViewModal(record)}
                 />
-                {/* </Button> */}
               </Tooltip>
             )}
           />
@@ -225,7 +253,7 @@ export default function Orders() {
           title={
             <div className="pt-5 text-center bg-[#FFEFD9]">
               <h2 className="text-[#1b7443] text-3xl font-bold">
-                Order Details
+                Order&apos;s Details
               </h2>
             </div>
           }
@@ -237,33 +265,32 @@ export default function Orders() {
         >
           {currentRecord && (
             <div className="my-4">
-              <div className="flex justify-between">
+              <div className="flex justify-between leading-7">
                 <div>
                   <p>
-                    Order ID: <strong>#{currentRecord.orderId}</strong>
+                    <strong> Order ID: #</strong>
+                    {currentRecord.orderId}
                   </p>
                   <p>
-                    Customer: <strong>{currentRecord.customerName}</strong>
+                    <strong> Customer: </strong>
+                    {currentRecord.customerName}
                   </p>
                   <p>
-                    Payment Date:{" "}
-                    <strong>
-                      {" "}
-                      {moment(currentRecord.date).format("MM/DD/YYYY")}
-                    </strong>
+                    <strong> Payment Date: </strong>
+                    {moment(currentRecord.date).format("MM/DD/YYYY")}
                   </p>
                   <p>
-                    Organization Name:{" "}
-                    <strong> {currentRecord.organizationName}</strong>
+                    <strong>Organization Name: </strong>
+                    {currentRecord.organizationName}
                   </p>
                   <p>
-                    Order Status:{" "}
+                    <strong> Order Status: </strong>
                     <Tag color={statusColors[currentRecord.orderStatus]}>
                       {currentRecord.orderStatus}
                     </Tag>
                   </p>
                   <p>
-                    Location: <strong>{currentRecord.location}</strong>
+                    <strong>Location: </strong> {currentRecord.location}
                   </p>
                 </div>
                 <div>

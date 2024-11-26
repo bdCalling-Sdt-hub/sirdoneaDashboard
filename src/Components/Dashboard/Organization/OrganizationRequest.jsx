@@ -1,17 +1,92 @@
-// RequestTable.js
 import { DeleteOutlined, EyeOutlined } from "@ant-design/icons";
-import { Button, ConfigProvider, Input, Table, Tag, Tooltip } from "antd";
+import {
+  Button,
+  ConfigProvider,
+  Input,
+  Table,
+  Tag,
+  Tooltip,
+  Modal,
+} from "antd";
 import axios from "axios";
 import { useEffect, useState } from "react";
 import { GrDownload } from "react-icons/gr";
-import RequestDetailsModal from "../../UI/OrganizationModal/ReqDetailsModal";
+import ReasonModal from "../../UI/OrganizationModal/ReasonModal"; // ReasonModal component
+import RequestDetailsModal from "../../UI/OrganizationModal/ReqDetailsModal"; // RequestDetailsModal component
 
 const OrganizationRequest = () => {
-  const [data, setData] = useState([]);
+  const [data, setData] = useState([]); // Raw data
+  const [filteredData, setFilteredData] = useState([]); // Filtered data based on search
   const [loading, setLoading] = useState(true);
   const [isModalVisible, setIsModalVisible] = useState(false);
   const [selectedRecord, setSelectedRecord] = useState(null);
+  const [deleteVisible, setDeleteVisible] = useState(false);
+  const [reasonModalVisible, setReasonModalVisible] = useState(false); // Reason modal visibility
+  const [selectedDelete, setSelectedDelete] = useState(null);
+  const [searchTerm, setSearchTerm] = useState(""); // State for search term
 
+  // Fetching data
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const response = await axios.get("/data/requestData.json"); // Adjust path if necessary
+        setData(response.data);
+        setFilteredData(response.data); // Initially, show all data
+      } catch (error) {
+        console.error("Error fetching data:", error);
+      } finally {
+        setLoading(false);
+      }
+    };
+    fetchData();
+  }, []);
+
+  // Handle the search input change
+  const handleSearch = (value) => {
+    setSearchTerm(value);
+
+    if (value.trim() === "") {
+      setFilteredData(data); // Show all data if search is empty
+    } else {
+      // Filter data based on the search term (case-insensitive)
+      const lowercasedValue = value.toLowerCase();
+      const filtered = data.filter((record) => {
+        return (
+          record.eventName.toLowerCase().includes(lowercasedValue) ||
+          record.name.toLowerCase().includes(lowercasedValue) ||
+          record.target.toLowerCase().includes(lowercasedValue)
+        );
+      });
+      setFilteredData(filtered); // Update filtered data
+    }
+  };
+
+  // Open Delete Confirmation Modal
+  const handleDelete = (record) => {
+    setSelectedDelete(record); // Store the record to delete
+    setDeleteVisible(true); // Show delete confirmation modal
+  };
+
+  const handleDeleteClose = () => {
+    setDeleteVisible(false); // Close the delete modal
+    setSelectedDelete(null);
+  };
+
+  // Handle deletion confirmation
+  const handleConfirmDelete = () => {
+    // Close the delete modal
+    setDeleteVisible(false);
+    // Open the reason modal for deleting
+    setReasonModalVisible(true);
+  };
+
+  // Close Reason Modal
+  const handleReasonModalClose = () => {
+    setReasonModalVisible(false); // Close the reason modal
+    setSelectedDelete(null); // Reset selected record for deletion
+  };
+
+  // Show Details Modal
   const showDetailsModal = (record) => {
     setSelectedRecord(record);
     setIsModalVisible(true);
@@ -21,20 +96,6 @@ const OrganizationRequest = () => {
     setIsModalVisible(false);
     setSelectedRecord(null);
   };
-
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const response = await axios.get("/data/requestData.json"); // Adjust path if necessary
-        setData(response.data);
-      } catch (error) {
-        console.error("Error fetching data:", error);
-      } finally {
-        setLoading(false);
-      }
-    };
-    fetchData();
-  }, []);
 
   const columns = [
     {
@@ -65,7 +126,6 @@ const OrganizationRequest = () => {
       dataIndex: "target",
       key: "target",
     },
-
     {
       title: "Approve or Deny",
       dataIndex: "approve",
@@ -97,7 +157,6 @@ const OrganizationRequest = () => {
         );
       },
     },
-
     {
       title: "Action",
       key: "delete",
@@ -116,6 +175,7 @@ const OrganizationRequest = () => {
               icon={<DeleteOutlined />}
               shape="circle"
               className="text-red-500"
+              onClick={() => handleDelete(record)}
             />
           </Tooltip>
         </div>
@@ -124,15 +184,19 @@ const OrganizationRequest = () => {
   ];
 
   return (
-    <div className=" min-h-screen bg-[#FAF8F5]">
+    <div className="min-h-screen bg-[#FAF8F5]">
       {/* Header and Search */}
       <div className="bg-[#1b7443] rounded-t-lg p-4 flex justify-between items-center">
-        <h2 className="text-white text-lg font-semibold">Request</h2>
+        <h2 className="text-white text-lg font-semibold">
+          Organization Request
+        </h2>
         <div className="flex items-center flex-col md:flex-row gap-5">
           <Input.Search
             placeholder="Search User"
             className="w-64"
             style={{ borderRadius: "5px" }}
+            value={searchTerm} // Bind the search term state
+            onChange={(e) => handleSearch(e.target.value)} // Handle search input change
           />
           <button className="rounded-full bg-white w-10 h-10 md:w-10 flex items-center justify-center">
             <GrDownload className="text-4xl text-[#1B7443] p-2" />
@@ -155,7 +219,6 @@ const OrganizationRequest = () => {
               headerColor: "rgb(27,120,67)",
               headerSplitColor: "rgb(200,240,218)",
               fontWeightStrong: 500,
-
               cellFontSizeMD: 14,
               cellFontSizeLG: 18,
             },
@@ -164,7 +227,7 @@ const OrganizationRequest = () => {
       >
         <Table
           columns={columns}
-          dataSource={data}
+          dataSource={filteredData} // Display the filtered data
           pagination={{ pageSize: 8 }}
           loading={loading}
           rowKey="id"
@@ -173,6 +236,47 @@ const OrganizationRequest = () => {
         />
       </ConfigProvider>
 
+      <ConfigProvider
+        theme={{
+          components: {
+            Modal: {
+              contentBg: "rgb(255,239,217)",
+              headerBg: "rgb(255,239,217)",
+            },
+            Button: {
+              colorPrimary: "#1B7443",
+              colorPrimaryHover: "#3B6441",
+              colorPrimaryTextHover: "rgb(0,0,0)",
+              defaultBg: "#C8F0DA",
+              defaultHoverColor: "rgb(0,0,0)",
+              defaultHoverBorderColor: "rgb(0,0,0)",
+            },
+          },
+        }}
+      >
+        {/* Delete Confirmation Modal */}
+        <Modal
+          title="Confirm Deletion"
+          open={deleteVisible}
+          onCancel={handleDeleteClose}
+          onOk={handleConfirmDelete}
+          okText="Yes, Delete"
+          cancelText="Cancel"
+        >
+          <p>Are you sure you want to delete this record?</p>
+        </Modal>
+      </ConfigProvider>
+
+      {/* Reason Modal */}
+      {reasonModalVisible && (
+        <ReasonModal
+          visible={reasonModalVisible}
+          onClose={handleReasonModalClose}
+          data={selectedDelete}
+        />
+      )}
+
+      {/* Request Details Modal */}
       {selectedRecord && (
         <RequestDetailsModal
           visible={isModalVisible}

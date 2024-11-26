@@ -1,8 +1,6 @@
-import React from "react";
+
 import { ConfigProvider, Tooltip } from "antd";
 import {
-  CartesianGrid,
-  Legend,
   Line,
   LineChart,
   ReferenceLine,
