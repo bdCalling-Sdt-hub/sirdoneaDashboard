@@ -8,7 +8,10 @@ const SettingsChangePassword = () => {
     navigate("/signin");
   };
   return (
-    <div>
+    <>
+      <div className=" text-xl font-semibold">
+        <h2>Change Password</h2>
+      </div>
       <div className="container w-[90%] mx-auto min-h-[80vh] p-20 flex justify-center items-center">
         <div className="w-full lg:w-[70%]">
           <Form
@@ -50,7 +53,7 @@ const SettingsChangePassword = () => {
               />
             </Form.Item>
             <Typography.Title level={4} style={{ color: "#222222" }}>
-              Re-enter new Password
+              Confirm New Password
             </Typography.Title>
             <Form.Item
               name="reEnterPassword"
@@ -76,10 +79,10 @@ const SettingsChangePassword = () => {
                 className="py-2 px-3 text-xl bg-site-color border border-white text-base-color hover:bg-transparent hover:border-secoundary-color focus:bg-transparent focus:border-secoundary-color"
               />
             </Form.Item>
-            <div className="mt-10">
+            <div className="mt-10 text-right">
               <Link
                 to="/settings/forgot-password"
-                className="text-[#1B7443] text-lg !underline"
+                className="text-[#1B7443] text-lg"
               >
                 Forgot Password?
               </Link>
@@ -95,7 +98,7 @@ const SettingsChangePassword = () => {
           </Form>
         </div>
       </div>
-    </div>
+    </>
   );
 };
 

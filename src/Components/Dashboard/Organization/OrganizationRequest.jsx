@@ -1,12 +1,9 @@
 // RequestTable.js
-import { useState, useEffect } from "react";
-import { Table, Button, Input, Tooltip, ConfigProvider } from "antd";
-import {
-  EyeOutlined,
-  CheckCircleOutlined,
-  DeleteOutlined,
-} from "@ant-design/icons";
+import { DeleteOutlined, EyeOutlined } from "@ant-design/icons";
+import { Button, ConfigProvider, Input, Table, Tooltip } from "antd";
 import axios from "axios";
+import { useEffect, useState } from "react";
+import { GrDownload } from "react-icons/gr";
 import RequestDetailsModal from "../../UI/OrganizationModal/ReqDetailsModal";
 
 const OrganizationRequest = () => {
@@ -41,7 +38,7 @@ const OrganizationRequest = () => {
 
   const columns = [
     {
-      title: "S.ID",
+      title: "SL ID",
       dataIndex: "id",
       key: "id",
     },
@@ -54,7 +51,7 @@ const OrganizationRequest = () => {
       ),
     },
     {
-      title: "“Organization”",
+      title: "Organization",
       dataIndex: "eventName",
       key: "eventName",
     },
@@ -68,62 +65,53 @@ const OrganizationRequest = () => {
       dataIndex: "target",
       key: "target",
     },
-    // {
-    //   title: "Percentage",
-    //   dataIndex: "percentage",
-    //   key: "percentage",
-    // },
+
     {
-      title: "Details",
-      key: "details",
-      render: (_, record) => (
-        <Tooltip title="View Details">
-          <Button
-            icon={<EyeOutlined />}
-            shape="circle"
-            onClick={() => showDetailsModal(record)}
-          />
-        </Tooltip>
-      ),
-    },
-    {
-      title: "Approve",
+      title: "Approve or Deny",
+      dataIndex: "approve",
       key: "approve",
-      render: () => (
-        <Tooltip title="Approve">
-          <Button
-            icon={<CheckCircleOutlined />}
-            shape="circle"
-            className="text-green-800"
-          />
-        </Tooltip>
-      ),
     },
+
     {
-      title: "Delete",
+      title: "Action",
       key: "delete",
-      render: () => (
-        <Tooltip title="Delete">
-          <Button
-            icon={<DeleteOutlined />}
-            shape="circle"
-            className="text-red-500"
-          />
-        </Tooltip>
+      render: (_, record) => (
+        <div className="flex">
+          <Tooltip title="View Details">
+            <Button
+              icon={<EyeOutlined />}
+              shape="circle"
+              className="mr-2"
+              onClick={() => showDetailsModal(record)}
+            />
+          </Tooltip>
+          <Tooltip title="Delete">
+            <Button
+              icon={<DeleteOutlined />}
+              shape="circle"
+              className="text-red-500"
+            />
+          </Tooltip>
+        </div>
       ),
     },
   ];
 
   return (
-    <div className="p-4 min-h-screen bg-[#FAF8F5]">
+    <div className=" min-h-screen bg-[#FAF8F5]">
       {/* Header and Search */}
       <div className="bg-[#1b7443] rounded-t-lg p-4 flex justify-between items-center">
         <h2 className="text-white text-lg font-semibold">Request</h2>
-        <Input.Search
-          placeholder="Search User"
-          className="w-64"
-          style={{ borderRadius: "5px" }}
-        />
+        <div className="flex items-center flex-col md:flex-row gap-5">
+          <Input.Search
+            placeholder="Search User"
+            className="w-64"
+            style={{ borderRadius: "5px" }}
+          />
+          <button className="rounded-full bg-white w-10 h-10 md:w-10 flex items-center justify-center">
+            <GrDownload className="text-4xl text-[#1B7443] p-2" />
+          </button>
+        </div>
       </div>
 
       {/* Table with Custom Theme */}
@@ -131,8 +119,19 @@ const OrganizationRequest = () => {
         theme={{
           components: {
             Table: {
-              headerBg: "white",
-              headerColor: "rgb(27,116,67)",
+              bodySortBg: "rgb(204,148,148)",
+              borderColor: "#E7E7E7",
+              expandIconBg: "rgb(217,194,194)",
+              filterDropdownBg: "rgb(56,191,65)",
+              filterDropdownMenuBg: "rgb(206,111,111)",
+              fixedHeaderSortActiveBg: "rgb(129,78,78)",
+              headerBg: "#C8F0DA",
+              headerColor: "rgb(27,120,67)",
+              headerSplitColor: "rgb(200,240,218)",
+              fontWeightStrong: 500,
+
+              cellFontSizeMD: 14,
+              cellFontSizeLG: 18,
             },
           },
         }}
@@ -143,7 +142,8 @@ const OrganizationRequest = () => {
           pagination={{ pageSize: 8 }}
           loading={loading}
           rowKey="id"
-          className="bg-white rounded-b-lg shadow-lg"
+          className="bg-white rounded-b-lg shadow-lg mt-4"
+          scroll={{ x: true }}
         />
       </ConfigProvider>
 

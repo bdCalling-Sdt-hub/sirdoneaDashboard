@@ -5,7 +5,8 @@
     "eventName": "Super Offer",
     "name": "Josef Endrik",
     "target": "600$",
-    "percentage": "50%"
+    "percentage": "50%",
+    "approve": "Approved"
   },
   {
     "id": "#1235",
@@ -13,7 +14,8 @@
     "eventName": "Dam e kom",
     "name": "Josef Endrik",
     "target": "600$",
-    "percentage": "50%"
+    "percentage": "50%",
+    "approve": "Approved"
   },
   {
     "id": "#1236",
@@ -21,6 +23,7 @@
     "eventName": "Super Offer",
     "name": "Josef Endrik",
     "target": "600$",
-    "percentage": "50%"
+    "percentage": "50%",
+    "approve": "Deny"
   }
 ]

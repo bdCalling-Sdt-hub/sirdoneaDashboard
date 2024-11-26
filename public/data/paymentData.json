@@ -1,25 +1,26 @@
 [
-    {
-      "id": "#1234",
-      "founderName": "Josef Endrik",
-      "eventName": "Super offer",
-      "endDate": "10-26-24",
-      "target": "60.00$",
-      "sells": "70.00$",
-      "percentage": "50",
-      "payment": "20.00$",
-      "status": "Pay Now"
-    },
-    {
-      "id": "#1235",
-      "founderName": "Josef Endrik",
-      "eventName": "Dam e kom",
-      "endDate": "10-10-24",
-      "target": "60.00$",
-      "sells": "70.00$",
-      "percentage": "50",
-      "payment": "20.00$",
-      "status": "Completed"
-    }
-  ]
-  
+  {
+    "id": "#1234",
+    "founderName": "Josef Endrik",
+    "eventName": "Super offer",
+    "endDate": "10-26-24",
+    "target": "60.00$",
+    "sells": "70.00$",
+    "percentage": "50",
+    "payment": "20.00$",
+    "payoutOption": "Check Payout",
+    "status": "Pay Now"
+  },
+  {
+    "id": "#1235",
+    "founderName": "Josef Endrik",
+    "eventName": "Dam e kom",
+    "endDate": "10-10-24",
+    "target": "60.00$",
+    "sells": "70.00$",
+    "percentage": "50",
+    "payment": "20.00$",
+    "payoutOption": "Direct Deposit",
+    "status": "Completed"
+  }
+]

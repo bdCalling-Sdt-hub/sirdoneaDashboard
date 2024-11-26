@@ -1,10 +1,10 @@
-import { useState } from "react";
-import { Input, Button, Form, ConfigProvider, Select } from "antd";
 import {
   CalendarOutlined,
   EditOutlined,
   LeftOutlined,
 } from "@ant-design/icons";
+import { Button, ConfigProvider, Form, Input, Select } from "antd";
+import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 const countryCodes = [
   { label: "+1", value: "US", flag: "https://flagcdn.com/w320/us.png" },
@@ -53,8 +53,13 @@ const Profile = () => {
         </Button>
       </div>
       <div className="bg-white rounded-lg shadow-lg p-6 xl:mx-40">
-        <div className="flex items-center gap-20 mx-48">
+        <div className="flex items-center justify-between gap-20 mx-48">
           <div className="flex flex-col items-center">
+            <img
+              className="rounded-full"
+              src="https://i.ibb.co.com/xJdQCTG/download.jpg"
+              alt="pic"
+            />
             <h3 className="xl:text-lg font-bold">Admin</h3>
             <h2 className="text-xl lg:text-2xl font-bold">
               {profileData.fullName}
@@ -65,33 +70,68 @@ const Profile = () => {
               theme={{
                 components: {
                   Input: {
-                    colorTextPlaceholder: "rgba(255,255,255,0.7)",
+                    // colorTextPlaceholder: "rgba(255,255,255,0.7)",
                     hoverBg: "#B2DAC4",
                     activeBg: "#B2DAC4",
+                  },
+                  Select: {
+                    optionSelectedBg: "rgb(254,188,96)",
+                    optionActiveBg: "rgb(255,217,165)",
                   },
                 },
               }}
             >
               <Form layout="vertical">
-                <Form.Item
-                  label={
-                    <label
-                      style={{
-                        color: "black",
-                        fontWeight: "bold",
-                        fontSize: "18px",
-                      }}
+                <div className="grid grid-cols-2 gap-4">
+                  <div>
+                    <Form.Item
+                      label={
+                        <label
+                          htmlFor="firstName"
+                          style={{
+                            color: "black",
+                            fontWeight: "bold",
+                            fontSize: "18px",
+                          }}
+                        >
+                          First Name
+                        </label>
+                      }
                     >
-                      First Name
-                    </label>
-                  }
-                >
-                  <Input
-                    className="bg-[#B2DAC4] rounded-lg h-10 font-semibold w-96"
-                    value={profileData.fullName}
-                    readOnly
-                  />
-                </Form.Item>
+                      <Input
+                        id="firstName"
+                        placeholder="First Name"
+                        className="bg-[#B2DAC4] rounded-lg h-10 font-semibold w-full"
+                        value={profileData.firstName}
+                        readOnly
+                      />
+                    </Form.Item>
+                  </div>
+                  <div>
+                    <Form.Item
+                      label={
+                        <label
+                          htmlFor="lastName"
+                          style={{
+                            color: "black",
+                            fontWeight: "bold",
+                            fontSize: "18px",
+                          }}
+                        >
+                          Last Name
+                        </label>
+                      }
+                    >
+                      <Input
+                        id="lastName"
+                        placeholder="Last Name"
+                        className="bg-[#B2DAC4] rounded-lg h-10 font-semibold w-full"
+                        value={profileData.lastName}
+                        readOnly
+                      />
+                    </Form.Item>
+                  </div>
+                </div>
                 <Form.Item
                   label={
                     <label
@@ -106,7 +146,7 @@ const Profile = () => {
                   }
                 >
                   <Input
-                    className=" bg-[#B2DAC4] rounded-lg h-10 font-semibold w-96"
+                    className=" bg-[#B2DAC4] rounded-lg h-10 font-semibold w-full text-black"
                     value={profileData.email}
                     readOnly
                   />
@@ -114,44 +154,38 @@ const Profile = () => {
                 <div className="flex flex-col">
                   <Form.Item
                     label={
-                      <label
-                        style={{
-                          color: "black",
-                          fontWeight: "bold",
-                          fontSize: "18px",
-                        }}
-                      >
+                      <label className="text-black font-bold text-lg ">
                         Phone Number
                       </label>
                     }
+                    name="phoneCode"
                   >
                     <div className="flex gap-2">
                       <Select
-                        defaultValue={profileData.phoneCode}
-                        className="h-10"
-                        style={{ width: 120 }}
-                        open={false}
-                      >
-                        {countryCodes.map((country) => (
-                          <Select.Option
-                            key={country.value}
-                            value={country.value}
-                          >
-                            <img
-                              src={country.flag}
-                              alt={`${country.value} Flag`}
-                              className="w-5 h-3 inline-block mr-2"
-                            />
-                            {country.label}
-                          </Select.Option>
-                        ))}
-                      </Select>
-
-                      <Input
-                        className="bg-[#B2DAC4] rounded-lg h-10 font-semibold w-64"
-                        value={profileData.phoneNumber}
-                        readOnly
+                        style={{
+                          width: 150,
+                          height: "46px",
+                        }}
+                        options={countryCodes.map((country) => ({
+                          label: (
+                            <div className="flex items-center">
+                              <img
+                                src={country.flag}
+                                alt={`${country.value} Flag`}
+                                className="w-5 h-3 inline-block mr-2"
+                              />
+                              {country.label}
+                            </div>
+                          ),
+                          value: country.value,
+                        }))}
                       />
+                      <Form.Item name="phoneNumber" noStyle>
+                        <Input
+                          className="bg-[#B2DAC4] rounded-lg h-12 font-semibold"
+                          placeholder="Enter Phone Number"
+                        />
+                      </Form.Item>
                     </div>
                   </Form.Item>
                 </div>
@@ -169,7 +203,7 @@ const Profile = () => {
                   }
                 >
                   <Input
-                    className="bg-[#B2DAC4] rounded-lg h-10 font-semibold w-96"
+                    className="bg-[#B2DAC4] rounded-lg h-10 font-semibold w-full"
                     value={profileData.birthday}
                     prefix={
                       <div style={{ display: "flex", alignItems: "center" }}>
