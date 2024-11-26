@@ -161,9 +161,9 @@ const AddProductForm = ({ onSubmit }) => {
                   value={teaOption}
                   onChange={(value) => setTeaOption(value)}
                 >
-                  <Option value="green">Green</Option>
-                  <Option value="black">Black</Option>
-                  <Option value="herbal">Herbal</Option>
+                  <Option value="bagged">Bagged</Option>
+                  <Option value="loose">Loose Leaf</Option>
+                  {/* <Option value="herbal">Herbal</Option> */}
                 </Select>
               </ConfigProvider>
             </div>
@@ -249,13 +249,13 @@ const AddProductForm = ({ onSubmit }) => {
               >
                 <Select
                   placeholder="Select color"
-                  className="w-48 h-10"
+                  className="w-44 h-10"
                   value={colorInput}
                   onChange={(value) => setColorInput(value)}
                 >
-                  <Option value="red">Red</Option>
-                  <Option value="blue">Blue</Option>
-                  <Option value="black">Black</Option>
+                  <Option value="white">White</Option>
+                  <Option value="tan">Tan</Option>
+                  {/* <Option value="black">Black</Option> */}
                 </Select>
               </ConfigProvider>
             </div>
@@ -272,10 +272,13 @@ const AddProductForm = ({ onSubmit }) => {
                   },
                 }}
               >
-                <Select placeholder="Select size" className="w-48 h-10">
-                  <Option value="s">Small</Option>
-                  <Option value="m">Medium</Option>
-                  <Option value="l">Large</Option>
+                <Select placeholder="Select size" className="w-44 h-10">
+                  <Option value="small">Small</Option>
+                  <Option value="medium">Medium</Option>
+                  <Option value="large">Large</Option>
+                  <Option value="xl">XL</Option>
+                  <Option value="2xl">2XL</Option>
+                  <Option value="3xl">3XL</Option>
                 </Select>
               </ConfigProvider>
             </div>
@@ -295,7 +298,7 @@ const AddProductForm = ({ onSubmit }) => {
               <label className="font-semibold">Price</label>
               <Input
                 type="number"
-                className="w-28 h-10"
+                className="w-40 h-10"
                 placeholder="Enter price"
                 value={price}
                 onChange={(e) => setPrice(e.target.value)}

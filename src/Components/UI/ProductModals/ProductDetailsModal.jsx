@@ -51,7 +51,7 @@ const ProductDetailsModal = ({ visible, onClose, product }) => {
               <img
                 src={product.images[currentImageIndex]}
                 alt={product.name}
-                className="w-1/2 h-auto object-cover rounded-lg mx-4"
+                className="w-3/4 h-80 object-cover rounded-lg mx-4"
               />
             ) : (
               <div className="w-1/2 h-auto object-cover rounded-lg mx-4 text-center">
@@ -65,17 +65,27 @@ const ProductDetailsModal = ({ visible, onClose, product }) => {
               disabled={!product.images || product.images.length <= 1}
             />
           </div>
-          <div className="text-center">
-            <h2 className="text-xl font-semibold">{product.product}</h2>
-            <p className="text-xl font-bold bg-[#FFA500] text-black rounded-lg mx-auto py-2 w-40 mt-2">
-              Price: ${product.price}
-            </p>
+          <div className="text-start">
+            <h2 className="text-xl font-semibold">
+              Product: <span>{product.product}</span>
+            </h2>
+            <div className="">
+              <p className="text-xl font-bold text-[#1B7443] rounded-lg py-2 w-40 mt-2">
+                Price:
+              </p>
+              <p className="text-lg font-bold bg-[#FEBC60] text-white rounded-lg py-2 w-1/2 text-center mt-2">
+                Bag: ${product.price}
+              </p>
+              <p className="text-lg font-bold bg-[#FEBC60] text-white rounded-lg py-2 w-1/2 text-center mt-2">
+                Loose Leaf: ${product.price}
+              </p>
+            </div>
           </div>
-
+          {/* 
           <div className="flex justify-between mt-4 px-8">
             <div>
               <p className="font-semibold">
-                Category:{" "}
+                Category:
                 <span className="font-normal">{product.category}</span>
               </p>
             </div>
@@ -85,9 +95,9 @@ const ProductDetailsModal = ({ visible, onClose, product }) => {
                 <span className="font-normal">{product.subCategory}</span>
               </p>
             </div>
-          </div>
+          </div> */}
 
-          <div className="mt-4 px-8 text-gray-600 text-sm">
+          <div className="mt-4 text-gray-600 text-sm text-start">
             <p>{product.description}</p>
           </div>
 

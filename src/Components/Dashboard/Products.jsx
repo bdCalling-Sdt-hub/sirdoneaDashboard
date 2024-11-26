@@ -5,7 +5,7 @@ import {
   Input,
   Modal,
   Popover,
-  Select,
+  // Select,
   Switch,
   Table,
   Tooltip,
@@ -18,8 +18,8 @@ import AddProductForm from "../UI/ProductModals/CreateProduct";
 import EditProductForm from "../UI/ProductModals/EditProduct";
 import ProductDetailsModal from "../UI/ProductModals/ProductDetailsModal";
 
-const { Search } = Input;
-const { Option } = Select;
+// const { Search } = Input;
+// const { Option } = Select;
 
 const Products = () => {
   const [data, setData] = useState([]);
@@ -62,10 +62,23 @@ const Products = () => {
     },
     {
       title: "Image",
-      dataIndex: "image",
-      key: "image",
-      render: (image) => (
-        <img src={image} alt="Product" className="w-8 h-8 rounded-full" />
+      dataIndex: "images",
+      key: "images",
+      render: (images) => (
+        <div className="flex space-x-2">
+          {images && images.length > 0 ? (
+            images.map((image, index) => (
+              <img
+                key={index}
+                src={image}
+                alt={`Product Image ${index + 1}`}
+                className="size-8 rounded-full"
+              />
+            ))
+          ) : (
+            <span>No images</span>
+          )}
+        </div>
       ),
     },
     {
