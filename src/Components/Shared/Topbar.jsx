@@ -1,6 +1,7 @@
-import { BellFilled, BellOutlined, UserOutlined } from "@ant-design/icons";
+import { BellOutlined, UserOutlined } from "@ant-design/icons";
 import { Badge, ConfigProvider, Dropdown, Grid } from "antd";
 import { useEffect, useState } from "react";
+import { FaRegBell } from "react-icons/fa";
 import { GiHamburgerMenu } from "react-icons/gi";
 import { Link } from "react-router-dom";
 
@@ -61,15 +62,28 @@ const Topbar = ({ collapsed, setCollapsed }) => {
   const notificationMenu = (
     <div
       onClick={handleMenuClick}
-      className="w-64 p-4 bg-white rounded-lg shadow-md"
+      className="w-80 p-4 bg-white rounded-lg shadow-md"
     >
+      <div>
+        <h2 className="text-2xl font-semibold text-center text-[#1B7443]">
+          Notification
+        </h2>
+        <p className="text-end -mt-7 cursor-pointer">X</p>
+      </div>
+      <p className="border-b-[1px]  border-[#1B7443] py-2 mb-2"></p>
       {notifications.map((notification) => (
-        <div
-          key={notification.id}
-          className="flex gap-2 py-2 border-b last:border-b-0"
-        >
-          <BellFilled style={{ color: "#1B7443", fontSize: "20px" }} />
-          <div className="flex flex-col items-start">
+        <div key={notification.id} className="flex items-center gap-2 py-3 ">
+          <FaRegBell
+            // className="bg-[#B2DAC4] text-2xl"
+            style={{
+              backgroundColor: "#B2DAC4",
+              color: "#1B7443",
+              fontSize: "28px",
+              padding: "4px",
+              borderRadius: "20%",
+            }}
+          />
+          <div className="flex flex-col items-start justify-center">
             <p>{notification.message}</p>
             <p className="text-gray-400 text-sm">{notification.time}</p>
           </div>
