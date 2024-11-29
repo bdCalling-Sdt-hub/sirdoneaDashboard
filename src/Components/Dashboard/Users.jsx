@@ -88,7 +88,7 @@ export default function Users() {
                 }}
               />
               <button className="rounded-full bg-white w-10 h-10 md:w-10 flex items-center justify-center">
-                <GrDownload className="text-5xl text-[#1B7443] p-2" />
+                <GrDownload className="text-5xl text-[#1B7443] p-2 font-extrabold" />
               </button>
             </div>
           </ConfigProvider>
