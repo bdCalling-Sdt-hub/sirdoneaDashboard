@@ -120,7 +120,7 @@ export default function Orders() {
             </Select>
 
             <Input
-              placeholder="Search ser"
+              placeholder="Search User"
               value={searchText}
               onChange={(e) => onSearch(e.target.value)}
               className="text-base font-semibold"
@@ -136,7 +136,7 @@ export default function Orders() {
               }}
             />
 
-            <button className="rounded-full bg-white w-10 h-10 md:w-12 flex items-center justify-center">
+            <button className="rounded-full bg-white w-10 h-10 md:w-10 flex items-center justify-center">
               <GrDownload className="text-4xl text-[#1B7443] p-2" />
             </button>
           </div>
