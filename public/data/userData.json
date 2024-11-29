@@ -28,7 +28,7 @@
     "joiningDate": "2022-03-22",
     "email": "jane.smith@example.com",
     "productName": "Butterfly Pea Tea",
-    "quantity": "7",
+    "quantity": "17",
 
     "avatar": "../images/userImage.png",
     "gender": "Female",
@@ -48,7 +48,7 @@
 
     "email": "mike.johnson@example.com",
     "productName": "Butterfly Pea Tea",
-    "quantity": "17",
+    "quantity": "22",
     "avatar": "../images/userImage.png",
     "gender": "Male",
     "dateOfBirth": "1978-11-12",
@@ -67,7 +67,7 @@
 
     "email": "emily.davis@example.com",
     "productName": "Butterfly Pea Tea",
-    "quantity": "33",
+    "quantity": "75",
     "avatar": "../images/userImage.png",
     "gender": "Female",
     "dateOfBirth": "1992-09-18",
@@ -86,7 +86,7 @@
 
     "email": "chris.wilson@example.com",
     "productName": "Butterfly Pea Tea",
-    "quantity": "66",
+    "quantity": "96",
     "avatar": "../images/userImage.png",
     "gender": "Male",
     "dateOfBirth": "1989-03-05",

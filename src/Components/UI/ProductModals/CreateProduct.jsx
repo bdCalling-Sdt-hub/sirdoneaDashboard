@@ -17,7 +17,7 @@ const { Option } = Select;
 
 const AddProductForm = ({ onSubmit }) => {
   const [colorInput, setColorInput] = useState("");
-  const [productType, setProductType] = useState(null);
+  const [productType, setProductType] = useState("");
   const [teaOption, setTeaOption] = useState("");
   const [price, setPrice] = useState("");
   const [quantity, setQuantity] = useState("");
@@ -134,6 +134,7 @@ const AddProductForm = ({ onSubmit }) => {
             placeholder="Product Type"
             className="w-full h-10"
             onChange={(value) => setProductType(value)}
+            defaultValue="tea"
           >
             <Option value="tea">Tea</Option>
             <Option value="mug">Mug</Option>
@@ -145,7 +146,7 @@ const AddProductForm = ({ onSubmit }) => {
 
       {/* Conditional rendering based on product type */}
       {productType === "tea" && (
-        <div className="flex flex-col gap-2 my-4 ">
+        <div className="flex flex-col gap-2 my-4">
           <div>
             <label className="font-semibold">Product</label>
             <Input
@@ -159,27 +160,15 @@ const AddProductForm = ({ onSubmit }) => {
           <div className="flex items-center gap-3 my-2">
             <div className="flex flex-col">
               <label className="font-semibold">Options</label>
-              <ConfigProvider
-                theme={{
-                  components: {
-                    Select: {
-                      optionSelectedBg: "rgb(254,188,96)",
-                      optionActiveBg: "rgb(255,217,165)",
-                    },
-                  },
-                }}
+              <Select
+                placeholder="Select Options"
+                className="w-56 h-10"
+                value={teaOption}
+                onChange={(value) => setTeaOption(value)}
               >
-                <Select
-                  placeholder="Select Options"
-                  className="w-56 h-10"
-                  value={teaOption}
-                  onChange={(value) => setTeaOption(value)}
-                >
-                  <Option value="bagged">Bagged</Option>
-                  <Option value="loose">Loose Leaf</Option>
-                  {/* <Option value="herbal">Herbal</Option> */}
-                </Select>
-              </ConfigProvider>
+                <Option value="bagged">Bagged</Option>
+                <Option value="loose">Loose Leaf</Option>
+              </Select>
             </div>
             <div>
               <label className="font-semibold">Price</label>
@@ -265,16 +254,7 @@ const AddProductForm = ({ onSubmit }) => {
                   },
                 }}
               >
-                <Select
-                  placeholder="Select color"
-                  className="w-44 h-10"
-                  value={colorInput}
-                  onChange={(value) => setColorInput(value)}
-                >
-                  <Option value="white">White</Option>
-                  <Option value="tan">Tan</Option>
-                  {/* <Option value="black">Black</Option> */}
-                </Select>
+                <Input className="w-44 h-10"></Input>
               </ConfigProvider>
             </div>
 
@@ -394,7 +374,7 @@ const AddProductForm = ({ onSubmit }) => {
 
       <div className="mt-2">
         <label className="font-semibold">Cover Image</label>
-        <div className="flex flex-col items-center bg-gray-200">
+        <div className="flex flex-col items-center bg-gray-200 py-5">
           <Upload className="" listType="picture-card">
             <div>
               <UploadOutlined />

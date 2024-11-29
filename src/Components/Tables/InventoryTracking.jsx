@@ -41,7 +41,7 @@ const InventoryTracking = ({ data, loading, pageSize = 0 }) => {
       key: "quantity",
       render: (quantity) => {
         const color =
-          quantity > 10 ? "#0873FD" : quantity > 3 ? "#FF9500" : "#FF0909";
+          quantity > 75 ? "#0873FD" : quantity > 16 ? "#FF9500" : "#FF0909";
         return (
           <span className="ml-4" style={{ color }}>
             {quantity}

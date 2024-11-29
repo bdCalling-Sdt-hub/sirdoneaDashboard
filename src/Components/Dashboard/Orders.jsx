@@ -102,12 +102,12 @@ export default function Orders() {
             },
           }}
         >
-          <div className="flex items-center">
+          <div className="flex items-center gap-2">
             <Select
               style={{ width: 300 }}
               value={statusFilter}
               onChange={handleStatusFilterChange}
-              className="w-72 h-[44px] mr-8 border-none"
+              className="w-72 h-[44px] mr-6 border-none"
             >
               <Select.Option value="" disabled>
                 <span style={{ color: "gray" }}>Filter Status</span>
@@ -120,7 +120,7 @@ export default function Orders() {
             </Select>
 
             <Input
-              placeholder="Search Orders"
+              placeholder="Search ser"
               value={searchText}
               onChange={(e) => onSearch(e.target.value)}
               className="text-base font-semibold"
@@ -135,6 +135,10 @@ export default function Orders() {
                 color: "#010515",
               }}
             />
+
+            <button className="rounded-full bg-white w-10 h-10 md:w-12 flex items-center justify-center">
+              <GrDownload className="text-4xl text-[#1B7443] p-2" />
+            </button>
           </div>
         </ConfigProvider>
       </div>
