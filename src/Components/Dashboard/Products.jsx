@@ -23,6 +23,7 @@ import ProductDetailsModal from "../UI/ProductModals/ProductDetailsModal";
 
 const Products = () => {
   const [data, setData] = useState([]);
+  console.log(data);
   const [loading, setLoading] = useState(true);
   const [isAddModalVisible, setIsAddModalVisible] = useState(false);
   const [isEditModalVisible, setIsEditModalVisible] = useState(false);

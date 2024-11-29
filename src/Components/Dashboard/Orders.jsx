@@ -13,19 +13,21 @@ import moment from "moment";
 import { useEffect, useMemo, useState } from "react";
 import { AiOutlineEye } from "react-icons/ai";
 import { GrDownload } from "react-icons/gr";
+const { Option } = Select;
 
 const statuses = ["Pending", "Processing", "Shipped", "Delivered", "Canceled"];
 
 const statusColors = {
-  Pending: "orange",
-  Processing: "blue",
-  Shipped: "purple",
+  Pending: "#BB1CA9",
+  Processing: "#0C1020",
+  Shipped: "#DD8500",
   Delivered: "green",
   Canceled: "red",
 };
 
 export default function Orders() {
   const [searchText, setSearchText] = useState("");
+  const [statusFilter, setStatusFilter] = useState(""); // New state for status filter
   const [data, setData] = useState([]);
   const [loading, setLoading] = useState(true);
   const [isViewModalVisible, setIsViewModalVisible] = useState(false);
@@ -72,6 +74,10 @@ export default function Orders() {
     setIsViewModalVisible(false);
   };
 
+  const handleStatusFilterChange = (value) => {
+    setStatusFilter(value); // Update the status filter
+  };
+
   return (
     <div className="min-h-screen rounded-lg">
       <div className="flex items-center justify-between p-3 bg-[#1b7443] rounded">
@@ -85,23 +91,51 @@ export default function Orders() {
               },
             },
           }}
+        ></ConfigProvider>
+        <ConfigProvider
+          theme={{
+            components: {
+              Input: {
+                colorTextPlaceholder: "rgb(0, 0, 0, 0.3)",
+                colorBgContainer: "white",
+              },
+            },
+          }}
         >
-          <Input
-            placeholder="Search Orders"
-            value={searchText}
-            onChange={(e) => onSearch(e.target.value)}
-            className="text-base font-semibold"
-            prefix={
-              <SearchOutlined className="text-[#2B4257] font-bold text-lg mr-2" />
-            }
-            style={{
-              width: 280,
-              padding: "8px 16px",
-              backgroundColor: "#F3F3F3",
-              border: "1px solid white",
-              color: "#010515",
-            }}
-          />
+          <div className="flex items-center">
+            <Select
+              style={{ width: 300 }}
+              value={statusFilter}
+              onChange={handleStatusFilterChange}
+              className="w-72 h-[44px] mr-8 border-none"
+            >
+              <Select.Option value="" disabled>
+                <span style={{ color: "gray" }}>Filter Status</span>
+              </Select.Option>
+              {statuses.map((status) => (
+                <Select.Option key={status} value={status}>
+                  {status}
+                </Select.Option>
+              ))}
+            </Select>
+
+            <Input
+              placeholder="Search Orders"
+              value={searchText}
+              onChange={(e) => onSearch(e.target.value)}
+              className="text-base font-semibold"
+              prefix={
+                <SearchOutlined className="text-[#2B4257] font-bold text-lg mr-2" />
+              }
+              style={{
+                width: 280,
+                padding: "8px 16px",
+                backgroundColor: "#F3F3F3",
+                border: "1px solid white",
+                color: "#010515",
+              }}
+            />
+          </div>
         </ConfigProvider>
       </div>
 
@@ -115,6 +149,7 @@ export default function Orders() {
               borderColor: "rgb(73,72,72,0.1)",
               headerColor: "#1b7443",
               footerBg: "rgb(255,255,255)",
+              fontWeightStrong: 200,
             },
           },
         }}
@@ -141,7 +176,7 @@ export default function Orders() {
             title="Date"
             dataIndex="date"
             key="date"
-            render={(date) => moment(date).format("MM/DD/YYYY")}
+            render={(date) => moment(date).format("MMMM D, h:mm A")}
           />
           <Table.Column title="Items" dataIndex="totalItems" key="totalItems" />
           <Table.Column
@@ -155,7 +190,16 @@ export default function Orders() {
             dataIndex="status"
             key="status"
             render={(status) => (
-              <Tag color={statusColors[status] || "gray"}>{status}</Tag>
+              <Tag
+                style={{
+                  color: statusColors[status] || "blue",
+                  border: "none",
+                  fontSize: "18px",
+                  fontWeight: "500",
+                }}
+              >
+                {status}
+              </Tag>
             )}
           />
           <Table.Column
@@ -167,8 +211,8 @@ export default function Orders() {
                 theme={{
                   components: {
                     Select: {
-                      optionSelectedBg: "rgb(27,116,67)",
-                      optionSelectedColor: "rgba(255,255,255,0.88)",
+                      colorBgContainer: "rgb(178,218,196)",
+                      hoverBorderColor: "rgb(26,214,110)",
                     },
                   },
                 }}
@@ -180,7 +224,12 @@ export default function Orders() {
                     value: status,
                     label: status,
                   }))}
-                  style={{ width: 150 }}
+                  style={{
+                    width: 150,
+                    backgroundColor: "!black", // Sets the background color for the select box itself
+                    color: "white",
+                    zIndex: 1,
+                  }}
                 />
               </ConfigProvider>
             )}
@@ -257,9 +306,22 @@ export default function Orders() {
                   </p>
                   <p>
                     <strong> Order Status: </strong>
-                    <Tag color={statusColors[currentRecord.orderStatus]}>
-                      {currentRecord.orderStatus}
+                    <Tag
+                      style={{
+                        color: statusColors[status] || "blue",
+                        border: "none",
+                        fontSize: "16px",
+                        fontWeight: "500",
+                        backgroundColor: "transparent",
+                      }}
+                    >
+                      {currentRecord.status}
                     </Tag>
+                  </p>
+                  <p>
+                    <strong> Contact Number: </strong>
+
+                    {currentRecord.contactNumber}
                   </p>
                   <p>
                     <strong>Location: </strong> {currentRecord.location}

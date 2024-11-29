@@ -6,7 +6,7 @@
     "category": "Coffee",
     "subCategory": "Cloud Coffee",
     "description": "A rich and aromatic cappuccino with a strong coffee base and a creamy foam top, perfect for a quick pick-me-up.",
-    "images": ["/images/demoCup.png", "/images/demoCoffee.png"],
+    "images": ["/images/demoCup.png"],
     "quantity": 100
   },
   {
@@ -16,7 +16,7 @@
     "category": "Coffee",
     "subCategory": "Hot Coffee",
     "description": "Wake up to the bold and refreshing taste of our Morning Muse coffee, crafted to energize and inspire.",
-    "images": ["/images/demoCup.png", "/images/demoCoffee.png"],
+    "images": ["/images/demoCup.png"],
     "quantity": 150
   },
   {
@@ -26,7 +26,7 @@
     "category": "Coffee",
     "subCategory": "Espresso",
     "description": "A powerful and smooth espresso with a hint of chocolate notes, designed to awaken your senses.",
-    "images": ["/images/demoCup.png", "/images/demoCoffee.png"],
+    "images": ["/images/demoCup.png"],
     "quantity": 80
   },
   {
@@ -36,7 +36,7 @@
     "category": "Coffee",
     "subCategory": "Mocha",
     "description": "Indulge in the velvety blend of coffee and chocolate with our Mystic Mocha, topped with a touch of cream.",
-    "images": ["/images/demoCoffee.png", "/images/demoCup.png"],
+    "images": ["/images/demoCup.png"],
     "quantity": 60
   },
   {
@@ -46,7 +46,7 @@
     "category": "Tea",
     "subCategory": "Herbal Tea",
     "description": "A soothing herbal tea blend with calming chamomile and refreshing mint to start your day on a gentle note.",
-    "images": ["/images/demoCoffee.png", "/images/demoCup.png"],
+    "images": ["/images/demoCup.png"],
     "quantity": 120
   },
   {
@@ -56,7 +56,7 @@
     "category": "Coffee",
     "subCategory": "Black Coffee",
     "description": "Our classic black coffee is brewed to perfection, offering a bold flavor with no additives, just pure coffee goodness.",
-    "images": ["/images/demoCoffee.png", "/images/demoCup.png"],
+    "images": ["/images/demoCup.png"],
     "quantity": 200
   },
   {
@@ -66,7 +66,7 @@
     "category": "Tea",
     "subCategory": "Chai",
     "description": "A traditional chai tea blend with hints of cinnamon, cardamom, and ginger, perfect for cozy mornings.",
-    "images": ["/images/demoCoffee.png", "/images/demoCup.png"],
+    "images": ["/images/demoCup.png"],
     "quantity": 90
   },
   {
@@ -76,7 +76,7 @@
     "category": "Juice",
     "subCategory": "Smoothie",
     "description": "A refreshing berry smoothie packed with strawberries, blueberries, and raspberries, perfect for a summer day.",
-    "images": ["/images/demoCoffee.png", "/images/demoCup.png"],
+    "images": ["/images/demoCup.png"],
     "quantity": 70
   },
   {
@@ -86,7 +86,7 @@
     "category": "Juice",
     "subCategory": "Vegetable Juice",
     "description": "A nutrient-packed green juice with spinach, kale, and apple to give you a refreshing health boost.",
-    "images": ["/images/demoCoffee.png", "/images/demoCup.png"],
+    "images": ["/images/demoCup.png"],
     "quantity": 50
   },
   {
@@ -96,7 +96,7 @@
     "category": "Juice",
     "subCategory": "Fruit Juice",
     "description": "A tropical mix of mango, pineapple, and coconut, giving you a taste of paradise in every sip.",
-    "images": ["/images/demoCoffee.png", "/images/demoCup.png"],
+    "images": ["/images/demoCup.png"],
     "quantity": 85
   },
   {
@@ -106,7 +106,7 @@
     "category": "Tea",
     "subCategory": "Green Tea",
     "description": "A rejuvenating matcha green tea with a smooth and earthy flavor, perfect for mindful mornings.",
-    "images": ["/images/demoCoffee.png", "/images/demoCup.png"],
+    "images": ["/images/demoCup.png"],
     "quantity": 110
   },
   {
@@ -116,7 +116,7 @@
     "category": "Juice",
     "subCategory": "Specialty Drink",
     "description": "A calming blend of lavender and lemon for a refreshing twist on classic lemonade, ideal for relaxation.",
-    "images": ["/images/demoCoffee.png", "/images/demoCup.png"],
+    "images": ["/images/demoCup.png"],
     "quantity": 95
   }
 ]

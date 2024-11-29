@@ -27,3 +27,7 @@ input {
 .custom-modal-bg .ant-modal-content {
   background-color: rgb(159, 172, 172);
 }
+
+.ant-select:hover {
+  border: transparent !important; /* Prevent background color change on hover */
+}
