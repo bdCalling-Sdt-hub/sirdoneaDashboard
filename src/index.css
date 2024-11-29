@@ -28,6 +28,6 @@ input {
   background-color: rgb(159, 172, 172);
 }
 
-.ant-select:hover {
-  border: transparent !important; /* Prevent background color change on hover */
+.ant-select-selector {
+  border: none !important;
 }

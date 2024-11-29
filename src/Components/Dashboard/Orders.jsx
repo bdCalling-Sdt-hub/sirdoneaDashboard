@@ -212,7 +212,8 @@ export default function Orders() {
                   components: {
                     Select: {
                       colorBgContainer: "rgb(178,218,196)",
-                      hoverBorderColor: "rgb(26,214,110)",
+
+                      hoverBorderColor: "rgb(194,44,162)",
                     },
                   },
                 }}
