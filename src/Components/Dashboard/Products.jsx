@@ -209,7 +209,7 @@ const Products = () => {
       </Button>
       {/* Filters */}
       <div className="flex justify-between bg-[#1b7443] text-white p-4 rounded-lg">
-        <h2 className="text-xl font-semibold">Products List</h2>
+        <h2 className="text-xl font-semibold">Products Lis</h2>
         <div className="flex flex-col md:flex-row gap-5">
           {/* <Search placeholder="Search User" /> */}
           <Input

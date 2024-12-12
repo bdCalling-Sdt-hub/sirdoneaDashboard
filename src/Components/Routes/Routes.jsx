@@ -33,6 +33,7 @@ import SubCategory from "../Dashboard/Category/SubCategory";
 import OrganizationTable from "../Dashboard/Organization/AllOrganization";
 import OrganizationRequest from "../Dashboard/Organization/OrganizationRequest";
 import OrganizationPayment from "../Dashboard/Organization/OrganizationPayment";
+import Categories from "../Dashboard/Category";
 
 //
 
@@ -76,6 +77,10 @@ const router = createBrowserRouter([
           {
             path: "orders",
             element: <Orders />,
+          },
+          {
+           path:"categories",
+           element:<Categories/>
           },
           {
             path: "main-category",

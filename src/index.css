@@ -31,3 +31,18 @@ input {
 .ant-select-selector {
   border: none !important;
 }
+
+/* Targeting the popover content */
+.ant-popover .ant-popover-inner {
+  background: rgb(236, 224, 170) !important; /* Set your desired color */
+}
+
+
+.ant-upload.ant-upload-select {
+  border: 2px solid white !important;
+}
+
+
+.ant-modal-content{
+  background: rgb(236, 224, 170) !important;
+}
