@@ -78,7 +78,7 @@ const CategoryAdd = ({ onSubmit }) => {
                 </p>
               )}
               <Upload
-                className="absolute flex justify-center items-center gap-0"
+                className="absolute flex justify-center items-center"
                 listType="picture-card"
                 showUploadList={false}
                 onChange={handleUpload}
