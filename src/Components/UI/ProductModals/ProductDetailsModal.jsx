@@ -121,17 +121,6 @@ const ProductDetailsModal = ({ visible, onClose, product }) => {
             <h2 className="text-xl font-semibold">
               Product: <span>{product.product}</span>
             </h2>
-            {/* <div className="">
-              <p className="text-xl font-bold text-[#1B7443] rounded-lg py-2 w-40 mt-2">
-                Price:
-              </p>
-              <p className="text-lg font-bold bg-[#FEBC60] text-white rounded-lg py-2 w-1/2 text-center mt-2">
-                Bag: ${product.price}
-              </p>
-              <p className="text-lg font-bold bg-[#FEBC60] text-white rounded-lg py-2 w-1/2 text-center mt-2">
-                Loose Leaf: ${product.price}
-              </p>
-            </div> */}
 
             <div className="mt-4">
               <ConfigProvider

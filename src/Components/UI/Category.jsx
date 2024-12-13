@@ -1,19 +1,7 @@
 /* eslint-disable react/prop-types */
-import { PlusOutlined, UploadOutlined } from "@ant-design/icons";
-import {
-  Button,
-  ConfigProvider,
-  Input,
-  message,
-  Select,
-  Table,
-  Upload,
-} from "antd";
+import { Button, Input, Upload } from "antd";
 import { useEffect, useState } from "react";
-import { RiDeleteBin6Line } from "react-icons/ri";
-
-const { TextArea } = Input;
-const { Option } = Select;
+import { FaPlus } from "react-icons/fa";
 
 const CategoryAdd = ({ onSubmit }) => {
   const [colorInput, setColorInput] = useState("");
@@ -28,38 +16,20 @@ const CategoryAdd = ({ onSubmit }) => {
   const [tShirtItems, setTShirtItems] = useState([]);
   const [mugItems, setMugItems] = useState([]);
   const [toteItems, setToteItems] = useState([]);
+  const [imageUrl, setImageUrl] = useState(null);
 
   useEffect(() => {
     console.log("Mug Items:", mugItems);
     console.log("Tote Items:", toteItems);
   }, [mugItems, toteItems]);
 
-  const handleAddTea = () => {
-    if (productName && teaOption && price && quantity) {
-      const teaItem = { productName, teaOption, price, quantity };
-      setTeaItems([...teaItems, teaItem]);
-      setProductName("");
-      setTeaOption("");
-      setPrice("");
-      setQuantity("");
-      message.success("Tea item added successfully!");
-    } else {
-      message.error("Please fill all fields for Tea.");
-    }
-  };
-
-  const handleAddTShirt = () => {
-    if (productName && colorInput && quantity && price) {
-      const tShirtItem = { productName, colorInput, price, quantity, size };
-      setTShirtItems([...tShirtItems, tShirtItem]);
-      setProductName("");
-      setColorInput("");
-      setQuantity("");
-      setPrice("");
-      setSize("");
-      message.success("T-shirt item added successfully!");
-    } else {
-      message.error("Please fill all fields for T-shirt.");
+  const handleUpload = (info) => {
+    if (info.file.status === "done" || info.file.originFileObj) {
+      const reader = new FileReader();
+      reader.onload = () => {
+        setImageUrl(reader.result); // Set uploaded image
+      };
+      reader.readAsDataURL(info.file.originFileObj);
     }
   };
 
@@ -90,42 +60,58 @@ const CategoryAdd = ({ onSubmit }) => {
     setToteItems([]);
   };
 
- 
-
   return (
-    <div className="p-5 addProducts">
-   
-
-  
-
-      <div className="mt-2">
-        <div className="flex flex-col items-center bg-white py-5">
-          <Upload className="" listType="picture-card">
-            <div>
-              <UploadOutlined />
-              <div>Click to upload</div>
+    <div className="flex justify-center">
+      <div className="">
+        <div className="mt-2">
+          <div className="flex flex-col items-center justify-center ml-4 bg-white  py-5 h-[328px] w-[564px] rounded-sm">
+            <div className="relative w-[564px] h-[330px] rounded-sm  flex justify-center items-center">
+              {imageUrl ? (
+                <img
+                  src={imageUrl}
+                  alt="Uploaded"
+                  className="absolute w-full h-[338px]  object-cover rounded-sm"
+                />
+              ) : (
+                <p className="text-[#8E8E93] w-60 mt-24 text-xl text-center">
+                  Upload Image Here
+                </p>
+              )}
+              <Upload
+                className="absolute flex justify-center items-center gap-0"
+                listType="picture-card"
+                showUploadList={false}
+                onChange={handleUpload}
+              >
+                {imageUrl ? null : (
+                  <div className="bg-[#000000B2] text-white w-14 h-14 rounded-full flex justify-center items-center">
+                    <FaPlus className="text-5xl font-bold" />
+                  </div>
+                )}
+              </Upload>
             </div>
-          </Upload>
+          </div>
+        </div>
+
+        <div className="mt-4">
+          <label className="">Category Name</label>
+          <br />
+          <Input
+            className="placeholder:text-gray-500 w-[584px] border border-green-600"
+            placeholder="Enter category name"
+            rows={4}
+          />
+        </div>
+
+        <div className="text-center">
+          <Button
+            className="mt-6 h-12 w-80 bg-[#1b7443] text-white text-lg "
+            onClick={handleSubmit}
+          >
+            Save
+          </Button>
         </div>
       </div>
-
-    
-
-      <div className="mt-4">
-        <label className="font-semibold">Product Details</label>
-        <Input
-          className="placeholder:text-gray-500"
-          placeholder="Enter product details..."
-          rows={4}
-        />
-      </div>
-
-      <Button
-        className="mt-6 w-64 bg-[#1b7443] text-white h-12 text-lg mx-64"
-        onClick={handleSubmit}
-      >
-        Save
-      </Button>
     </div>
   );
 };

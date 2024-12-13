@@ -1,12 +1,19 @@
-import { EllipsisOutlined, EyeOutlined, PlusOutlined } from "@ant-design/icons";
-import { Button, ConfigProvider, Input, Modal, Popover, Switch, Table, Tooltip } from "antd";
+import { PlusOutlined } from "@ant-design/icons";
+import {
+  Button,
+  ConfigProvider,
+  Modal,
+  Popover,
+  Switch,
+  Table,
+  Tooltip,
+} from "antd";
 import axios from "axios";
 import { useEffect, useState } from "react";
-import AddProductForm from "../UI/ProductModals/CreateProduct";
-import ProductDetailsModal from "../UI/ProductModals/ProductDetailsModal";
 import { RiDeleteBin6Line } from "react-icons/ri";
 import { TbEdit } from "react-icons/tb";
 import CategoryAdd from "../UI/Category";
+import CategoryEditModal from "../UI/CategoryModal/CategoryEditModal";
 
 const Categories = () => {
   const [data, setData] = useState([]);
@@ -14,7 +21,7 @@ const Categories = () => {
   const [isAddModalVisible, setIsAddModalVisible] = useState(false);
   const [selectedProduct, setSelectedProduct] = useState(null);
   const [isModalVisible, setIsModalVisible] = useState(false);
-  const [popoverVisible, setPopoverVisible] = useState(null);  // Track popover visibility per record
+  const [popoverVisible, setPopoverVisible] = useState(null); // Track popover visibility per record
 
   // Fetching product data
   useEffect(() => {
@@ -41,11 +48,11 @@ const Categories = () => {
     // Remove the item from the state
     const updatedData = data.filter((item) => item.id !== record.id);
     setData(updatedData);
-    setPopoverVisible(null);  // Close the popover after delete
+    setPopoverVisible(null); // Close the popover after delete
   };
 
   const handleCancel = () => {
-    setPopoverVisible(null);  // Close the popover without making any changes
+    setPopoverVisible(null); // Close the popover without making any changes
   };
 
   const columns = [
@@ -81,6 +88,26 @@ const Categories = () => {
       key: "category",
     },
     {
+      title: "",
+      dataIndex: "",
+      key: "",
+    },
+    {
+      title: "",
+      dataIndex: "",
+      key: "",
+    },
+    {
+      title: "",
+      dataIndex: "",
+      key: "",
+    },
+    {
+      title: "",
+      dataIndex: "",
+      key: "",
+    },
+    {
       title: "Action",
       key: "action",
       render: (_, record) => (
@@ -96,10 +123,10 @@ const Categories = () => {
           <Popover
             content={
               <div className="px-4 py-6 rounded-lg">
-              <div className="text-xl font-thin">
-              <p >Do you want to delete this</p>
-              <p className="text-center">category?</p>
-              </div>
+                <div className="text-xl font-thin">
+                  <p>Do you want to delete this</p>
+                  <p className="text-center">category?</p>
+                </div>
                 <div className="flex justify-between mt-6">
                   <Button
                     onClick={handleCancel}
@@ -117,8 +144,10 @@ const Categories = () => {
               </div>
             }
             trigger="click"
-            visible={popoverVisible === record.id}  // Show popover only for the clicked record
-            onVisibleChange={(visible) => setPopoverVisible(visible ? record.id : null)}  // Track popover visibility
+            visible={popoverVisible === record.id} // Show popover only for the clicked record
+            onVisibleChange={(visible) =>
+              setPopoverVisible(visible ? record.id : null)
+            } // Track popover visibility
             placement="bottomRight"
           >
             <RiDeleteBin6Line className="cursor-pointer text-lg text-[#FF3B30]" />
@@ -140,13 +169,29 @@ const Categories = () => {
     <div className="px-2 min-h-screen">
       {/* Header */}
       <Button
-        className="flex items-center h-12 text-xl mb-4 bg-[#B2DAC4] p-4 rounded-lg w-full font-semibold"
+        className="flex items-center h-12 text-xl mb-4 bg-[#B2DAC4] p-4 rounded-lg w-full "
         onClick={handleOpenAddModal}
       >
         <PlusOutlined />
-        <p>Add Product</p>
+        <p>Add Category</p>
       </Button>
       {/* Product List Table */}
+
+      <div className=" bg-[#1b7443] p-3 rounded-t-lg">
+        <h1 className="text-2xl font-bold  text-white ">Category List</h1>
+        <ConfigProvider
+          theme={{
+            components: {
+              Input: {
+                colorTextPlaceholder: "rgb(0, 0, 0, 0.5)",
+                colorBgContainer: "white",
+              },
+            },
+          }}
+        >
+          <div className="flex items-center justify-center gap-2"></div>
+        </ConfigProvider>
+      </div>
       <ConfigProvider
         theme={{
           components: {
@@ -180,7 +225,7 @@ const Categories = () => {
 
       {/* Product Details Modal */}
       {selectedProduct && (
-        <ProductDetailsModal
+        <CategoryEditModal
           visible={isModalVisible}
           onClose={() => setIsModalVisible(false)}
           product={selectedProduct}

@@ -20,12 +20,8 @@ input {
 
 /* Override modal content background */
 .custom-modal .ant-modal-content {
-  background-color: rgb(255, 239, 217); /* Change the background color */
+  background-color: rgb(255, 239, 217);
   border-radius: 8px; /* Optional: Add border radius to modal content */
-}
-
-.custom-modal-bg .ant-modal-content {
-  background-color: rgb(159, 172, 172);
 }
 
 .ant-select-selector {
@@ -34,15 +30,20 @@ input {
 
 /* Targeting the popover content */
 .ant-popover .ant-popover-inner {
-  background: rgb(236, 224, 170) !important; /* Set your desired color */
+  background: #ffefd9;
 }
-
 
 .ant-upload.ant-upload-select {
-  border: 2px solid white !important;
+  border: none !important;
 }
 
+.ant-modal-content {
+  background: #ffefd9;
+  border: 1px solid #febc60;
+  width: 660px;
+}
 
-.ant-modal-content{
-  background: rgb(236, 224, 170) !important;
+.ant-modal .ant-modal-content {
+  position: relative;
+  background-color: #ffefd9;
 }
