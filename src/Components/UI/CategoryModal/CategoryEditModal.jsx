@@ -61,7 +61,7 @@ const CategoryEditModal = ({ visible, onClose, product }) => {
                   showUploadList={false}
                   onChange={handleUpload}
                 >
-                  <div className="bg-[#40C4FF] text-white w-10 h-10 rounded-full flex justify-center items-center">
+                  <div className="bg-[#40C4FF] text-white w-8 h-8 rounded-full flex justify-center items-center">
                     <MdModeEdit className="text-2xl font-bold" />
                   </div>
                 </Upload>

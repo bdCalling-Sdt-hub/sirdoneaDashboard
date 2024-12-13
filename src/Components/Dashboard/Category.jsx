@@ -83,6 +83,11 @@ const Categories = () => {
       ),
     },
     {
+      title: "",
+      dataIndex: "",
+      key: "",
+    },
+    {
       title: "Category",
       dataIndex: "category",
       key: "category",
@@ -108,7 +113,12 @@ const Categories = () => {
       key: "",
     },
     {
-      title: "Action",
+      title: "",
+      dataIndex: "",
+      key: "",
+    },
+    {
+      title: <span className="ml-6">Action</span>,
       key: "action",
       render: (_, record) => (
         <div className="flex items-center space-x-2">
@@ -122,21 +132,21 @@ const Categories = () => {
           </Tooltip>
           <Popover
             content={
-              <div className="px-4 py-6 rounded-lg">
+              <div className="px-4 py-6">
                 <div className="text-xl font-thin">
                   <p>Do you want to delete this</p>
                   <p className="text-center">category?</p>
                 </div>
-                <div className="flex justify-between mt-6">
+                <div className="flex justify-between mt-6 gap-3">
                   <Button
                     onClick={handleCancel}
-                    className="flex items-center space-x-2 bg-[#DDDDDD] "
+                    className="flex items-center space-x-2 bg-[#DDDDDD] w-28 font-semibold"
                   >
                     Cancel
                   </Button>
                   <Button
                     onClick={() => handleDelete(record)} // Pass the record for deletion
-                    className="flex items-center space-x-2 bg-[#FF3B30] text-white no-hover"
+                    className="flex items-center space-x-2 bg-[#FF3B30] text-white no-hover w-28 font-semibold"
                   >
                     Delete
                   </Button>

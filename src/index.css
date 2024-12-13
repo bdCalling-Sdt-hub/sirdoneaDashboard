@@ -31,6 +31,7 @@ input {
 /* Targeting the popover content */
 .ant-popover .ant-popover-inner {
   background: #ffefd9;
+  border-radius: 12px;
 }
 
 .ant-upload.ant-upload-select {
@@ -39,11 +40,16 @@ input {
 
 .ant-modal-content {
   background: #ffefd9;
-  border: 1px solid #febc60;
+
   width: 660px;
 }
 
 .ant-modal .ant-modal-content {
   position: relative;
   background-color: #ffefd9;
+}
+
+.ant-popover-content {
+  border: 1px solid #febc60;
+  border-radius: 12px;
 }
