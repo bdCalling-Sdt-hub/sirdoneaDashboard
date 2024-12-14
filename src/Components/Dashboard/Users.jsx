@@ -87,8 +87,8 @@ export default function Users() {
                   color: "#010515",
                 }}
               />
-              <button className="rounded-full bg-white w-10 h-10 md:w-12 flex items-center justify-center">
-                <GrDownload className="text-4xl text-[#1B7443] p-2" />
+              <button className="rounded-full bg-white w-10 h-10 md:w-10 flex items-center justify-center">
+                <GrDownload className="text-5xl text-[#1B7443] p-2 font-extrabold" />
               </button>
             </div>
           </ConfigProvider>

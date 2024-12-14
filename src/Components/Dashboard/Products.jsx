@@ -20,6 +20,7 @@ import ProductDetailsModal from "../UI/ProductModals/ProductDetailsModal";
 const Products = () => {
   const [data, setData] = useState([]); // All products
   const [filteredData, setFilteredData] = useState([]); // Filtered products based on search
+  console.log(data);
   const [loading, setLoading] = useState(true);
   const [isAddModalVisible, setIsAddModalVisible] = useState(false);
   const [isEditModalVisible, setIsEditModalVisible] = useState(false);

@@ -17,9 +17,9 @@ import { GrDownload } from "react-icons/gr";
 const statuses = ["Pending", "Processing", "Shipped", "Delivered", "Canceled"];
 
 const statusColors = {
-  Pending: "orange",
-  Processing: "blue",
-  Shipped: "purple",
+  Pending: "#BB1CA9",
+  Processing: "#0C1020",
+  Shipped: "#DD8500",
   Delivered: "green",
   Canceled: "red",
 };
@@ -153,6 +153,7 @@ export default function Orders() {
               borderColor: "rgb(73,72,72,0.1)",
               headerColor: "#1b7443",
               footerBg: "rgb(255,255,255)",
+              fontWeightStrong: 200,
             },
           },
         }}
@@ -179,7 +180,7 @@ export default function Orders() {
             title="Date"
             dataIndex="date"
             key="date"
-            render={(date) => moment(date).format("MM/DD/YYYY")}
+            render={(date) => moment(date).format("MMMM D, h:mm A")}
           />
           <Table.Column title="Items" dataIndex="totalItems" key="totalItems" />
           <Table.Column
@@ -193,7 +194,16 @@ export default function Orders() {
             dataIndex="status"
             key="status"
             render={(status) => (
-              <Tag color={statusColors[status] || "gray"}>{status}</Tag>
+              <Tag
+                style={{
+                  color: statusColors[status] || "blue",
+                  border: "none",
+                  fontSize: "18px",
+                  fontWeight: "500",
+                }}
+              >
+                {status}
+              </Tag>
             )}
           />
           <Table.Column
@@ -218,7 +228,12 @@ export default function Orders() {
                     value: status,
                     label: status,
                   }))}
-                  style={{ width: 150 }}
+                  style={{
+                    width: 150,
+                    backgroundColor: "!black", // Sets the background color for the select box itself
+                    color: "white",
+                    zIndex: 1,
+                  }}
                 />
               </ConfigProvider>
             )}
@@ -285,9 +300,22 @@ export default function Orders() {
                   </p>
                   <p>
                     <strong> Order Status: </strong>
-                    <Tag color={statusColors[currentRecord.orderStatus]}>
-                      {currentRecord.orderStatus}
+                    <Tag
+                      style={{
+                        color: statusColors[status] || "blue",
+                        border: "none",
+                        fontSize: "16px",
+                        fontWeight: "500",
+                        backgroundColor: "transparent",
+                      }}
+                    >
+                      {currentRecord.status}
                     </Tag>
+                  </p>
+                  <p>
+                    <strong> Contact Number: </strong>
+
+                    {currentRecord.contactNumber}
                   </p>
                   <p>
                     <strong>Location: </strong> {currentRecord.location}

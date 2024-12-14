@@ -35,25 +35,26 @@ const InventoryTracking = ({ data, loading, pageSize = 0 }) => {
       dataIndex: "productName",
       key: "productName",
     },
-    { title: "Quantity", dataIndex: "quantity", key: "quantity" },
+    {
+      title: "Quantity",
+      dataIndex: "quantity",
+      key: "quantity",
+      render: (quantity) => {
+        const color =
+          quantity > 75 ? "#0873FD" : quantity > 16 ? "#FF9500" : "#FF0909";
+        return (
+          <span className="ml-4" style={{ color }}>
+            {quantity}
+          </span>
+        );
+      },
+    },
 
     {
       title: "Join date",
       dataIndex: "joiningDate",
       key: "joiningDate",
     },
-
-    // {
-    //   title: "User Type",
-    //   dataIndex: "role", // assuming your data has a "userType" field
-    //   key: "userType",
-    //   filters: [
-    //     { text: "User", value: "user" },
-    //     { text: "Driver", value: "driver" },
-    //   ],
-    //   onFilter: (value, record) => record.role === value,
-    //   render: (role) => role.charAt(0).toUpperCase() + role.slice(1),
-    // },
   ];
   return (
     <div>

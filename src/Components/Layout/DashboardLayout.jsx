@@ -14,6 +14,7 @@ import { HiOutlineUserGroup } from "react-icons/hi";
 import { SlHandbag } from "react-icons/sl";
 import { Link, NavLink, Outlet, useLocation } from "react-router-dom";
 import { AllImages } from "../../../public/images/AllImages";
+import { BiCategoryAlt } from "react-icons/bi";
 
 const DashboardLayout = () => {
   const location = useLocation();
@@ -61,23 +62,12 @@ const DashboardLayout = () => {
       icon: <CgMenuCake />,
       label: <NavLink to="orders">Orders</NavLink>,
     },
-    // {
-    //   key: "categories",
-    //   icon: <BiCategoryAlt />,
-    //   label: <span className="text-base-color">Categories</span>,
-    //   children: [
-    //     {
-    //       key: "main-category",
-    //       icon: <span>&#8226;</span>,
-    //       label: <NavLink to="main-category">Main Category</NavLink>,
-    //     },
-    //     {
-    //       key: "sub-category",
-    //       icon: <span>&#8226;</span>,
-    //       label: <NavLink to="sub-category">Sub Category</NavLink>,
-    //     },
-    //   ],
-    // },
+    {
+      key: "categories",
+      icon: <BiCategoryAlt />,
+      label: <NavLink to="categories">Main Category</NavLink>,
+  
+    },
     {
       key: "products",
       icon: <SlHandbag />,

@@ -23,20 +23,18 @@ export const mainTheme = {
       colorPrimaryHover: "#2B4257",
     },
     Select: {
-      colorBgContainer: "rgba(0,0,0,0)",
       fontSize: 20,
       optionSelectedColor: "#FAFAFA",
       optionSelectedBg: "#2B4257",
       optionActiveBg: "#2B4257",
       optionActiveColor: "#FAFAFA",
-      colorBorder: "#FCC1BE",
       colorBgElevated: "#FAFAFA",
-      selectorBg: "#FAFAFA",
+
+      // selectorBg: "#FAFAFA",
       colorText: "#0C0C0C",
       colorTextPlaceholder: "rgb(0, 0, 0,0.5)",
       // activeOutlineColor: "#FCC1BE",
       // activeBorderColor: "#FCC1BE",
-      hoverBorderColor: "#FCC1BE",
     },
     DatePicker: {
       fontSize: 20,

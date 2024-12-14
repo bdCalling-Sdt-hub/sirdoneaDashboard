@@ -1,8 +1,8 @@
 /* eslint-disable react/prop-types */
 // ProductDetailsModal.js
-import { useState } from "react";
-import { Modal, Button, ConfigProvider } from "antd";
 import { LeftOutlined, RightOutlined } from "@ant-design/icons";
+import { Button, ConfigProvider, Modal, Table } from "antd";
+import { useState } from "react";
 
 const ProductDetailsModal = ({ visible, onClose, product }) => {
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
@@ -20,6 +20,51 @@ const ProductDetailsModal = ({ visible, onClose, product }) => {
       prevIndex === product.images.length - 1 ? 0 : prevIndex + 1
     );
   };
+
+  const tShirtColumns = [
+    {
+      title: "Option",
+      dataIndex: "option",
+      key: "option",
+      render: (text, record) => {
+        // record will contain the row data, which is the product
+        return (
+          <div className="flex items-center gap-1">
+            <p>{record.product}</p>{" "}
+            {/* Access product name or any other field in the record */}
+          </div>
+        );
+      },
+    },
+
+    {
+      title: "Price",
+      dataIndex: "price",
+      key: "price",
+      render: (text) => {
+        // 'text' is the value of the column ('price'), 'record' is the entire row data
+        return (
+          <div>
+            <p>${text}</p> {/* Use 'text' here to access the 'price' value */}
+          </div>
+        );
+      },
+    },
+
+    {
+      title: "Quantity",
+      dataIndex: "quantity",
+      key: "quantity",
+      render: (text) => {
+        // 'text' is the value of the column ('price'), 'record' is the entire row data
+        return (
+          <div>
+            <p>{text}</p> {/* Use 'text' here to access the 'price' value */}
+          </div>
+        );
+      },
+    },
+  ];
 
   return (
     <ConfigProvider
@@ -48,11 +93,18 @@ const ProductDetailsModal = ({ visible, onClose, product }) => {
               disabled={!product.images || product.images.length <= 1}
             />
             {product.images && product.images.length > 0 ? (
-              <img
-                src={product.images[currentImageIndex]}
-                alt={product.name}
-                className="w-3/4 h-80 object-cover rounded-lg mx-4"
-              />
+              <div className="flex">
+                <img
+                  src={product.images[currentImageIndex]}
+                  alt={product.name}
+                  className="w-2/4 h-64 object-cover rounded-lg mx-2"
+                />
+                <img
+                  src={product.images[currentImageIndex]}
+                  alt={product.name}
+                  className="w-2/4 h-64 object-cover rounded-lg mx-4"
+                />
+              </div>
             ) : (
               <div className="w-1/2 h-auto object-cover rounded-lg mx-4 text-center">
                 <p>No image available</p>
@@ -69,33 +121,29 @@ const ProductDetailsModal = ({ visible, onClose, product }) => {
             <h2 className="text-xl font-semibold">
               Product: <span>{product.product}</span>
             </h2>
-            <div className="">
-              <p className="text-xl font-bold text-[#1B7443] rounded-lg py-2 w-40 mt-2">
-                Price:
-              </p>
-              <p className="text-lg font-bold bg-[#FEBC60] text-white rounded-lg py-2 w-1/2 text-center mt-2">
-                Bag: ${product.price}
-              </p>
-              <p className="text-lg font-bold bg-[#FEBC60] text-white rounded-lg py-2 w-1/2 text-center mt-2">
-                Loose Leaf: ${product.price}
-              </p>
+
+            <div className="mt-4">
+              <ConfigProvider
+                theme={{
+                  components: {
+                    Table: {
+                      cellFontSize: 14,
+                      padding: 8,
+                      borderColor: "#fff",
+                      headerSplitColor: "#1B7443",
+                    },
+                  },
+                }}
+              >
+                <Table
+                  columns={tShirtColumns}
+                  dataSource={[product]}
+                  rowKey="productName"
+                  pagination={false}
+                />
+              </ConfigProvider>
             </div>
           </div>
-          {/* 
-          <div className="flex justify-between mt-4 px-8">
-            <div>
-              <p className="font-semibold">
-                Category:
-                <span className="font-normal">{product.category}</span>
-              </p>
-            </div>
-            <div>
-              <p className="font-semibold">
-                Sub-Category:{" "}
-                <span className="font-normal">{product.subCategory}</span>
-              </p>
-            </div>
-          </div> */}
 
           <div className="mt-4 text-gray-600 text-sm text-start">
             <p>{product.description}</p>

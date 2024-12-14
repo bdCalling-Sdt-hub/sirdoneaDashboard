@@ -1,0 +1,123 @@
+[
+    {
+      "id": "#1234",
+      "product": "Cloud 9 Cappuccino",
+      "price": "1.5-23",
+      "category": "Coffee",
+      "subCategory": "Cloud Coffee",
+      "description": "A rich and aromatic cappuccino with a strong coffee base and a creamy foam top, perfect for a quick pick-me-up.",
+      "images": ["/images/demoCup.png"],
+      "quantity": 100
+    },
+    {
+      "id": "#1235",
+      "product": "Morning Muse",
+      "price": "2.0-23",
+      "category": "Coffee",
+      "subCategory": "Hot Coffee",
+      "description": "Wake up to the bold and refreshing taste of our Morning Muse coffee, crafted to energize and inspire.",
+      "images": ["/images/demoCup.png"],
+      "quantity": 150
+    },
+    {
+      "id": "#1236",
+      "product": "Eclipse Espresso",
+      "price": "2.5-23",
+      "category": "Coffee",
+      "subCategory": "Espresso",
+      "description": "A powerful and smooth espresso with a hint of chocolate notes, designed to awaken your senses.",
+      "images": ["/images/demoCup.png"],
+      "quantity": 80
+    },
+    {
+      "id": "#1237",
+      "product": "Mystic Mocha",
+      "price": "3.0-23",
+      "category": "Coffee",
+      "subCategory": "Mocha",
+      "description": "Indulge in the velvety blend of coffee and chocolate with our Mystic Mocha, topped with a touch of cream.",
+      "images": ["/images/demoCup.png"],
+      "quantity": 60
+    },
+    {
+      "id": "#1238",
+      "product": "Sunrise Sips",
+      "price": "2.5-23",
+      "category": "Tea",
+      "subCategory": "Herbal Tea",
+      "description": "A soothing herbal tea blend with calming chamomile and refreshing mint to start your day on a gentle note.",
+      "images": ["/images/demoCup.png"],
+      "quantity": 120
+    },
+    {
+      "id": "#1239",
+      "product": "Black Hot Coffee",
+      "price": "1.8-23",
+      "category": "Coffee",
+      "subCategory": "Black Coffee",
+      "description": "Our classic black coffee is brewed to perfection, offering a bold flavor with no additives, just pure coffee goodness.",
+      "images": ["/images/demoCup.png"],
+      "quantity": 200
+    },
+    {
+      "id": "#1240",
+      "product": "Chai Bliss",
+      "price": "2.0-23",
+      "category": "Tea",
+      "subCategory": "Chai",
+      "description": "A traditional chai tea blend with hints of cinnamon, cardamom, and ginger, perfect for cozy mornings.",
+      "images": ["/images/demoCup.png"],
+      "quantity": 90
+    },
+    {
+      "id": "#1241",
+      "product": "Berry Breeze",
+      "price": "2.2-23",
+      "category": "Juice",
+      "subCategory": "Smoothie",
+      "description": "A refreshing berry smoothie packed with strawberries, blueberries, and raspberries, perfect for a summer day.",
+      "images": ["/images/demoCup.png"],
+      "quantity": 70
+    },
+    {
+      "id": "#1242",
+      "product": "Green Glow",
+      "price": "2.8-23",
+      "category": "Juice",
+      "subCategory": "Vegetable Juice",
+      "description": "A nutrient-packed green juice with spinach, kale, and apple to give you a refreshing health boost.",
+      "images": ["/images/demoCup.png"],
+      "quantity": 50
+    },
+    {
+      "id": "#1243",
+      "product": "Tropical Twist",
+      "price": "3.0-23",
+      "category": "Juice",
+      "subCategory": "Fruit Juice",
+      "description": "A tropical mix of mango, pineapple, and coconut, giving you a taste of paradise in every sip.",
+      "images": ["/images/demoCup.png"],
+      "quantity": 85
+    },
+    {
+      "id": "#1244",
+      "product": "Morning Matcha",
+      "price": "2.7-23",
+      "category": "Tea",
+      "subCategory": "Green Tea",
+      "description": "A rejuvenating matcha green tea with a smooth and earthy flavor, perfect for mindful mornings.",
+      "images": ["/images/demoCup.png"],
+      "quantity": 110
+    },
+    {
+      "id": "#1245",
+      "product": "Lavender Lemonade",
+      "price": "3.5-23",
+      "category": "Juice",
+      "subCategory": "Specialty Drink",
+      "description": "A calming blend of lavender and lemon for a refreshing twist on classic lemonade, ideal for relaxation.",
+      "images": ["/images/demoCup.png"],
+      "quantity": 95
+    }
+  ]
+  
