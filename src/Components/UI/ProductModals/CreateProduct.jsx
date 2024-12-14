@@ -1,26 +1,28 @@
 /* eslint-disable react/prop-types */
-import { useState, useEffect } from "react";
+import { PlusOutlined, UploadOutlined } from "@ant-design/icons";
 import {
-  Input,
-  Select,
   Button,
-  Upload,
   ConfigProvider,
+  Input,
   message,
+  Select,
   Table,
+  Upload,
 } from "antd";
-import { UploadOutlined, PlusOutlined } from "@ant-design/icons";
+import { useEffect, useState } from "react";
+import { RiDeleteBin6Line } from "react-icons/ri";
 
 const { TextArea } = Input;
 const { Option } = Select;
 
 const AddProductForm = ({ onSubmit }) => {
   const [colorInput, setColorInput] = useState("");
-  const [productType, setProductType] = useState(null);
+  const [productType, setProductType] = useState("");
   const [teaOption, setTeaOption] = useState("");
   const [price, setPrice] = useState("");
   const [quantity, setQuantity] = useState("");
   const [productName, setProductName] = useState("");
+  const [size, setSize] = useState("");
 
   const [teaItems, setTeaItems] = useState([]);
   const [tShirtItems, setTShirtItems] = useState([]);
@@ -48,12 +50,13 @@ const AddProductForm = ({ onSubmit }) => {
 
   const handleAddTShirt = () => {
     if (colorInput && quantity && price) {
-      const tShirtItem = { productName, colorInput, price, quantity };
+      const tShirtItem = { productName, colorInput, price, quantity, size };
       setTShirtItems([...tShirtItems, tShirtItem]);
       setProductName("");
       setColorInput("");
       setQuantity("");
       setPrice("");
+      setSize("");
       message.success("T-shirt item added successfully!");
     } else {
       message.error("Please fill all fields for T-shirt.");
@@ -102,8 +105,18 @@ const AddProductForm = ({ onSubmit }) => {
     // { title: "Product Name", dataIndex: "productName", key: "productName" },
     { title: "Color", dataIndex: "colorInput", key: "colorInput" },
     { title: "Size", dataIndex: "size", key: "size" },
-    { title: "Price", dataIndex: "price", key: "price" },
     { title: "Quantity", dataIndex: "quantity", key: "quantity" },
+    { title: "Price", dataIndex: "price", key: "price" },
+    {
+      title: "Delete",
+      dataIndex: "delete",
+      key: "delete",
+      render: () => (
+        <button>
+          <RiDeleteBin6Line className="text-[#FF3B30] ml-3" />
+        </button>
+      ),
+    },
   ];
 
   return (
@@ -119,10 +132,12 @@ const AddProductForm = ({ onSubmit }) => {
             },
           }}
         >
+          <span className="font-semibold"> Type</span>
           <Select
             placeholder="Product Type"
             className="w-full h-10"
             onChange={(value) => setProductType(value)}
+            defaultValue="tea"
           >
             <Option value="tea">Tea</Option>
             <Option value="mug">Mug</Option>
@@ -136,7 +151,7 @@ const AddProductForm = ({ onSubmit }) => {
       {productType === "tea" && (
         <div className="flex flex-col gap-2 my-4">
           <div>
-            <label className="font-semibold">Product Name</label>
+            <label className="font-semibold">Product</label>
             <Input
               className="h-10 text-lg placeholder:text-gray-500"
               placeholder="Enter tea name"
@@ -148,27 +163,15 @@ const AddProductForm = ({ onSubmit }) => {
           <div className="flex items-center gap-3 my-2">
             <div className="flex flex-col">
               <label className="font-semibold">Options</label>
-              <ConfigProvider
-                theme={{
-                  components: {
-                    Select: {
-                      optionSelectedBg: "rgb(254,188,96)",
-                      optionActiveBg: "rgb(255,217,165)",
-                    },
-                  },
-                }}
+              <Select
+                placeholder="Select Options"
+                className="w-56 h-10"
+                value={teaOption}
+                onChange={(value) => setTeaOption(value)}
               >
-                <Select
-                  placeholder="Select Options"
-                  className="w-56 h-10"
-                  value={teaOption}
-                  onChange={(value) => setTeaOption(value)}
-                >
-                  <Option value="bagged">Bagged</Option>
-                  <Option value="loose">Loose Leaf</Option>
-                  {/* <Option value="herbal">Herbal</Option> */}
-                </Select>
-              </ConfigProvider>
+                <Option value="bagged">Bagged</Option>
+                <Option value="loose">Loose Leaf</Option>
+              </Select>
             </div>
             <div>
               <label className="font-semibold">Price</label>
@@ -193,12 +196,14 @@ const AddProductForm = ({ onSubmit }) => {
             </div>
           </div>
 
-          <Button
-            className="w-20 bg-[#1b7443] text-white h-10 text-lg"
-            onClick={handleAddTea}
-          >
-            Add
-          </Button>
+          <div className="text-right">
+            <Button
+              className="w-20 bg-[#1b7443] text-white h-10 text-lg text-start"
+              onClick={handleAddTea}
+            >
+              Add
+            </Button>
+          </div>
 
           {teaItems.length > 0 && (
             <div className="mt-4">
@@ -209,6 +214,8 @@ const AddProductForm = ({ onSubmit }) => {
                     Table: {
                       cellFontSize: 14,
                       padding: 8,
+                      borderColor: "#fff",
+                      headerSplitColor: "#1B7443",
                     },
                   },
                 }}
@@ -228,7 +235,7 @@ const AddProductForm = ({ onSubmit }) => {
       {productType === "tShirt" && (
         <div className="flex flex-col gap-3 my-2">
           <div>
-            <label className="font-semibold">Product Name</label>
+            <label className="font-semibold">Product</label>
             <Input
               className="h-10"
               placeholder="Enter product name"
@@ -250,16 +257,7 @@ const AddProductForm = ({ onSubmit }) => {
                   },
                 }}
               >
-                <Select
-                  placeholder="Select color"
-                  className="w-44 h-10"
-                  value={colorInput}
-                  onChange={(value) => setColorInput(value)}
-                >
-                  <Option value="white">White</Option>
-                  <Option value="tan">Tan</Option>
-                  {/* <Option value="black">Black</Option> */}
-                </Select>
+                <Input className="w-44 h-10"></Input>
               </ConfigProvider>
             </div>
 
@@ -275,7 +273,12 @@ const AddProductForm = ({ onSubmit }) => {
                   },
                 }}
               >
-                <Select placeholder="Select size" className="w-44 h-10">
+                <Select
+                  placeholder="Select size"
+                  className="w-44 h-10"
+                  onChange={(value) => setSize(value)}
+                  value={size}
+                >
                   <Option value="small">Small</Option>
                   <Option value="medium">Medium</Option>
                   <Option value="large">Large</Option>
@@ -296,7 +299,6 @@ const AddProductForm = ({ onSubmit }) => {
                 onChange={(e) => setQuantity(e.target.value)}
               />
             </div>
-
             <div>
               <label className="font-semibold">Price</label>
               <Input
@@ -310,22 +312,26 @@ const AddProductForm = ({ onSubmit }) => {
             </div>
           </div>
 
-          <Button
-            className="w-20 bg-[#1b7443] text-white h-10 text-lg"
-            onClick={handleAddTShirt}
-          >
-            Add
-          </Button>
+          <div className="text-right">
+            <Button
+              className="w-20 bg-[#1b7443] text-white h-10 text-lg text-start"
+              onClick={handleAddTShirt}
+            >
+              Add
+            </Button>
+          </div>
 
           {tShirtItems.length > 0 && (
             <div className="mt-4">
-              <p className="font-semibold">Added T-Shirt Items</p>
+              {/* <p className="font-semibold">Added T-Shirt Items</p> */}
               <ConfigProvider
                 theme={{
                   components: {
                     Table: {
                       cellFontSize: 14,
                       padding: 8,
+                      borderColor: "#FFFFFF",
+                      headerSplitColor: "#1B7443",
                     },
                   },
                 }}
@@ -334,7 +340,7 @@ const AddProductForm = ({ onSubmit }) => {
                 <Table
                   columns={tShirtColumns}
                   dataSource={tShirtItems}
-                  rowKey="productName"
+                  rowKey="produc"
                   pagination={false}
                 />
               </ConfigProvider>
@@ -347,7 +353,7 @@ const AddProductForm = ({ onSubmit }) => {
       {(productType === "mug" || productType === "tote") && (
         <div className="flex flex-col gap-2 my-4">
           <div>
-            <label className="font-semibold">Product Name</label>
+            <label className="font-semibold">Product</label>
             <Input
               placeholder="Enter product name"
               className="h-10 placeholder:text-gray-500"
