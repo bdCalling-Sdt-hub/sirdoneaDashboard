@@ -128,6 +128,7 @@ const AddProductForm = ({ onSubmit }) => {
               Select: {
                 optionSelectedBg: "rgb(254,188,96)",
                 optionActiveBg: "rgb(255,217,165)",
+                fontSize: 14,
               },
             },
           }}
@@ -153,7 +154,7 @@ const AddProductForm = ({ onSubmit }) => {
           <div>
             <label className="font-semibold">Product</label>
             <Input
-              className="h-10 text-lg placeholder:text-gray-500"
+              className="h-10 placeholder:text-gray-500"
               placeholder="Enter tea name"
               value={productName}
               onChange={(e) => setProductName(e.target.value)}
@@ -163,15 +164,27 @@ const AddProductForm = ({ onSubmit }) => {
           <div className="flex items-center gap-3 my-2">
             <div className="flex flex-col">
               <label className="font-semibold">Options</label>
-              <Select
-                placeholder="Select Options"
-                className="w-56 h-10"
-                value={teaOption}
-                onChange={(value) => setTeaOption(value)}
+              <ConfigProvider
+                theme={{
+                  components: {
+                    Select: {
+                      optionSelectedBg: "rgb(254,188,96)",
+                      optionActiveBg: "rgb(255,217,165)",
+                      fontSize: 12,
+                    },
+                  },
+                }}
               >
-                <Option value="bagged">Bagged</Option>
-                <Option value="loose">Loose Leaf</Option>
-              </Select>
+                <Select
+                  placeholder="Select Options"
+                  className="w-56 h-10"
+                  value={teaOption}
+                  onChange={(value) => setTeaOption(value)}
+                >
+                  <Option value="bagged">Bagged</Option>
+                  <Option value="loose">Loose Leaf</Option>
+                </Select>
+              </ConfigProvider>
             </div>
             <div>
               <label className="font-semibold">Price</label>
@@ -247,35 +260,27 @@ const AddProductForm = ({ onSubmit }) => {
           <div className="flex items-center gap-3">
             <div>
               <label className="font-semibold">Color</label>
-              <ConfigProvider
-                theme={{
-                  components: {
-                    Select: {
-                      optionSelectedBg: "rgb(254,188,96)",
-                      optionActiveBg: "rgb(255,217,165)",
-                    },
-                  },
-                }}
-              >
-                <Input className="w-44 h-10"></Input>
+              <ConfigProvider>
+                <Input className="w-36 h-10"></Input>
               </ConfigProvider>
             </div>
 
             <div>
-              <label className="font-semibold">Size</label>{" "}
+              <label className="font-semibold">Size</label>
               <ConfigProvider
                 theme={{
                   components: {
                     Select: {
                       optionSelectedBg: "rgb(254,188,96)",
                       optionActiveBg: "rgb(255,217,165)",
+                      fontSize: 12,
                     },
                   },
                 }}
               >
                 <Select
                   placeholder="Select size"
-                  className="w-44 h-10"
+                  className="w-36 h-10"
                   onChange={(value) => setSize(value)}
                   value={size}
                 >
@@ -293,8 +298,8 @@ const AddProductForm = ({ onSubmit }) => {
               <label className="font-semibold">Quantity</label>
               <Input
                 type="number"
-                className="h-10 placeholder:text-gray-500"
-                placeholder="Enter quantity"
+                className="h-10 placeholder:text-gray-500 w-20"
+                // placeholder="Enter quantity"
                 value={quantity}
                 onChange={(e) => setQuantity(e.target.value)}
               />
@@ -336,11 +341,10 @@ const AddProductForm = ({ onSubmit }) => {
                   },
                 }}
               >
-                {" "}
                 <Table
                   columns={tShirtColumns}
                   dataSource={tShirtItems}
-                  rowKey="produc"
+                  rowKey="product"
                   pagination={false}
                 />
               </ConfigProvider>

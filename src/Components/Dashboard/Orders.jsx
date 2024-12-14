@@ -13,7 +13,6 @@ import moment from "moment";
 import { useEffect, useMemo, useState } from "react";
 import { AiOutlineEye } from "react-icons/ai";
 import { GrDownload } from "react-icons/gr";
-const { Option } = Select;
 
 const statuses = ["Pending", "Processing", "Shipped", "Delivered", "Canceled"];
 
@@ -27,7 +26,6 @@ const statusColors = {
 
 export default function Orders() {
   const [searchText, setSearchText] = useState("");
-  const [statusFilter, setStatusFilter] = useState(""); // New state for status filter
   const [statusFilter, setStatusFilter] = useState(""); // New state for status filter
   const [data, setData] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -90,72 +88,10 @@ export default function Orders() {
     setStatusFilter(value); // Update the status filter
   };
 
-  const handleStatusFilterChange = (value) => {
-    setStatusFilter(value); // Update the status filter
-  };
   return (
     <div className="min-h-screen rounded-lg">
       <div className="flex items-center justify-between p-3 bg-[#1b7443] rounded">
         <h1 className="text-2xl font-bold text-white ">Orders List</h1>
-        <ConfigProvider
-          theme={{
-            components: {
-              Input: {
-                colorTextPlaceholder: "rgb(0, 0, 0, 0.5)",
-                colorBgContainer: "white",
-              },
-            },
-          }}
-        ></ConfigProvider>
-        <ConfigProvider
-          theme={{
-            components: {
-              Input: {
-                colorTextPlaceholder: "rgb(0, 0, 0, 0.3)",
-                colorBgContainer: "white",
-              },
-            },
-          }}
-        >
-          <div className="flex items-center gap-2">
-            <Select
-              style={{ width: 300 }}
-              value={statusFilter}
-              onChange={handleStatusFilterChange}
-              className="w-72 h-[44px] mr-6 border-none"
-            >
-              <Select.Option value="" disabled>
-                <span style={{ color: "gray" }}>Filter Status</span>
-              </Select.Option>
-              {statuses.map((status) => (
-                <Select.Option key={status} value={status}>
-                  {status}
-                </Select.Option>
-              ))}
-            </Select>
-
-            <Input
-              placeholder="Search User"
-              value={searchText}
-              onChange={(e) => onSearch(e.target.value)}
-              className="text-base font-semibold"
-              prefix={
-                <SearchOutlined className="text-[#2B4257] font-bold text-lg mr-2" />
-              }
-              style={{
-                width: 280,
-                padding: "8px 16px",
-                backgroundColor: "#F3F3F3",
-                border: "1px solid white",
-                color: "#010515",
-              }}
-            />
-
-            <button className="rounded-full bg-white w-10 h-10 md:w-10 flex items-center justify-center">
-              <GrDownload className="text-4xl text-[#1B7443] p-2" />
-            </button>
-          </div>
-        </ConfigProvider>
 
         <div className="flex items-center gap-2">
           {/* Add Select for Status Filter */}
@@ -281,9 +217,6 @@ export default function Orders() {
                     Select: {
                       optionSelectedBg: "rgb(254,188,96)",
                       optionActiveBg: "rgb(255,217,165)",
-                      colorBgContainer: "rgb(178,218,196)",
-
-                      hoverBorderColor: "rgb(194,44,162)",
                     },
                   },
                 }}
