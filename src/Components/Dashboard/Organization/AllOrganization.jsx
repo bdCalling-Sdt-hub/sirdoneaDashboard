@@ -6,20 +6,20 @@ import { GrDownload } from "react-icons/gr";
 import OrganizationDetails from "../../UI/OrganizationModal/OrgDetails";
 
 const OrganizationTable = () => {
-  const [data, setData] = useState([]); // All data from the API
-  const [filteredData, setFilteredData] = useState([]); // Data after applying the search filter
+  const [data, setData] = useState([]);
+  const [filteredData, setFilteredData] = useState([]);
   const [loading, setLoading] = useState(true);
   const [isModalVisible, setIsModalVisible] = useState(false);
   const [selectedRecord, setSelectedRecord] = useState(null);
-  const [searchQuery, setSearchQuery] = useState(""); // State for managing the search input
+  const [searchQuery, setSearchQuery] = useState("");
 
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await axios.get("/public/data/organizationData.json"); // Adjust path if necessary
+        const response = await axios.get("/public/data/organizationData.json");
         console.log(response);
-        setData(response.data);
-        setFilteredData(response.data); // Initially show all data
+        setData(response?.data);
+        setFilteredData(response?.data);
       } catch (error) {
         console.error("Error fetching data:", error);
       } finally {
@@ -103,7 +103,6 @@ const OrganizationTable = () => {
 
     // Filter the data based on the search query
     const filtered = data.filter((record) => {
-      // Convert all fields to lowercase to make the search case-insensitive
       return (
         record.name.toLowerCase().includes(value.toLowerCase()) ||
         record.organization.toLowerCase().includes(value.toLowerCase()) ||
@@ -113,17 +112,17 @@ const OrganizationTable = () => {
       );
     });
 
-    setFilteredData(filtered); // Update the filtered data
+    setFilteredData(filtered);
   };
 
   const handleDetailsClick = (record) => {
-    setSelectedRecord(record); // Set the selected record data
-    setIsModalVisible(true); // Open the modal
+    setSelectedRecord(record);
+    setIsModalVisible(true);
   };
 
   const handleModalClose = () => {
     setIsModalVisible(false);
-    setSelectedRecord(null); // Reset the selected record
+    setSelectedRecord(null);
   };
 
   return (
@@ -137,7 +136,7 @@ const OrganizationTable = () => {
             className="w-64"
             style={{ borderRadius: "5px" }}
             value={searchQuery}
-            onChange={(e) => handleSearch(e.target.value)} // Call the handleSearch on change
+            onChange={(e) => handleSearch(e.target.value)}
           />
           <button className="rounded-full bg-white w-10 h-10 md:w-10 flex items-center justify-center">
             <GrDownload className="text-4xl text-[#1B7443] p-2" />
@@ -166,7 +165,7 @@ const OrganizationTable = () => {
       >
         <Table
           columns={columns}
-          dataSource={filteredData} // Use filtered data here
+          dataSource={filteredData}
           pagination={{ pageSize: 8 }}
           loading={loading}
           rowKey="id"
