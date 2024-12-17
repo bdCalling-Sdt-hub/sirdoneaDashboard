@@ -1,124 +1,106 @@
 /* eslint-disable react/prop-types */
 // EditProductForm.js
-import {
-  CloseOutlined,
-  PlusOutlined,
-  SaveOutlined,
-  UploadOutlined,
-} from "@ant-design/icons";
-import { Button, Input, Upload } from "antd";
-import { useEffect, useState } from "react";
+import { PlusOutlined, SaveOutlined, UploadOutlined } from "@ant-design/icons";
+import { Button, ConfigProvider, Input, message, Select, Upload } from "antd";
+import { Option } from "antd/es/mentions";
+import { useState } from "react";
 
 const { TextArea } = Input;
 // const { Option } = Select;
 
 const EditProductForm = ({ initialValues, onSubmit }) => {
-  const [colors, setColors] = useState(initialValues?.colors || []);
-  const [colorInput, setColorInput] = useState("");
-  const [colorPrice, setColorPrice] = useState("");
-  const [productDetails, setProductDetails] = useState({
-    category: initialValues.category || "",
-    subCategory: initialValues.subCategory || "",
-    productType: initialValues.productType || "",
-    price: initialValues.price || "",
-    size: initialValues.size || [],
-    coverImage: initialValues.coverImage || null,
-    details: initialValues.details || "",
-  });
+  console.log(initialValues);
 
-  useEffect(() => {
-    if (initialValues.colors) {
-      setColors(initialValues.colors);
+  // State for managing form fields
+  const [productName, setProductName] = useState(
+    initialValues?.product || ""
+  );
+  const [teaOption, setTeaOption] = useState(initialValues?.option || "");
+  const [category, setCategory] = useState(initialValues?.category || "");
+  const [size, setSize] = useState(initialValues?.category || "");
+  const [price, setPrice] = useState(initialValues?.price || "");
+  const [quantity, setQuantity] = useState(initialValues?.quantity || 1);
+  const [images, setImages] = useState(initialValues?.images || []);
+  const [coverImage, setCoverImage] = useState(
+    initialValues?.coverImage || null
+  );
+  const [details, setDetails] = useState(initialValues?.description || "");
+
+  // Handle cover image change
+  const handleCoverImageChange = (info) => {
+    console.log(info);
+    if (info.file) {
+      setCoverImage(info.file.originFileObj);
+      message.success("Cover image uploaded successfully");
+    } else {
+      message.error("Cover image upload failed");
     }
-  }, [initialValues]);
+  };
 
-  const handleAddColor = () => {
-    if (colorInput && colorPrice && !colors.includes(colorInput, colorPrice)) {
-      setColors([...colors, colorInput, colorPrice]);
-      setColorPrice("");
-      setColorInput("");
+  const handleImagesChange = (info) => {
+    if (info && info.file) {
+      if (info.file.status === "done") {
+        setImages((prevImages) => [...prevImages, info.file.originFileObj]);
+      } else if (info.file.status === "error") {
+        message.error("Image upload failed");
+      }
     }
   };
 
-  const handleRemoveColor = (color) => {
-    setColors(colors.filter((c) => c !== color));
-  };
-
-  const handleChange = (field, value) => {
-    setProductDetails((prev) => ({ ...prev, [field]: value }));
-  };
-
+  // Handle form submission
   const handleSubmit = () => {
-    onSubmit({ ...productDetails, colors });
+    // if (
+    //   !productName ||
+    //   !teaOption ||
+    //   !price ||
+    //   !quantity ||
+    //   !coverImage ||
+    //   !details
+    // ) {
+    //   message.error("Please fill all the fields.");
+    //   return;
+    // }
+
+    // Prepare form data
+    const formData = {
+      productName,
+      teaOption,
+      price,
+      quantity,
+      images,
+      coverImage,
+      details,
+    };
+
+    // Call the onSave prop (or API call)
+    onSubmit(formData);
+
+    console.log(formData);
+
+    // Reset form fields
+    setProductName("");
+    setTeaOption("");
+    setPrice("");
+    setQuantity(1);
+    setImages([]);
+    setCoverImage(null);
+    setDetails("");
+
+    message.success("Product saved successfully!");
   };
 
   return (
     <div className="p-5 bg-[#FFEFD9]">
-      {/* Category and Sub Category */}
-      {/* <div className="grid grid-cols-2 gap-4">
-        <Select
-          placeholder="Category"
-          value={productDetails.category}
-          onChange={(value) => handleChange("category", value)}
-          className="w-full h-10"
-        >
-          <Option value="coffee">Coffee</Option>
-          <Option value="tea">Tea</Option>
-          <Option value="juice">Juice</Option>
-        </Select>
-        <Select
-          placeholder="Sub Category"
-          value={productDetails.subCategory}
-          onChange={(value) => handleChange("subCategory", value)}
-          className="w-full h-10"
-        >
-          <Option value="black-coffee">Black Coffee</Option>
-          <Option value="hot-coffee">Hot Coffee</Option>
-        </Select>
-      </div> */}
-      <h1 className="font-semibold">Product</h1>
+      {/* <h1 className="font-semibold">Product</h1>
       <Input
-        placeholder="Capichino black hot coffee"
-        value={productDetails.productType}
+        value={productDetails.productName}
         onChange={(e) => handleChange("productType", e.target.value)}
         className="w-full h-10 my-2"
-      />
-      {/* Product Type and Price */}
-      {/* <div className="flex gap-5 mt-2">
-        <Input
-          placeholder="Product Price"
-          type="number"
-          value={productDetails.price}
-          onChange={(e) => handleChange("price", e.target.value)}
-          className="w-56 h-10 mb-4"
-        />{" "}
-        <div className="flex items-center space-x-2 mb-4">
-          <span>
-            Product Size <span className="text-gray-400">(Optional)</span>:
-          </span>
-          {["S", "M", "L", "XL", "XXL"].map((size) => (
-            <Checkbox
-              key={size}
-              checked={productDetails.size.includes(size)}
-              onChange={(e) => {
-                const newSize = e.target.checked
-                  ? [...productDetails.size, size]
-                  : productDetails.size.filter((s) => s !== size);
-                handleChange("size", newSize);
-              }}
-            >
-              {size}
-            </Checkbox>
-          ))}
-        </div>
-      </div> */}
+      /> */}
 
       <div className="">
-        {/* Cover Image */}
-
-        {/* Colors Section */}
         <div className="mt-4">
-          <div className="grid  lg:grid-cols-3 gap-12">
+          {/* <div className="flex gap-2">
             <div>
               <h1 className="font-bold">Option</h1>
               <Input
@@ -133,57 +115,296 @@ const EditProductForm = ({ initialValues, onSubmit }) => {
               <Input
                 value={colorPrice}
                 onChange={(e) => setColorPrice(e.target.value)}
-                className="w-60 h-10"
+                className="w-40 h-10"
+                type="number"
               />
             </div>
 
             <div className="mt-6">
               <Button
-                className="bg-[#B2DAC4] text-[#1b7743] h-10"
-                style={{ width: "200px" }}
+                className="bg-[#B2DAC4] text-[#164b2d] h-10 font-semibold"
+                style={{ width: "150px" }}
                 onClick={handleAddColor}
               >
                 Add
               </Button>
             </div>
-          </div>
-          <div className="flex flex-wrap gap-2 mt-2">
-            {colors.map((color) => (
-              <div
-                key={color}
-                className="flex items-center bg-white px-2 py-1 rounded-lg text-sm"
-              >
-                {color}
-                <CloseOutlined
-                  className="ml-2 cursor-pointer text-red-500"
-                  onClick={() => handleRemoveColor(color)}
+          </div> */}
+
+          {/* Conditional rendering based on product type */}
+          {category === "Tea" && (
+            <div className="flex flex-col gap-2 my-4">
+              <div>
+                <label className="font-semibold">Product</label>
+                <Input
+                  className="h-10 placeholder:text-gray-500"
+                  placeholder="Enter tea name"
+                  value={productName}
+                  onChange={(e) => setProductName(e.target.value)}
                 />
               </div>
-            ))}
-          </div>
+
+              <div className="flex items-center gap-3 my-2">
+                <div className="flex flex-col">
+                  <label className="font-semibold">Options</label>
+                  <ConfigProvider
+                    theme={{
+                      components: {
+                        Select: {
+                          optionSelectedBg: "rgb(254,188,96)",
+                          optionActiveBg: "rgb(255,217,165)",
+                          fontSize: 12,
+                        },
+                      },
+                    }}
+                  >
+                    <Select
+                      placeholder="Select Options"
+                      className="w-56 h-10"
+                      value={teaOption}
+                      onChange={(value) => setTeaOption(value)}
+                    >
+                      <Option value="bagged">Bagged</Option>
+                      <Option value="loose">Loose Leaf</Option>
+                    </Select>
+                  </ConfigProvider>
+                </div>
+                <div>
+                  <label className="font-semibold">Price</label>
+                  <Input
+                    type="number"
+                    className="h-10 text-lg placeholder:text-gray-500"
+                    placeholder="Enter price"
+                    value={price}
+                    onChange={(e) => setPrice(e.target.value)}
+                    prefix="$"
+                  />
+                </div>
+                <div>
+                  <label className="font-semibold">Quantity</label>
+                  <Input
+                    type="number"
+                    className="h-10 text-lg placeholder:text-gray-500"
+                    placeholder="Enter quantity"
+                    value={quantity}
+                    onChange={(e) => setQuantity(e.target.value)}
+                  />
+                </div>
+              </div>
+
+              {/* <div className="text-right">
+                <Button
+                  className="w-20 bg-[#1b7443] text-white h-10 text-lg text-start"
+                  onClick={handleAddTea}
+                >
+                  Add
+                </Button>
+              </div> */}
+
+              {/* {teaItems.length > 0 && (
+                <div className="mt-4">
+                  <p className="font-semibold">Added Tea Items</p>
+                  <ConfigProvider
+                    theme={{
+                      components: {
+                        Table: {
+                          cellFontSize: 14,
+                          padding: 8,
+                          borderColor: "#fff",
+                          headerSplitColor: "#1B7443",
+                        },
+                      },
+                    }}
+                  >
+                    <Table
+                      columns={teaColumns}
+                      dataSource={teaItems}
+                      rowKey="productName"
+                      pagination={false}
+                    />
+                  </ConfigProvider>
+                </div>
+              )} */}
+            </div>
+          )}
+
+          {category === "T-shirt" && (
+            <div className="flex flex-col gap-3 my-2">
+              <div>
+                <label className="font-semibold">Product</label>
+                <Input
+                  className="h-10"
+                  placeholder="Edit product name"
+                  value={productName}
+                  onChange={(e) => setProductName(e.target.value)}
+                />
+              </div>
+
+              <div className="flex items-center gap-3">
+                <div className="flex flex-col">
+                  <label className="font-semibold">Color</label>
+                  <ConfigProvider>
+                    <Input className="w-full h-10"></Input>
+                  </ConfigProvider>
+                </div>
+
+                {/* <div>
+                  <label className="font-semibold">Size</label>
+                  <ConfigProvider
+                    theme={{
+                      components: {
+                        Select: {
+                          optionSelectedBg: "rgb(254,188,96)",
+                          optionActiveBg: "rgb(255,217,165)",
+                          fontSize: 12,
+                        },
+                      },
+                    }}
+                  >
+                    <Select
+                      placeholder="Edit size"
+                      className="w-36 h-10"
+                      onChange={(value) => setSize(value)}
+                      value={size}
+                    >
+                      <Option value="small">Small</Option>
+                      <Option value="medium">Medium</Option>
+                      <Option value="large">Large</Option>
+                      <Option value="xl">XL</Option>
+                      <Option value="2xl">2XL</Option>
+                      <Option value="3xl">3XL</Option>
+                    </Select>
+                  </ConfigProvider>
+                </div> */}
+
+                <div className="flex flex-col">
+                  <label className="font-semibold">Quantity</label>
+                  <Input
+                    type="number"
+                    className="h-10 placeholder:text-gray-500 w-full"
+                    // placeholder="Enter quantity"
+                    value={quantity}
+                    onChange={(e) => setQuantity(e.target.value)}
+                  />
+                </div>
+
+                <div className="flex flex-col">
+                  <label className="font-semibold">Price</label>
+                  <Input
+                    // type="number"
+                    className="w-full h-10"
+                    placeholder="Edit price"
+                    value={price}
+                    onChange={(e) => setPrice(e.target.value)}
+                    prefix="$"
+                  />
+                </div>
+              </div>
+
+              {/* <div className="text-right">
+                <Button
+                  className="w-20 bg-[#1b7443] text-white h-10 text-lg text-start"
+                  onClick={handleAddTShirt}
+                >
+                  Add
+                </Button>
+              </div> */}
+
+              {/* {tShirtItems.length > 0 && (
+                <div className="mt-4">
+                  <ConfigProvider
+                    theme={{
+                      components: {
+                        Table: {
+                          cellFontSize: 14,
+                          padding: 8,
+                          borderColor: "#FFFFFF",
+                          headerSplitColor: "#1B7443",
+                        },
+                      },
+                    }}
+                  >
+                    <Table
+                      columns={tShirtColumns}
+                      dataSource={tShirtItems}
+                      rowKey="product"
+                      pagination={false}
+                    />
+                  </ConfigProvider>
+                </div>
+              )} */}
+            </div>
+          )}
+
+          {/* Mug and Tote - No Add Button, No Table */}
+          {(category === "Mug" || category === "Tote") && (
+            <div className="flex flex-col gap-2 my-4">
+              <div>
+                <label className="font-semibold">Product</label>
+                <Input
+                  placeholder="Enter product name"
+                  className="h-10 placeholder:text-gray-500"
+                  value={productName}
+                  onChange={(e) => setProductName(e.target.value)}
+                />
+              </div>
+              <div>
+                <label className="font-semibold">Price</label>
+                <Input
+                  placeholder="Enter price"
+                  type="number"
+                  className="h-10"
+                  value={price}
+                  onChange={(e) => setPrice(e.target.value)}
+                  prefix="$"
+                />
+              </div>
+            </div>
+          )}
         </div>
       </div>
 
       {/* cover image */}
       <div className=" mt-4">
         <label className="font-bold">Cover Image</label>
-        <Upload
-          className="w-96"
+        {/* <Upload
+          className="w-28 border border-dashed border-[#14b65a]"
           listType="picture-card"
           showUploadList={false}
           beforeUpload={() => false}
-          onChange={(info) => handleChange("coverImage", info.file)}
+          onChange={(info) => handleCoverImageChange("coverImage", info.file)}
         >
-          {productDetails.coverImage ? (
+          {coverImage ? (
             <img
-              src={URL.createObjectURL(productDetails.coverImage)}
+              src={URL.createObjectURL(coverImage)}
+              alt="cover"
+              style={{ width: "100%" }}
+            />
+          ) : (
+            <div className="">
+              <UploadOutlined />
+              <div>Click to upload</div>
+            </div>
+          )}
+        </Upload> */}
+
+        <Upload
+          className="w-28 border border-dashed border-[#14b65a]"
+          listType="picture-card"
+          showUploadList={false}
+          beforeUpload={() => false} // Prevent default upload
+          onChange={handleCoverImageChange} // Handle file change
+        >
+          {coverImage ? (
+            <img
+              src={URL.createObjectURL(coverImage)}
               alt="cover"
               style={{ width: "100%" }}
             />
           ) : (
             <div>
-              <UploadOutlined />
-              <div>Click to upload</div>
+              <PlusOutlined />
+              <div>Upload</div>
             </div>
           )}
         </Upload>
@@ -192,13 +413,15 @@ const EditProductForm = ({ initialValues, onSubmit }) => {
       <div className="flex flex-col mt-4">
         <label className="font-bold">Product Images</label>
         <Upload
-          className="w-full"
+          className="w-28 border border-dashed border-[#14b65a]"
           listType="picture-card"
           multiple
           beforeUpload={() => false}
-          onChange={(info) => handleChange("productImages", info.fileList)}
+          onChange={(info) =>
+            handleImagesChange("productImages", info.fileList)
+          }
         >
-          <div>
+          <div className="">
             <PlusOutlined />
             <div>Click to upload</div>
           </div>
@@ -211,8 +434,8 @@ const EditProductForm = ({ initialValues, onSubmit }) => {
         <TextArea
           placeholder="Enter product details..."
           rows={4}
-          value={productDetails.details}
-          onChange={(e) => handleChange("details", e.target.value)}
+          value={details}
+          onChange={(e) => setDetails("details", e.target.value)}
         />
       </div>
 
