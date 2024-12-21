@@ -17,7 +17,7 @@ const { Option } = Select;
 
 const AddProductForm = ({ onSubmit }) => {
   const [colorInput, setColorInput] = useState("");
-  const [productType, setProductType] = useState("");
+  const [productType, setProductType] = useState("tea");
   const [teaOption, setTeaOption] = useState("");
   const [price, setPrice] = useState("");
   const [quantity, setQuantity] = useState("");
@@ -133,16 +133,16 @@ const AddProductForm = ({ onSubmit }) => {
             },
           }}
         >
-          <span className="font-semibold"> Type</span>
+          <span className="font-semibold">Type</span>
           <Select
             placeholder="Product Type"
             className="w-full h-10"
             onChange={(value) => setProductType(value)}
-            defaultValue=""
+            value={productType}
           >
-            <Option value="" disabled>
+            {/* <Option value="" disabled>
               Select Product Type
-            </Option>
+            </Option> */}
             <Option value="tea">Tea</Option>
             <Option value="mug">Mug</Option>
             <Option value="tote">Tote</Option>
@@ -414,7 +414,7 @@ const AddProductForm = ({ onSubmit }) => {
       </div>
 
       <Button
-        className="mt-6 w-64 bg-[#1b7443] text-white h-12 text-lg mx-64"
+        className="mt-6 w-64 bg-[#1b7443] text-white h-12 text-lg mx-44"
         onClick={handleSubmit}
       >
         Save
