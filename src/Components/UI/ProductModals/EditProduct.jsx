@@ -1,6 +1,7 @@
+/* eslint-disable no-unused-vars */
 /* eslint-disable react/prop-types */
 // EditProductForm.js
-import { PlusOutlined, SaveOutlined, UploadOutlined } from "@ant-design/icons";
+import { PlusOutlined, SaveOutlined } from "@ant-design/icons";
 import { Button, ConfigProvider, Input, message, Select, Upload } from "antd";
 import { Option } from "antd/es/mentions";
 import { useState } from "react";
@@ -12,9 +13,7 @@ const EditProductForm = ({ initialValues, onSubmit }) => {
   console.log(initialValues);
 
   // State for managing form fields
-  const [productName, setProductName] = useState(
-    initialValues?.product || ""
-  );
+  const [productName, setProductName] = useState(initialValues?.product || "");
   const [teaOption, setTeaOption] = useState(initialValues?.option || "");
   const [category, setCategory] = useState(initialValues?.category || "");
   const [size, setSize] = useState(initialValues?.category || "");

@@ -138,8 +138,11 @@ const AddProductForm = ({ onSubmit }) => {
             placeholder="Product Type"
             className="w-full h-10"
             onChange={(value) => setProductType(value)}
-            defaultValue="tea"
+            defaultValue=""
           >
+            <Option value="" disabled>
+              Select Product Type
+            </Option>
             <Option value="tea">Tea</Option>
             <Option value="mug">Mug</Option>
             <Option value="tote">Tote</Option>
