@@ -4,7 +4,7 @@ import { MdModeEdit } from "react-icons/md";
 import { useUpdateCategoryMutation } from "../../../Redux/api/categoryApi";
 import Swal from "sweetalert2";
 
-const CategoryEditModal = ({ visible, onClose, product }) => {
+const CategoryEditModal = ({ visible, onClose, product, refetch }) => {
   const [categoryName, setCategoryName] = useState("");
   const [imageUrl, setImageUrl] = useState(null);
   const [imageUrl2, setImageUrl2] = useState(null);
@@ -39,13 +39,13 @@ const CategoryEditModal = ({ visible, onClose, product }) => {
     console.log('name', categoryName, 'image', imageUrl2);
     
   
-    // Debug FormData
-    for (let pair of formData.entries()) {
-      console.log(pair[0], pair[1]);
-    }
+    // // Debug FormData
+    // for (let pair of formData.entries()) {
+    //   console.log(pair[0], pair[1]);
+    // }
   
     try {
-      const response = await updateCategory(product._id, formData).unwrap();
+      const response = await updateCategory({id:product._id, formData}).unwrap();
       console.log("Category response:", response);
   
       if (response.success) {
@@ -54,6 +54,7 @@ const CategoryEditModal = ({ visible, onClose, product }) => {
           title: "Success!",
           text: response.message,
         });
+        refetch();
         onClose();
       }
     } catch (error) {

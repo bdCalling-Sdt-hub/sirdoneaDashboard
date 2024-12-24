@@ -79,17 +79,19 @@ const categoryApi = baseApi.injectEndpoints({
     }),
 
     updateCategory: builder.mutation({
-      query: (id, formData) => {
+      query: ({id, formData}) => {
         const accessToken = localStorage.getItem("accessToken");
+        console.log("formdata query", formData);
         return {
           url: `/category/${id}`,
           method: "PATCH",
-          body: formData, // Automatically set `multipart/form-data`
+          body: formData, 
           headers: {
-            Authorization: `Bearer ${accessToken}`, // Don't manually set Content-Type
+            Authorization: `Bearer ${accessToken}`, 
           },
         };
       },
+      invalidatesTags: ["category"],
     }),
   }),
 });

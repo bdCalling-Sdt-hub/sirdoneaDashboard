@@ -13,47 +13,41 @@ import moment from "moment";
 import { useEffect, useMemo, useState } from "react";
 import { AiOutlineEye } from "react-icons/ai";
 import { GrDownload } from "react-icons/gr";
+import { useGetAllOrdersDataQuery, useOrderUpdateStatusMutation } from "../../Redux/api/orderApi";
+import { ca } from "react-day-picker/locale";
+import Swal from "sweetalert2";
 
-const statuses = ["Pending", "Processing", "Shipped", "Delivered", "Canceled"];
+const statuses = ["pending", "processing", "shipped", "delivered", "canceled"];
 
 const statusColors = {
-  Pending: "#BB1CA9",
-  Processing: "#0C1020",
-  Shipped: "#DD8500",
-  Delivered: "green",
-  Canceled: "red",
+  pending: "#BB1CA9",
+  processing: "#0C1020",
+  shipped: "#DD8500",
+  delivered: "green",
+  canceled: "red",
 };
 
 export default function Orders() {
   const [searchText, setSearchText] = useState("");
   const [statusFilter, setStatusFilter] = useState(""); // New state for status filter
-  const [data, setData] = useState([]);
-  const [loading, setLoading] = useState(true);
+
   const [isViewModalVisible, setIsViewModalVisible] = useState(false);
   const [currentRecord, setCurrentRecord] = useState(null);
+  const {data: orderData, isLoading, refetch} = useGetAllOrdersDataQuery();
+  const [updateOrderStatus] = useOrderUpdateStatusMutation();
 
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const response = await axios.get("/data/orderData.json");
-        console.log(response.data);
-        setData(response.data);
-      } catch (error) {
-        console.error("Error fetching data:", error);
-      } finally {
-        setLoading(false);
-      }
-    };
-    fetchData();
-  }, []);
+  console.log('orderData ', orderData?.data); 
+
 
   const filteredData = useMemo(() => {
-    let filtered = data;
+    let filtered = orderData?.data;
+    console.log({filtered});
+    
 
     // Filter by search text
     if (searchText) {
       filtered = filtered.filter((item) =>
-        item.organizationName.toLowerCase().includes(searchText.toLowerCase())
+        item?.organizerId?.organizationDetails?.organizationName.toLowerCase().includes(searchText.toLowerCase())
       );
     }
 
@@ -63,7 +57,7 @@ export default function Orders() {
     }
 
     return filtered;
-  }, [data, searchText, statusFilter]);
+  }, [orderData?.data, searchText, statusFilter]);
 
   const onSearch = (value) => setSearchText(value);
 
@@ -72,12 +66,44 @@ export default function Orders() {
     setIsViewModalVisible(true);
   };
 
-  const handleStatusChange = (value, record) => {
-    setData((prevData) =>
-      prevData.map((item) =>
-        item.orderId === record.orderId ? { ...item, orderStatus: value } : item
-      )
-    );
+  const handleStatusChange = async(value, record) => {
+    console.log('value', value, "record", record);
+
+    try {
+      const updatedStatus = value;
+      const orderId = record._id;
+      const updatedData = { orderStatus: updatedStatus };
+
+      const res = await updateOrderStatus({ orderId, updatedData }).unwrap();
+      console.log({res});
+      
+      if (res.success) {
+        Swal.fire({
+          icon: "success",
+          title: "Success!",
+          text: "order status updated successfully.",
+        })
+        refetch();
+      }else{
+        Swal.fire({
+          icon: "error",
+          title: "Error!",
+          text: res.message,
+        })
+      }
+
+    }catch (error) {
+      console.error("Error updating status:", error);
+      if(error?.data?.success === false){
+        Swal.fire({
+          icon: "error",
+          title: "Error!",
+          text: error?.data?.message,
+        })
+      }
+    }
+
+    
   };
 
   const handleCancel = () => {
@@ -113,7 +139,7 @@ export default function Orders() {
               // style={{ width: 200, marginLeft: 16 }}
             >
               <Select.Option value="">All</Select.Option>
-              {statuses.map((status) => (
+              {statuses?.map((status) => (
                 <Select.Option key={status} value={status}>
                   {status}
                 </Select.Option>
@@ -160,34 +186,42 @@ export default function Orders() {
       >
         <Table
           dataSource={filteredData}
-          loading={loading}
+          loading={isLoading}
           pagination={{ pageSize: 8 }}
           rowKey="orderId"
           scroll={{ x: true }}
         >
-          <Table.Column title="Order ID" dataIndex="orderId" key="orderId" />
+          <Table.Column title="S. ID"  key="orderId" render={(text, record, index) => `${index + 1}`} />
           <Table.Column
-            title="Customer Name"
-            dataIndex="customerName"
-            key="customerName"
-          />
+  title="Customer Name"
+  key="customerName"
+  render={(text, record) => {
+    console.log({ record }); // Logs the entire row data
+    return record?.userId?.fullName || "N/A"; // Return the full name or "N/A"
+  }}
+/>
+
           <Table.Column
-            title="Organization"
-            dataIndex="organizationName"
-            key="organizationName"
-          />
+        title="Organization"
+        key="organizationName"
+        render={(record) =>
+          record?.organizerId?.organizationDetails?.organizationName || "N/A"
+        }
+      />
           <Table.Column
             title="Date"
             dataIndex="date"
             key="date"
-            render={(date) => moment(date).format("MMMM D, h:mm A")}
+            render={(text, record) =>
+              moment(record?.createdAt).format("MMMM D, h:mm A")
+            }
           />
-          <Table.Column title="Items" dataIndex="totalItems" key="totalItems" />
+          <Table.Column title="Items"  key="totalItems" render={(text, record) => record.orderProductList.length} />
           <Table.Column
-            title="Total"
-            dataIndex="totalPrice"
-            key="totalPrice"
-            render={(price) => `$${price}`}
+            title="Total Amount"
+            dataIndex="totalAmount"
+            key="totalAmount"
+            // render={(price) => `$${price}`}
           />
           <Table.Column
             title="Status"
@@ -224,7 +258,7 @@ export default function Orders() {
                 <Select
                   value={status}
                   onChange={(value) => handleStatusChange(value, record)}
-                  options={statuses.map((status) => ({
+                  options={statuses?.map((status) => ({
                     value: status,
                     label: status,
                   }))}
@@ -283,20 +317,16 @@ export default function Orders() {
               <div className="flex justify-between leading-7">
                 <div>
                   <p>
-                    <strong> Order ID: #</strong>
-                    {currentRecord.orderId}
-                  </p>
-                  <p>
                     <strong> Customer: </strong>
-                    {currentRecord.customerName}
+                    {currentRecord.userId.fullName}
                   </p>
                   <p>
                     <strong> Payment Date: </strong>
-                    {moment(currentRecord.date).format("MM/DD/YYYY")}
+                    {moment(currentRecord.createdAt).format("MM/DD/YYYY")}
                   </p>
                   <p>
                     <strong>Organization Name: </strong>
-                    {currentRecord.organizationName}
+                    {currentRecord.organizerId?.organizationDetails?.organizationName}
                   </p>
                   <p>
                     <strong> Order Status: </strong>
@@ -315,16 +345,16 @@ export default function Orders() {
                   <p>
                     <strong> Contact Number: </strong>
 
-                    {currentRecord.contactNumber}
+                    {currentRecord.orderNumber}
                   </p>
                   <p>
-                    <strong>Location: </strong> {currentRecord.location}
+                    <strong>Location: </strong> {currentRecord.orderAddress}
                   </p>
                 </div>
                 <div>
-                  <button className="rounded-full bg-white w-10 h-10 md:w-10 flex items-center justify-center border border-[#1B7443]">
+                  {/* <button className="rounded-full bg-white w-10 h-10 md:w-10 flex items-center justify-center border border-[#1B7443]">
                     <GrDownload className="text-4xl text-[#1B7443] p-2" />
-                  </button>
+                  </button> */}
                 </div>
               </div>
               <table className="table-auto w-full mt-4 border border-collapse ">
@@ -339,26 +369,26 @@ export default function Orders() {
                     <th className="border border-[#FFEFD9] px-4 py-2">
                       Quantity
                     </th>
-                    <th className="border border-[#FFEFD9] px-4 py-2 rounded-tr-lg">
-                      Price
-                    </th>
+                    {/* <th className="border border-[#FFEFD9] px-4 py-2">
+                      Total Price
+                    </th> */}
                   </tr>
                 </thead>
                 <tbody>
-                  {currentRecord.productList.map((product, index) => (
+                  {currentRecord?.orderProductList?.map((product, index) => (
                     <tr key={index} className="text-center bg-[#F2F2F7]">
                       <td className="border border-[#FFEFD9] px-4 py-2">
-                        {product.productName}
+                        {product.productId.productName}
                       </td>
                       <td className="border border-[#FFEFD9] px-4 py-2">
-                        ${product.productPrice.toFixed(2)}
+                        ${product?.price?.toFixed(2)}
                       </td>
                       <td className="border border-[#FFEFD9] px-4 py-2">
                         {product.quantity}
                       </td>
-                      <td className="border border-[#FFEFD9] px-4 py-2">
-                        ${product.price.toFixed(2)}
-                      </td>
+                      {/* <td className="border border-[#FFEFD9] px-4 py-2">
+  ${((product?.price) * (product?.quantity)).toFixed(2)}
+</td> */}
                     </tr>
                   ))}
                 </tbody>
@@ -368,11 +398,11 @@ export default function Orders() {
                       colSpan="3"
                       className="border px-4 py-2 text-right text-[#1B7443] "
                     >
-                      Total Price
+                      All Products Price ${currentRecord?.totalAmount?.toFixed(2) }
                     </td>
-                    <td className="border border-[#FFEFD9] px-4 py-2 text-[#1B7443] ">
-                      ${currentRecord.totalPrice.toFixed(2)}
-                    </td>
+                    {/* <td className="border border-[#FFEFD9] px-4 py-2 text-[#1B7443] ">
+                      ${currentRecord?.totalAmount?.toFixed(2) }
+                    </td> */}
                   </tr>
                 </tfoot>
               </table>

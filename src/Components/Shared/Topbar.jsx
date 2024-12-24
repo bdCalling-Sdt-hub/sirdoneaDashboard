@@ -4,6 +4,8 @@ import { useEffect, useState } from "react";
 import { FaRegBell } from "react-icons/fa";
 import { GiHamburgerMenu } from "react-icons/gi";
 import { Link } from "react-router-dom";
+import { useGetAllNotificationQuery } from "../../Redux/api/notificationApi";
+import moment from "moment/moment";
 
 const notifications = [
   {
@@ -33,10 +35,14 @@ const notifications = [
   },
 ];
 
+
+
 const { useBreakpoint } = Grid;
 
 // eslint-disable-next-line react/prop-types
 const Topbar = ({ collapsed, setCollapsed }) => {
+  const {data:notification1} = useGetAllNotificationQuery();
+console.log('noti', notification1?.data);
   const [notificationCount, setNotificationCount] = useState(
     notifications.length
   );
@@ -71,7 +77,7 @@ const Topbar = ({ collapsed, setCollapsed }) => {
         <p className="text-end -mt-7 cursor-pointer">X</p>
       </div>
       <p className="border-b-[1px]  border-[#1B7443] py-2 mb-2"></p>
-      {notifications.map((notification) => (
+      {notification1?.data?.map((notification) => (
         <div key={notification.id} className="flex items-center gap-2 py-3 ">
           <FaRegBell
             // className="bg-[#B2DAC4] text-2xl"
@@ -85,7 +91,7 @@ const Topbar = ({ collapsed, setCollapsed }) => {
           />
           <div className="flex flex-col items-start justify-center">
             <p>{notification.message}</p>
-            <p className="text-gray-400 text-sm">{notification.time}</p>
+            <p className="text-gray-400 text-sm">{moment(notification.createdAt).fromNow()}</p>
           </div>
         </div>
       ))}
@@ -127,7 +133,7 @@ const Topbar = ({ collapsed, setCollapsed }) => {
               onOpenChange={handleDropdownVisibleChange}
               open={isDropdownVisible}
             >
-              <Badge count={notificationCount} size="small">
+              <Badge count={notification1?.data?.length} size="small">
                 <BellOutlined
                   shape="circle"
                   size="small"

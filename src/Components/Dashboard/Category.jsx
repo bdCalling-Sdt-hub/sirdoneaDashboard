@@ -282,6 +282,7 @@ const handleSwitchChange = async(checked, record) => {
           visible={isModalVisible}
           onClose={() => setIsModalVisible(false)}
           product={selectedProduct}
+          refetch={refetch}
         />
       )}
     </div>

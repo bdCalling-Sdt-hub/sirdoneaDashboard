@@ -6,6 +6,7 @@ import {
 import { Button, ConfigProvider, Form, Input, Select } from "antd";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { useGetMyprofileQuery } from "../../Redux/api/usersApi";
 const countryCodes = [
   { label: "+1", value: "US", flag: "https://flagcdn.com/w320/us.png" },
   { label: "+44", value: "UK", flag: "https://flagcdn.com/w320/gb.png" },
@@ -18,18 +19,23 @@ const countryCodes = [
 
 const Profile = () => {
   // eslint-disable-next-line no-unused-vars
-  const [profileData, setProfileData] = useState({
-    fullName: "Sirdonea",
-    lastName: "",
-    email: "sirdonea@example.com",
-    phoneCode: "US",
-    phoneNumber: "01846875456",
-    birthday: "1990-01-01",
-  });
+  // const [profileData, setProfileData] = useState({
+  //   fullName: "Sirdonea",
+  //   lastName: "",
+  //   email: "sirdonea@example.com",
+  //   phoneCode: "US",
+  //   phoneNumber: "01846875456",
+  //   birthday: "1990-01-01",
+  // });
   const navigate = useNavigate();
 
+  const {data:profileDate, refetch} = useGetMyprofileQuery();
+
+  console.log("profileDate",profileDate?.data);
+  
+
   const handleEditClick = () => {
-    navigate("/edit-profile", { state: { profileData } });
+    navigate("/edit-profile", { state: { profileDate } });
   };
 
   return (
@@ -56,7 +62,7 @@ const Profile = () => {
         <div className="grid grid-cols-1 lg:grid-cols-3 items-center gap-8 lg:gap20 text-sm md:text-xl">
           <div className="col-span-1 flex flex-col items-center justify-center text-center">
             <h2 className="text-xl lg:text-2xl font-bold">
-              {profileData.fullName}
+              {profileDate?.data?.fullName}
             </h2>
             <h3 className="xl:text-lg font-semibold">Admin</h3>
           </div>
@@ -78,7 +84,7 @@ const Profile = () => {
               }}
             >
               <Form layout="vertical">
-                <div className="grid grid-cols-2 gap-4">
+                <div className="grid grid-cols-1 gap-4">
                   <div>
                     <Form.Item
                       label={
@@ -90,7 +96,7 @@ const Profile = () => {
                             fontSize: "18px",
                           }}
                         >
-                          First Name
+                          Full Name
                         </label>
                       }
                     >
@@ -98,31 +104,7 @@ const Profile = () => {
                         id="firstName"
                         placeholder="First Name"
                         className="bg-[#B2DAC4] rounded-lg h-10 font-semibold w-full"
-                        value={profileData.firstName}
-                        readOnly
-                      />
-                    </Form.Item>
-                  </div>
-                  <div>
-                    <Form.Item
-                      label={
-                        <label
-                          htmlFor="lastName"
-                          style={{
-                            color: "black",
-                            fontWeight: "bold",
-                            fontSize: "18px",
-                          }}
-                        >
-                          Last Name
-                        </label>
-                      }
-                    >
-                      <Input
-                        id="lastName"
-                        placeholder="Last Name"
-                        className="bg-[#B2DAC4] rounded-lg h-10 font-semibold w-full"
-                        value={profileData.lastName}
+                        value={profileDate?.data?.fullName}
                         readOnly
                       />
                     </Form.Item>
@@ -143,7 +125,7 @@ const Profile = () => {
                 >
                   <Input
                     className=" bg-[#B2DAC4] rounded-lg h-10 font-semibold w-full text-black"
-                    value={profileData.email}
+                    value={profileDate?.data?.email}
                     readOnly
                   />
                 </Form.Item>
@@ -157,7 +139,7 @@ const Profile = () => {
                     name="phoneCode"
                   >
                     <div className="flex gap-2">
-                      <Select
+                      {/* <Select
                         style={{
                           width: 150,
                           height: "46px",
@@ -175,42 +157,18 @@ const Profile = () => {
                           ),
                           value: country.value,
                         }))}
-                      />
-                      <Form.Item name="phoneNumber" noStyle>
+                      /> */}
+                      <Form.Item noStyle>
                         <Input
                           className="bg-[#B2DAC4] rounded-lg h-12 font-semibold"
                           placeholder="Enter Phone Number"
+                          value={profileDate?.data?.phone}
                         />
                       </Form.Item>
                     </div>
                   </Form.Item>
                 </div>
-                <Form.Item
-                  label={
-                    <label
-                      className="text-xs sm:text-sm md:text-base lg:text-lg font-bold"
-                      style={{
-                        color: "black",
-                        fontWeight: "bold",
-                        fontSize: "18px",
-                      }}
-                    >
-                      Date of Birth
-                    </label>
-                  }
-                >
-                  <Input
-                    className="bg-[#B2DAC4] rounded-lg h-10 font-semibold w-full"
-                    value={profileData.birthday}
-                    prefix={
-                      <div style={{ display: "flex", alignItems: "center" }}>
-                        <CalendarOutlined />
-                        <span style={{ marginLeft: "8px" }}></span>
-                      </div>
-                    }
-                    readOnly
-                  />
-                </Form.Item>
+                
               </Form>
             </ConfigProvider>
           </div>
