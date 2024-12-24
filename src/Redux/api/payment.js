@@ -1,13 +1,14 @@
 import { baseApi } from "../baseApi";
 
-const dashboardApi = baseApi.injectEndpoints({
+
+const paymentApi = baseApi.injectEndpoints({
   endpoints: (builder) => ({
-    getAllDashboardOverviewPoint: builder.query({
+    getAllPaymentEarnings: builder.query({
       query: () => {
         const accessToken = localStorage.getItem("accessToken");
         console.log("accessToken", accessToken);
         return {
-          url: "/payment/all-overview",
+          url: "/payment",
           method: "GET",
           headers: {
             "content-type": "application/json",
@@ -15,34 +16,14 @@ const dashboardApi = baseApi.injectEndpoints({
           },
         };
       },
-      // providesTags: ["task"],
+      providesTags: ["payment"],
     }),
-
-    getAllEarningAmountByYear: builder.query({
-      query: (year) => {
-        console.log("query year", year);
-        
-        const accessToken = localStorage.getItem("accessToken");
-        console.log("accessToken", accessToken);
-        return {
-          url: `/payment/all-earning-amount-by-year?year=${year}`,
-          method: "GET",
-          headers: {
-            "content-type": "application/json",
-            Authorization: `Bearer ${accessToken}`,
-          },
-        };
-      },
-      // providesTags: ["task"],
-    }),
-
-    getAllTopSellPRoductAndlowSellProduct: builder.query({
+    getAllPaymentTodayAndTotalEarnings: builder.query({
       query: () => {
-       
         const accessToken = localStorage.getItem("accessToken");
         console.log("accessToken", accessToken);
         return {
-          url: `/purchase-product/top-lowest-seller`,
+          url: "/payment/all-earning-amount",
           method: "GET",
           headers: {
             "content-type": "application/json",
@@ -50,14 +31,30 @@ const dashboardApi = baseApi.injectEndpoints({
           },
         };
       },
-      // providesTags: ["task"],
+      providesTags: ["payment"],
     }),
-
+    accountInfoDetails: builder.query({
+      query: (userId) => {
+        const accessToken = localStorage.getItem("accessToken");
+        console.log("accessToken", accessToken);
+        return {
+          url: `/account-info?userId=${userId}`,
+          method: "GET",
+          headers: {
+            "content-type": "application/json",
+            Authorization: `Bearer ${accessToken}`,
+          },
+        };
+      },
+      providesTags: ["payment"],
+    }),
+   
+   
   }),
 });
 
 export const {
-  useGetAllDashboardOverviewPointQuery,
-  useGetAllEarningAmountByYearQuery,
-  useGetAllTopSellPRoductAndlowSellProductQuery
-} = dashboardApi;
+  useGetAllPaymentEarningsQuery,
+  useGetAllPaymentTodayAndTotalEarningsQuery,
+  useAccountInfoDetailsQuery
+} = paymentApi;

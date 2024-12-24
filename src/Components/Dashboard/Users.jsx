@@ -6,34 +6,24 @@ import { useEffect, useMemo, useState } from "react";
 import { AiOutlineEye } from "react-icons/ai";
 import { GrDownload } from "react-icons/gr";
 import { AllIcons } from "../../../public/images/AllImages";
+import { useAllUsersQuery } from "../../Redux/api/usersApi";
+
+const url = "http://192.168.12.232:8010/";
 export default function Users() {
   const [searchText, setSearchText] = useState("");
-  const [data, setData] = useState([]);
-  const [loading, setLoading] = useState(true);
   const [isViewModalVisible, setIsViewModalVisible] = useState(false);
   const [currentRecord, setCurrentRecord] = useState(null);
+  const {data:allUsers, isLoading} = useAllUsersQuery();
+  console.log('users',allUsers?.data);
+  
 
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const response = await axios.get("/data/userData.json");
-        console.log(response);
-        setData(response.data);
-      } catch (error) {
-        console.error("Error fetching data:", error);
-      } finally {
-        setLoading(false);
-      }
-    };
-    fetchData();
-  }, []);
 
   const filteredData = useMemo(() => {
-    if (!searchText) return data;
+    if (!searchText) return allUsers?.data;
     return data.filter((item) =>
-      item.userName.toLowerCase().includes(searchText.toLowerCase())
+      item.fullName.toLowerCase().includes(searchText.toLowerCase())
     );
-  }, [data, searchText]);
+  }, [allUsers?.data, searchText]);
 
   const onSearch = (value) => setSearchText(value);
 
@@ -87,9 +77,9 @@ export default function Users() {
                   color: "#010515",
                 }}
               />
-              <button className="rounded-full bg-white w-10 h-10 md:w-10 flex items-center justify-center">
+              {/* <button className="rounded-full bg-white w-10 h-10 md:w-10 flex items-center justify-center">
                 <GrDownload className="text-5xl text-[#1B7443] p-2 font-extrabold" />
-              </button>
+              </button> */}
             </div>
           </ConfigProvider>
         </div>
@@ -114,20 +104,24 @@ export default function Users() {
         >
           <Table
             dataSource={filteredData}
-            loading={loading}
+            loading={isLoading}
             pagination={{ pageSize: 6 }}
             rowKey="id"
             scroll={{ x: true }}
             className="mt-4 cursor-pointer"
           >
-            <Table.Column title="SL ID" dataIndex="id" key="id" />
+            <Table.Column 
+  title="SL ID" 
+  key="id" 
+  render={(_, __, rowIndex) => `${rowIndex + 1}`} 
+/>
             <Table.Column
               title="Image"
               dataIndex="image"
               key="image"
               render={(text, record) => (
                 <img
-                  src={record.image}
+                  src={`${url}/${record.image}`}
                   alt="Image"
                   style={{ width: 40, height: 40 }}
                 />
@@ -136,21 +130,26 @@ export default function Users() {
 
             <Table.Column
               title="Full Name"
-              dataIndex="userName"
-              key="userName"
+              dataIndex="fullName"
+              key="fullName"
             />
             <Table.Column title="Email" dataIndex="email" key="email" />
             <Table.Column
-              title="Total Spend"
-              dataIndex="totalSpent"
+              title="Contact No." 
+              dataIndex="phone"
               key="totalSpent"
-              render={(totalSpent) => `$${totalSpent}`}
+            />
+            <Table.Column
+              title="Active/Inactive" 
+              dataIndex="isActive"
+              key="isActive"
+              render={(isActive) => (isActive ? "Active" : "Inactive")}
             />
             <Table.Column
               title="Join Date"
-              dataIndex="joiningDate"
-              key="joiningDate"
-              render={(date) => moment(date).format("MM/DD/YYYY")}
+              dataIndex="createdAt"
+              key="createdAt"
+              render={(createdAt) => moment(createdAt).format("MM/DD/YYYY")}
             />
             <Table.Column
               title="Action"
@@ -200,7 +199,7 @@ export default function Users() {
             {currentRecord && (
               <div className="my-4 flex flex-col ">
                 <div className="flex items-center justify-center gap-5">
-                  <img src={currentRecord.image} />
+                  <img src={`${url}/${currentRecord.image}`} />
                 </div>
                 <p className="font-semibold mt-4 text-2xl text-[#FEBC60] text-center">
                   User Information
@@ -209,7 +208,7 @@ export default function Users() {
                   <p>
                     Name:{" "}
                     <span className="font-semibold">
-                      {currentRecord.userName}
+                      {currentRecord.fullName}
                     </span>
                   </p>
                   <p>
@@ -219,27 +218,33 @@ export default function Users() {
                   <p>
                     Phone Number:{" "}
                     <span className="font-semibold">
-                      {currentRecord.contactNumber}
-                    </span>
-                  </p>
-                  <p>
-                    Date of Birth:{" "}
-                    <span className="font-semibold">
-                      {moment(currentRecord.dateOfBirth).format("MM/DD/YYYY")}
+                      {currentRecord.phone}
                     </span>
                   </p>
                   <p>
                     Joined:{" "}
                     <span className="font-semibold">
-                      {moment(currentRecord.joiningDate).format("MM/DD/YYYY")}
+                      {moment(currentRecord.createdAt).format("MM/DD/YYYY")}
                     </span>
                   </p>
                   <p>
+                    User Active:{" "}
+                    <span className="font-semibold">
+                      {currentRecord.isActive ? "Active" : "Inactive"}
+                    </span>
+                  </p>
+                  <p>
+                    User Deleted:{" "}
+                    <span className="font-semibold">
+                      {currentRecord.isDeleted ? "Deleted" : "Not Deleted"}
+                    </span>
+                  </p>
+                  {/* <p>
                     Organization Name:{" "}
                     <span className="font-semibold">
                       {currentRecord.organizationName}
                     </span>
-                  </p>
+                  </p> */}
                 </div>
                 <div className="flex justify-center">
                   <button

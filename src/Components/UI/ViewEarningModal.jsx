@@ -2,6 +2,8 @@
 import { Modal } from "antd";
 import { useEffect } from "react";
 
+const url = "http://192.168.12.232:8010/";
+
 const ViewEarningModal = ({
   isViewModalVisible,
   handleCancel,
@@ -12,6 +14,9 @@ const ViewEarningModal = ({
       console.log("Current Record:", currentRecord);
     }
   }, [isViewModalVisible, currentRecord]);
+
+  console.log('currentRecord earning', currentRecord);
+  
 
   return (
     <Modal
@@ -33,28 +38,27 @@ const ViewEarningModal = ({
         <div className="flex flex-col p-5">
           <div className="flex items-center justify-center gap-8">
             <img
-              src={currentRecord.avatar || "../../../public/images/user.png"}
+              src={`${url}${currentRecord?.userId?.image}`}
               alt="avatar"
-              className="w-36 h-32   mb-2"
+              className="w-36 h-32   mb-2 rounded-full"
             />
-            <h1 className="text-lg font-semibold">{currentRecord.userName}</h1>
+            <h1 className="text-lg font-semibold">{currentRecord.userId.fullName}</h1>
           </div>
           <h3 className="text-[#1b7443] font-semibold text-2xl mb-2 mt-6 text-center">
-            Information
+           Payment Information
           </h3>
           <div className="ml-8 space-y-2 text-[#000000] ">
             <p className="text-2xl">
               Amount: <span className="">${currentRecord.amount}</span>
             </p>
             <div className="text-lg leading-10">
-              <p>Serial ID {currentRecord.id}</p>
-              <p>Email:{currentRecord.email}</p>
+              <p>Email:{currentRecord.userId.email}</p>
               <p>
-                User Bank Account: ****
-                {currentRecord.accNumber.slice(-4)}
+                User Bank Transactions: ****
+                {currentRecord.transactionId}
               </p>
-              <p>Time & Date:{currentRecord.time}</p>
-              <p>Payment Method: {currentRecord.paymentMethod || "N/A"}</p>
+              <p>Payment Date:{currentRecord.createdAt ? new Date(currentRecord.createdAt).toLocaleDateString() : "N/A"}</p>
+              <p>Payment Method: {currentRecord.paymentType || "N/A"}</p>
             </div>
           </div>
         </div>

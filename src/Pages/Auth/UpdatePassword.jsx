@@ -2,12 +2,59 @@ import { Button, ConfigProvider, Form, Input, Typography } from "antd";
 
 import changePasswordImg from "/images/authImages/updatePass.png";
 import { useNavigate } from "react-router-dom";
+import { useResetPasswordMutation } from "../../Redux/api/authApi";
+import Swal from "sweetalert2";
+
 
 const ChangePassword = () => {
   const navigate = useNavigate();
-  const onFinish = (values) => {
+  const [resetPassword] = useResetPasswordMutation();
+  const onFinish = async(values) => {
     console.log("Success:", values);
-    navigate("/signin");
+     try {
+      const data = {
+        newPassword: values.newPassword,
+        confirmPassword: values.reEnterPassword,
+      };
+      console.log("Request payload:", data);
+
+      const token = localStorage.getItem("verifiedOtpToken");
+      if (!token) {
+        // toast.error("Session expired. Please start the reset process again.");
+        Swal.fire({
+          icon: "error",
+          title: "Session Expired",
+          text: "Session expired. Please start the reset process again.",
+        });
+        navigate("/forgot-password");
+        return;
+      }
+
+      const response = await resetPassword(data).unwrap();
+      console.log("Response:", response);
+
+      if (response.success) {
+        // toast.success("Password updated successfully!");
+        Swal.fire({
+          icon: "success",
+          title: "Success",
+          text: "Password updated successfully!.",
+        });
+        navigate("/signin");
+      }
+    } catch (error) {
+      console.log("Error updating password:", error);
+      // if (error.response) {
+      //   console.error("Validation error details:", error.response.data);
+      //   toast.error(
+      //     error.response.data.message ||
+      //       "Failed to update password. Please try again."
+      //   );
+      // } else {
+      //   toast.error("An unexpected error occurred. Please try again.");
+      // }
+    }
+    // navigate("/signin");
   };
 
   return (

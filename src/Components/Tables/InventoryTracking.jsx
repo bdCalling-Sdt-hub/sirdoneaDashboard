@@ -1,59 +1,66 @@
 /* eslint-disable react/prop-types */
 import { ConfigProvider, Table } from "antd";
+import { render } from "react-dom";
+
+
+const url = "http://192.168.12.232:8010/";
 
 const InventoryTracking = ({ data, loading, pageSize = 0 }) => {
+  console.log('data', data);
+  
   const columns = [
     {
       title: "S. ID",
-      dataIndex: "id",
-      key: "id",
-      responsive: ["md"],
+      key: "serialNumber", 
+      render: (text, record, index) => `${index + 1}`, 
+      responsive: ["md"], 
     },
+    
     {
-      title: "Profile Image",
-      dataIndex: "avatar",
-      key: "avatar",
-      render: (avatar) => (
-        <img src={avatar} alt="Product Image" className="size-8 rounded-full" />
+      title: "Product Image",
+      dataIndex: "coverImage",
+      key: "coverImage",
+      render: (coverImage) => (
+        <img src={`${url}${coverImage}`} alt="Product Image" className="size-8 rounded-full" />
       ),
     },
 
     {
-      title: "Full Name",
-      dataIndex: "userName",
-      key: "userName",
-    },
-
-    {
-      title: "Email",
-      dataIndex: "email",
-      key: "email",
-    },
-
-    {
-      title: "Product name",
+      title: "Product Name",
       dataIndex: "productName",
       key: "productName",
     },
+
     {
-      title: "Quantity",
-      dataIndex: "quantity",
-      key: "quantity",
-      render: (quantity) => {
-        const color =
-          quantity > 75 ? "#0873FD" : quantity > 16 ? "#FF9500" : "#FF0909";
-        return (
-          <span className="ml-4" style={{ color }}>
-            {quantity}
-          </span>
-        );
-      },
+      title: "Category",
+      dataIndex: "categoryName",
+      key: "categoryName",
     },
 
     {
-      title: "Join date",
-      dataIndex: "joiningDate",
-      key: "joiningDate",
+      title: "Stock",
+      dataIndex: "stock",
+      key: "stock",
+    },
+    {
+      title: "Available Stock",
+      dataIndex: "availablestock",
+      key: "availablestock",
+      
+    },
+    {
+      title: "Active/Inactive",
+      dataIndex: "isActive",
+      key: "isActive",
+      render: (isActive) => (isActive ? "Active" : "Inactive"),
+      
+    },
+
+    {
+      title: "Product Publish Date",
+      dataIndex: "createdAt",
+      key: "createdAt",
+      render: (createdAt) => new Date(createdAt).toLocaleDateString(),
     },
   ];
   return (

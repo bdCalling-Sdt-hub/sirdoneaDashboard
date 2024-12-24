@@ -3,7 +3,7 @@ import { baseApi } from "../baseApi";
 const usersApi = baseApi.injectEndpoints({
   endpoints: (builder) => ({
     allUsers: builder.query({
-      query: (data) => {
+      query: () => {
         const accessToken = localStorage.getItem("accessToken");
         console.log({ accessToken });
 
@@ -13,7 +13,7 @@ const usersApi = baseApi.injectEndpoints({
         return {
           url: "/users/all-users",
           method: "GET",
-          body: data,
+          // body: data,
           headers: {
             "content-type": "application/json",
             Authorization: `Bearer ${accessToken}`,

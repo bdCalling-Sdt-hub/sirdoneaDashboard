@@ -2,13 +2,54 @@ import { Button, ConfigProvider, Form, Input } from "antd";
 
 import { useNavigate } from "react-router-dom";
 import forgotImage from "/images/authImages/ForgotPassword.png";
+import { useForgetPasswordMutation } from "../../Redux/api/authApi";
+import toast from "react-hot-toast";
+import Swal from "sweetalert2";
+import { el } from "react-day-picker/locale";
+
 
 const ForgotPassword = () => {
   const navigate = useNavigate();
 
-  const onFinish = (values) => {
-    console.log("Success:", values);
-    navigate("/verify-otp");
+  // const onFinish = (values) => {
+  //   console.log("Success:", values);
+  //   navigate("/verify-otp");
+  // };
+  const [forgetPassword] = useForgetPasswordMutation();
+
+  const onFinish = async (values) => {
+    console.log("values:", values);
+const data = values;
+//     console.log("Success:", data);
+    
+    try {
+      const response = await forgetPassword(data).unwrap();
+      console.log("response token", response);
+      if (response.success === true) {
+        localStorage.setItem("otpToken", response?.data?.forgetToken);
+        // localStorage.setItem("userEmail", email);
+        Swal.fire({
+          icon: "success",
+          title: "Success",
+          text: "An OTP has been sent to your email!",
+        })
+        navigate("/verify-otp");
+      }else{
+        Swal.fire({
+          icon: "error",
+          title: "Error",
+          text: response.message,})
+      }
+    } catch (error) {
+      console.error("Error sending reset code:", error);
+      // if (error.data?.success === false) {
+      //   // toast.error(error.data?.message);
+      //   Swal.fire({
+      //     icon: "error",
+      //     title: "Error",
+      //     text: error.data?.message,})
+      // }
+    }
   };
   return (
     <div className="min-h-screen bg-white">

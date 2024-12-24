@@ -2,6 +2,8 @@
 import { Button, Modal } from "antd";
 import { IoIosArrowBack } from "react-icons/io";
 
+const url = "http://192.168.12.232:8010/";
+
 const OrganizationDetails = ({ visible, onClose, data }) => {
   if (!data) return null;
 
@@ -13,7 +15,7 @@ const OrganizationDetails = ({ visible, onClose, data }) => {
       onCancel={onClose}
       footer={null}
       centered
-      width={1200}
+      width={650}
       className="bg-[#FAF8F5] rounded-lg"
     >
       <div className="">
@@ -28,31 +30,31 @@ const OrganizationDetails = ({ visible, onClose, data }) => {
         </div>
 
         <h2 className="text-center text-[#1b7443] text-2xl font-thin mb-4">
-          Organization Name: {data.organization}
+          Organization Name: {data.organizationDetails.organizationName}
         </h2>
 
         <div className="px-14">
           <div className="flex justify-between items-center mb-6">
             <img
-              src={data.image}
+              src={`${url}${data.userId.image}`}
               alt="Event"
-              className="w-40 h-40 rounded-lg object-cover"
+              className="w-40 h-40 rounded-full object-cover"
             />
             <div className="text-right">
               <p className="text-green-600 font-semibold">
-                Starting Date: {data.startDate}
+                Starting Date: {`${data.fundraiserInformation.year || ""}/ ${data.fundraiserInformation.startMonth || ""}/ ${data.fundraiserInformation.startDay || ""}/ ${data.fundraiserInformation.startTime || ""}`}
               </p>
               <p className="text-red-600 font-semibold">
-                Ending Date: {data.endDate}
+                Ending Date: {`${data.fundraiserInformation.year || ""}/ ${data.fundraiserInformation.endMonth || ""}/ ${data.fundraiserInformation.endDay || ""}/ ${data.fundraiserInformation.endTime || ""}`}
               </p>
             </div>
           </div>
 
           <p className="text-lg font-semibold mb-1">
-            Organization Creator Name :<span> {data.name}</span>
+            Organization Creator Name :<span>  {data?.organizerInfo?.firstName || ""} {data?.organizerInfo?.lastName || ""}</span>
           </p>
           <p className="text-lg font-semibold mb-1">
-            Target: <span className="font-normal">{data.target}</span>
+            Target: <span className="font-normal">{data.fundraiserInformation.goal}</span>
           </p>
 
           <h3 className="text-lg font-semibold mb-2">Organization’s Details</h3>

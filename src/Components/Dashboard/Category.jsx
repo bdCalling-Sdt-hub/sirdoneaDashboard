@@ -14,115 +14,154 @@ import { RiDeleteBin6Line } from "react-icons/ri";
 import { TbEdit } from "react-icons/tb";
 import CategoryAdd from "../UI/Category";
 import CategoryEditModal from "../UI/CategoryModal/CategoryEditModal";
+import { useActiveZDeactiveStatusCategoryMutation, useDeleteCategoryMutation, useGetAllCategoryQuery } from "../../Redux/api/categoryApi";
+import Swal from "sweetalert2";
+
+
+const url = "http://192.168.12.232:8010/";
 
 const Categories = () => {
-  const [data, setData] = useState([]);
-  const [loading, setLoading] = useState(true);
   const [isAddModalVisible, setIsAddModalVisible] = useState(false);
   const [selectedProduct, setSelectedProduct] = useState(null);
   const [isModalVisible, setIsModalVisible] = useState(false);
   const [popoverVisible, setPopoverVisible] = useState(null); // Track popover visibility per record
+  const {data:categoryData, isLoading, refetch} = useGetAllCategoryQuery();
+  const [deleteCategory] = useDeleteCategoryMutation();
+  const [activeDeactive] = useActiveZDeactiveStatusCategoryMutation();
 
-  // Fetching product data
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const response = await axios.get("/data/products.json");
-        setData(response.data);
-      } catch (error) {
-        console.error("Error fetching data:", error);
-      } finally {
-        setLoading(false);
-      }
-    };
-
-    fetchData();
-  }, []);
-
+  console.log('categoryData', categoryData?.data);
+  
   const showDetailsModal = (product) => {
     setSelectedProduct(product);
     setIsModalVisible(true);
   };
 
-  const handleDelete = (record) => {
-    // Remove the item from the state
-    const updatedData = data.filter((item) => item.id !== record.id);
-    setData(updatedData);
-    setPopoverVisible(null); // Close the popover after delete
+  const handleDelete = async(record) => {
+   console.log("deleted _id", record._id);
+
+   try {
+     //  console.log({formData});
+      
+         const response = await deleteCategory(record._id).unwrap();
+         console.log("category response:", response);
+   
+         if (response.success === true) {
+           
+           // toast.success("OTP verified successfully!");
+           Swal.fire({
+             icon: "success",
+             title: "Success!",
+             text: "Category Deleted successfully.",
+           });
+   
+           setPopoverVisible(null);
+           refetch();
+           
+         }
+       } catch (error) {
+         console.error("Error:", error);
+         if (error.data?.message) {
+           // toast.error("Invalid OTP. Please try again.");
+           Swal.fire({
+             icon: "error",
+             title: "Error!",
+             text: error.data?.message,})
+         } else {
+           // toast.error("Failed to verify OTP. Please try again.");
+           Swal.fire({
+             icon: "error",
+             title: "Error!",
+             text: "Failed to deleted category. Please try again.",})
+         }
+       }
+   
+
+
+     // Close the popover after delete
   };
 
   const handleCancel = () => {
     setPopoverVisible(null); // Close the popover without making any changes
   };
 
+
+const handleSwitchChange = async(checked, record) => {
+  console.log("Current Value:", checked);
+  console.log("Record Data:", record);
+  try {
+    //  console.log({formData});
+     
+        const response = await activeDeactive(record._id).unwrap();
+        console.log("category response:", response);
+  
+        if (response.success === true) {
+          
+          // toast.success("OTP verified successfully!");
+          Swal.fire({
+            icon: "success",
+            title: "Success!",
+            text: response.message,
+          });
+  
+          refetch();
+          
+        }
+      } catch (error) {
+        console.error("Error:", error);
+        if (error.data?.message) {
+          // toast.error("Invalid OTP. Please try again.");
+          Swal.fire({
+            icon: "error",
+            title: "Error!",
+            text: error.data?.message,})
+        } else {
+          // toast.error("Failed to verify OTP. Please try again.");
+          Swal.fire({
+            icon: "error",
+            title: "Error!",
+            text: "Failed to deleted category. Please try again.",})
+        }
+      }
+};
+
   const columns = [
     {
-      title: "S.ID",
-      dataIndex: "id",
-      key: "id",
+      title: "S. ID",
+      key: "serialNumber", 
+      render: (text, record, index) => `${index + 1}`, 
+      responsive: ["md"], 
     },
     {
-      title: "Image",
-      dataIndex: "images",
-      key: "images",
-      render: (images) => (
-        <div className="flex space-x-2">
-          {images && images.length > 0 ? (
-            images.map((image, index) => (
-              <img
-                key={index}
-                src={image}
-                alt={`Product Image ${index + 1}`}
-                className="size-8 rounded-full"
-              />
-            ))
-          ) : (
-            <span>No images</span>
-          )}
-        </div>
-      ),
-    },
-    {
-      title: "",
-      dataIndex: "",
-      key: "",
-    },
+          title: "Image",
+          dataIndex: "image",
+          key: "image",
+          render: (image) => (
+            <img src={`${url}${image}`} alt="Category Image" className="size-8 rounded-full" />
+          ),
+        },
     {
       title: "Category",
-      dataIndex: "category",
-      key: "category",
+      dataIndex: "name",
+      key: "name",
     },
     {
-      title: "",
-      dataIndex: "",
-      key: "",
+      title: "Active/Inactive",
+      dataIndex: "isActive",
+      key: "isActive",
+      render: (isActive) => (isActive ? "Active" : "Inactive"),
+      
     },
-    {
-      title: "",
-      dataIndex: "",
-      key: "",
-    },
-    {
-      title: "",
-      dataIndex: "",
-      key: "",
-    },
-    {
-      title: "",
-      dataIndex: "",
-      key: "",
-    },
-    {
-      title: "",
-      dataIndex: "",
-      key: "",
-    },
+    
     {
       title: <span className="ml-6">Action</span>,
       key: "action",
       render: (_, record) => (
         <div className="flex items-center space-x-2">
-          <Switch defaultChecked={record.status} />
+          {/* <Switch defaultChecked={record.isActive}  onChange={(checked) => handleSwitchChange(checked, record)} /> */}
+          <Switch
+        checked={record.isActive} // Dynamically bind to isActive
+        onChange={(checked) => handleSwitchChange(checked, record)}
+      />
           <Tooltip title="View Details">
             <Button
               icon={<TbEdit />}
@@ -154,9 +193,9 @@ const Categories = () => {
               </div>
             }
             trigger="click"
-            visible={popoverVisible === record.id} // Show popover only for the clicked record
+            visible={popoverVisible === record._id} // Show popover only for the clicked record
             onVisibleChange={(visible) =>
-              setPopoverVisible(visible ? record.id : null)
+              setPopoverVisible(visible ? record._id : null)
             } // Track popover visibility
             placement="bottomRight"
           >
@@ -167,7 +206,11 @@ const Categories = () => {
     },
   ];
 
+
   const handleOpenAddModal = () => {
+
+    // console.log('value', values);
+    
     setIsAddModalVisible(true);
   };
 
@@ -214,9 +257,9 @@ const Categories = () => {
       >
         <Table
           columns={columns}
-          dataSource={data}
+          dataSource={categoryData?.data}
           pagination={{ pageSize: 10 }}
-          loading={loading}
+          loading={isLoading}
           rowKey="id"
           className="bg-white rounded-lg shadow-lg"
         />
@@ -230,7 +273,7 @@ const Categories = () => {
         centered
         width={800}
       >
-        <CategoryAdd />
+        <CategoryAdd setIsAddModalVisible={setIsAddModalVisible} />
       </Modal>
 
       {/* Product Details Modal */}

@@ -58,13 +58,12 @@ const authApi = baseApi.injectEndpoints({
 
     // Resend Otp
     ResendOtp: builder.mutation({
-      query: (data) => {
+      query: () => {
         const token = localStorage.getItem("otpToken");
         console.log("Resend OTP Token", token);
         return {
           url: "/otp/resend-otp",
           method: "PATCH",
-          body: data,
           headers: {
             // "content-type": "application/json",
             token: token,

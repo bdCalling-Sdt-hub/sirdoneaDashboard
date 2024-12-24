@@ -7,10 +7,23 @@ import { AllIcons } from "../../../public/images/AllImages";
 import Area_Chart from "../Chart/AreaChart";
 import EarningsPieChart from "../Chart/EarningsPieChart";
 import InventoryTracking from "../Tables/InventoryTracking";
+import { useGetAllDashboardOverviewPointQuery, useGetAllTopSellPRoductAndlowSellProductQuery } from "../../Redux/api/dashboardApi";
+import { useGetAllProductsQuery } from "../../Redux/api/product";
 
 const Dashboard = () => {
   const [data, setData] = useState([]);
   const [loading, setLoading] = useState(true);
+  const {data:overviewData, isLoading} = useGetAllDashboardOverviewPointQuery();
+  console.log("overviewData",overviewData?.data);
+  const [year, setYear] = useState(new Date().getFullYear());
+  // console.log('year',year);
+  const {data:products, isLoading:productLoading} = useGetAllProductsQuery();
+
+  const {data:topAndLowestProducts, isLoading:topAndLowestProductLoading} = useGetAllTopSellPRoductAndlowSellProductQuery();
+
+  console.log('{topAndLowestProducts?.data}',topAndLowestProducts?.data );
+  
+  
 
   useEffect(() => {
     const fetchData = async () => {
@@ -45,7 +58,7 @@ const Dashboard = () => {
                     Total Earning
                   </p>
                   <p className="text-sm lg:text-base xl:text-3xl font-semibold text-[#1B7443]">
-                    $1500
+                    ${overviewData?.data?.totalEarnings}
                   </p>
                 </div>
               </div>
@@ -60,7 +73,7 @@ const Dashboard = () => {
                     Total User
                   </p>
                   <p className="text-sm lg:text-base xl:text-3xl font-semibold text-[#1B7443]">
-                    100
+                    {overviewData?.data?.allUserCount}
                   </p>
                 </div>
               </div>
@@ -75,7 +88,7 @@ const Dashboard = () => {
                     Total Organization
                   </p>
                   <p className="text-sm lg:text-base xl:text-3xl font-semibold text-[#1B7443]">
-                    25
+                  {overviewData?.data?.allOrganizationCount}
                   </p>
                 </div>
               </div>
@@ -88,7 +101,7 @@ const Dashboard = () => {
                   Pending Campaign
                 </p>
                 <p className="text-sm lg:text-base xl:text-3xl font-semibold text-[#1B7443]">
-                  30
+                {overviewData?.data?.allOrganizationPending}
                 </p>
               </div>
             </div>
@@ -98,7 +111,7 @@ const Dashboard = () => {
                   Running Campaign
                 </p>
                 <p className="text-sm lg:text-base xl:text-3xl font-semibold text-[#1B7443]">
-                  20
+                  {overviewData?.data?.allOrganizationRunning}
                 </p>
               </div>
             </div>
@@ -108,7 +121,7 @@ const Dashboard = () => {
                   Completed Campaign
                 </p>
                 <p className="text-sm lg:text-base xl:text-3xl font-semibold text-[#1B7443]">
-                  15
+                {overviewData?.data?.allOrganizationCompleted}
                 </p>
               </div>
             </div>
@@ -138,7 +151,7 @@ const Dashboard = () => {
                   }}
                 >
                   <Select
-                    defaultValue="2024"
+                   onChange={(value) => setYear(value)}
                     style={{ width: 100 }}
                     options={[
                       { value: "2024", label: "2024" },
@@ -152,7 +165,7 @@ const Dashboard = () => {
             </div>
             <hr />
             <div>
-              <Area_Chart />
+              <Area_Chart year={year} />
             </div>
           </div>
         </div>
@@ -164,7 +177,7 @@ const Dashboard = () => {
             <p className="text-2xl font-semibold text-base-color my-4">
               Inventory Tracking
             </p>
-            <InventoryTracking data={data} loading={loading} />
+            <InventoryTracking data={products?.data} loading={productLoading} />
           </div>
           <div>
             <p className="text-xl font-bold text-black mt-4 mb-5">
@@ -198,9 +211,9 @@ const Dashboard = () => {
                   <div className="flex flex-col md:flex-row md:flex justify-center items-center mt-8 md:mt-0 mb-6">
                     <div>
                       <p className="text-[#656565]">Top selling</p>
-                      <h4 className="font-semibold">Butterfly Tea-58%</h4>
+                      <h4 className="font-semibold">{topAndLowestProducts?.data?.topProduct?.productName}</h4>
                       <h1 className="text-[#1B7443] text-2xl font-semibold">
-                        $720.55
+                        ${topAndLowestProducts?.data?.topProduct?.productTotalAmount}
                       </h1>
                     </div>
                     <div>
@@ -208,16 +221,16 @@ const Dashboard = () => {
                     </div>
                     <div>
                       <p className="text-[#656565]">Low selling</p>
-                      <h4 className="font-semibold">Minty Comfort-38%</h4>
+                      <h4 className="font-semibold">{topAndLowestProducts?.data?.lowProduct?.productName}</h4>
                       <h1 className="text-[#60CF92] text-2xl font-semibold">
-                        $110.55
+                        ${topAndLowestProducts?.data?.lowProduct?.productTotalAmount}
                       </h1>
                     </div>
                   </div>
                   <div className="flex lg:flex-col xl:flex-row items-center justify-between mx-6 gap-7">
                     <div>
                       <p className="text-md md:text-base">Earning</p>
-                      <p className="text-md md:text-xl font-bold">$ 3500.55</p>
+                      <p className="text-md md:text-xl font-bold">${topAndLowestProducts?.data?.totalEarning}</p>
                     </div>
                     <div>
                       <div className="flex justify-start items-center gap-1">

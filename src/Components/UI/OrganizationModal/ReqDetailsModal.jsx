@@ -3,8 +3,65 @@
 
 import { Button, ConfigProvider, Modal } from "antd";
 import { IoIosArrowBack } from "react-icons/io";
+import { useApprovedOrganizersMutation, useDeletedOrganizersMutation } from "../../../Redux/api/organizerApi";
+import Swal from "sweetalert2";
 
-const RequestDetailsModal = ({ visible, onClose, data }) => {
+const url = "http://192.168.12.232:8010/";
+
+const RequestDetailsModal = ({ visible, onClose, data , refetch}) => {
+
+  const [deleteOrganizer] = useDeletedOrganizersMutation();
+  const [acceptOrganizer] = useApprovedOrganizersMutation();
+
+  const handleDeleted = async (id) => {
+    try {
+      const response = await deleteOrganizer(id).unwrap();
+      console.log("organizer cencle response", response);
+      
+      if (response.success) {
+        Swal.fire({
+          icon: "success",
+          title: "Success!",
+          text: "Organizer Cenceled successfully.",
+        });
+        refetch();
+        onClose();
+      }
+    } catch (error) {
+      console.error("Error:", error);
+      Swal.fire({
+        icon: "error",
+        title: "Error!",
+        text: "Failed to delete organizer. Please try again.",
+      });
+    }
+  };
+
+
+  const handleApprove = async (id) => {
+    try {
+      const response = await acceptOrganizer(id).unwrap();
+      console.log("organizer approved response", response);
+      if (response.success) {
+        Swal.fire({
+          icon: "success",
+          title: "Success!",
+          text: "Organizer Approved successfully.",
+        });
+        refetch();
+        onClose();
+      }
+    } catch (error) {
+      console.error("Error:", error);
+      Swal.fire({
+        icon: "error",
+        title: "Error!",
+        text: "Failed to delete approved organizer. Please try again.",
+      });
+    }
+  };
+
+
   return (
     <ConfigProvider
       theme={{
@@ -51,27 +108,23 @@ const RequestDetailsModal = ({ visible, onClose, data }) => {
 
         <div className="px-14">
           <h3 className="text-xl font-thin text-[#1b7443] text-center">
-            Organization Name: {data.name || "Organization Name"}
+            Organization Name: {data.organizationDetails.organizationName || "Organization Name"}
           </h3>
 
           <div className="p-6">
             <div className="gap-4">
               <img
-                src={data.image || "../images/default.jpg"}
+                src={`${url}${data.userId.image }` || "../images/default.jpg"}
                 alt="Organization"
                 className="w-32 h-32 object-cover rounded-lg"
               />
               <div>
                 <p className="text-lg font-semibold">
-                  Organization Creator: Stiven Hoking
+                Organization Creator Name :<span>  {data?.organizerInfo?.firstName || ""} {data?.organizerInfo?.lastName || ""}</span>
                 </p>
                 <p>{data.creatorName}</p>
                 <p className="text-lg font-semibold mt-2">
-                  Target: {data.target}
-                </p>
-
-                <p className="text-lg font-semibold mt-2">
-                  Percentage: {data.percentage}
+                  Target: {data.fundraiserInformation.goal}
                 </p>
               </div>
             </div>
@@ -121,13 +174,13 @@ const RequestDetailsModal = ({ visible, onClose, data }) => {
 
         <div className="flex justify-center items-center gap-4 mt-6">
           <Button
-            onClick={() => console.log("Delete clicked")}
+            onClick={() => handleDeleted(data._id)}
             className="bg-red-500 text-white px-6 py-2 rounded-md"
           >
             Delete
           </Button>
           <Button
-            onClick={() => console.log("Approve clicked")}
+            onClick={() => handleApprove(data._id)}
             className="bg-[#1B7443] text-white px-6 py-2 rounded-md"
           >
             Approve

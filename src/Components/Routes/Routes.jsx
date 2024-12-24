@@ -34,6 +34,7 @@ import OrganizationTable from "../Dashboard/Organization/AllOrganization";
 import OrganizationRequest from "../Dashboard/Organization/OrganizationRequest";
 import OrganizationPayment from "../Dashboard/Organization/OrganizationPayment";
 import Categories from "../Dashboard/Category";
+import ProtectedRoute from "../ProtectedRoute";
 
 //
 
@@ -60,7 +61,11 @@ const router = createBrowserRouter([
       },
       {
         path: "",
-        element: <DashboardLayout />,
+        element:  (
+          <ProtectedRoute >
+            <DashboardLayout />
+           </ProtectedRoute>
+        ),
         children: [
           {
             path: "/",

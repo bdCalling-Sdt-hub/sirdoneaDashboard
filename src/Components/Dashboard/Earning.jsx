@@ -3,11 +3,9 @@ import { useEffect, useState } from "react";
 import { LuArrowLeftRight } from "react-icons/lu";
 import EarningTable from "../Tables/EarningTable";
 import ViewEarningModal from "../UI/ViewEarningModal";
+import { useGetAllPaymentEarningsQuery, useGetAllPaymentTodayAndTotalEarningsQuery } from "../../Redux/api/payment";
 
 export default function Earning() {
-  //* Use to set user
-  const [data, setData] = useState([]);
-  const [loading, setLoading] = useState(true);
 
   //* It's Use to Show Modal
   const [isViewModalVisible, setIsViewModalVisible] = useState(false);
@@ -15,23 +13,11 @@ export default function Earning() {
   //* It's Use to Set Seclected User to delete and view
   const [currentRecord, setCurrentRecord] = useState(null);
 
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const response = await axios.get("/data/earningData.json");
+  const {data: earningData, isLoading} = useGetAllPaymentEarningsQuery();
+  const {data: earningDataToday, isLoading: isLoadingToday} = useGetAllPaymentTodayAndTotalEarningsQuery();
 
-        setData(response?.data);
-      } catch (error) {
-        console.error("Error fetching data:", error);
-      } finally {
-        setLoading(false);
-      }
-    };
-
-    fetchData();
-  }, []);
-
-  console.log(data);
+  console.log('earningDataToday ', earningDataToday?.data);
+  
 
   const showViewModal = (record) => {
     setCurrentRecord(record);
@@ -55,20 +41,20 @@ export default function Earning() {
               <div className="flex items-center gap-3 bg-[#1b7443] text-primary-color px-4 py-2 rounded">
                 <LuArrowLeftRight />
                 <h1>Today’s Earning</h1>
-                <h1 className="font-semibold text-lg">$3230</h1>
+                <h1 className="font-semibold text-lg">${earningDataToday?.data?.todayEarnings}</h1>
               </div>
               <div className="flex items-center gap-3 bg-[#1b7443] text-primary-color px-4 py-2 rounded">
                 <LuArrowLeftRight />
                 <h1>Total Earning</h1>
-                <h1 className="font-semibold text-lg">$5230</h1>
+                <h1 className="font-semibold text-lg">${earningDataToday?.data?.totalEarnings}</h1>
               </div>
             </div>
           </div>
         </div>
         <div className="px-2 lg:px-6">
           <EarningTable
-            data={data}
-            loading={loading}
+            data={earningData?.data}
+            loading={isLoading}
             showViewModal={showViewModal}
             pageSize={8}
           />

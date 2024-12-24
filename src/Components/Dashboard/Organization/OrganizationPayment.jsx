@@ -7,28 +7,32 @@ import OrgPayment from "../../UI/OrganizationModal/OrgPayment";
 import CheckPayoutModal from "../../UI/OrganizationPaymentModal/CheckPayoutModal"; // Import the CheckPayoutModal
 import DirectDepositModal from "../../UI/OrganizationPaymentModal/DirectDepositModal";
 import PayNowModal from "../../UI/OrganizationPaymentModal/PayNowModal";
+import { useGetAllApprovedOrganizersQuery } from "../../../Redux/api/organizerApi";
+import { useAccountInfoDetailsQuery } from "../../../Redux/api/payment";
+import { render } from "react-dom";
 
 const OrganizationPayment = () => {
-  const [data, setData] = useState([]); // Raw data
   const [filteredData, setFilteredData] = useState([]); // Filtered data based on search
-  const [loading, setLoading] = useState(true);
   const [isModalVisible, setIsModalVisible] = useState(false);
   const [selectedRecord, setSelectedRecord] = useState(null);
-
   // Actions modal state
   const [isActionVisible, setActionVisible] = useState(false);
   const [selectedAction, setSelectedAction] = useState(null);
-
   // Details modal state
   const [isDetailsModalVisible, setIsDetailsModalVisible] = useState(false);
   const [selectedDetailsRecord, setSelectedDetailsRecord] = useState(null);
 
-  const [searchTerm, setSearchTerm] = useState(""); // State to store search term
+  const [searchTerm, setSearchTerm] = useState("");
+  const {data:acceptOrganizerData, isLoading, refetch} = useGetAllApprovedOrganizersQuery();
+
 
   // Show actions modal
   const showActionsModal = (record) => {
-    setSelectedAction(record); // Set the selected record
-    setActionVisible(true); // Show the modal
+    console.log('recode paymnet', record);
+    
+    setSelectedRecord(record); // Set the selected record
+    // setActionVisible(true); // Show the modal
+    setIsModalVisible(true);
   };
 
   // Close actions modal
@@ -59,122 +63,219 @@ const OrganizationPayment = () => {
     setSelectedDetailsRecord(null); // Clear the selected record
   };
 
-  // Fetching data
+
   useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const response = await axios.get("/data/paymentData.json"); // Fetch your data
-        setData(response.data);
-        setFilteredData(response.data); // Initially, show all data
-      } catch (error) {
-        console.error("Error fetching data:", error);
-      } finally {
-        setLoading(false);
-      }
-    };
-    fetchData();
-  }, []);
+    if (acceptOrganizerData?.data) {
+      setFilteredData(acceptOrganizerData.data);
+    } else {
+      setFilteredData([]);
+    }
+  }, [acceptOrganizerData]);
+
+
 
   // Handle the search input change
   const handleSearch = (value) => {
     setSearchTerm(value); // Update search term
 
     if (value.trim() === "") {
-      setFilteredData(data); // Show all data if search is empty
+      setFilteredData(acceptOrganizerData?.data); // Show all data if search is empty
     } else {
       // Perform case-insensitive search on relevant fields
       const lowercasedValue = value.toLowerCase();
-      const filtered = data.filter((record) => {
+      const filtered = acceptOrganizerData?.data?.filter((record) => {
         return (
-          record.founderName.toLowerCase().includes(lowercasedValue) ||
-          record.eventName.toLowerCase().includes(lowercasedValue) ||
-          record.target.toLowerCase().includes(lowercasedValue)
+          record.organizationDetails.organizationName.toLowerCase().includes(lowercasedValue) 
+          // record.eventName.toLowerCase().includes(lowercasedValue) ||
+          // record.target.toLowerCase().includes(lowercasedValue)
         );
       });
       setFilteredData(filtered); // Update filtered data
     }
   };
 
+ 
+  
+
+  // const columns = [
+  //   {
+  //     title: "S.ID",
+  //     dataIndex: "id",
+  //     key: "id",
+  //   },
+  //   {
+  //     title: "Organizer",
+  //     dataIndex: "founderName",
+  //     key: "founderName",
+  //   },
+  //   {
+  //     title: "Organization",
+  //     dataIndex: "eventName",
+  //     key: "eventName",
+  //   },
+  //   {
+  //     title: "Ending Date",
+  //     dataIndex: "endDate",
+  //     key: "endDate",
+  //   },
+  //   {
+  //     title: "Target",
+  //     dataIndex: "target",
+  //     key: "target",
+  //   },
+  //   {
+  //     title: "Sells",
+  //     dataIndex: "sells",
+  //     key: "sells",
+  //   },
+  //   {
+  //     title: "Payment",
+  //     dataIndex: "payment",
+  //     key: "payment",
+  //   },
+  //   {
+  //     title: "Payout option",
+  //     dataIndex: "payoutOption",
+  //     key: "payoutOption",
+  //     render: (_, record) => (
+  //       <Tag
+  //         className={`px-3 py-1 rounded-lg cursor-pointer font-semibold ${
+  //           record.payoutOption === "Direct Deposit"
+  //             ? "bg-[#1b7443] text-white"
+  //             : "bg-[#B2DAC4] text-[#1b7443]"
+  //         }`}
+  //         onClick={() => showDirectsModal(record)}
+  //       >
+  //         {record.payoutOption}
+  //       </Tag>
+  //     ),
+  //   },
+  //   {
+  //     title: "Details",
+  //     key: "details",
+  //     render: (_, record) => (
+  //       <Tooltip title="View Details">
+  //         <Button
+  //           icon={<EyeOutlined />}
+  //           shape="circle"
+  //           onClick={() => showDetailsModal(record)}
+  //         />
+  //       </Tooltip>
+  //     ),
+  //   },
+  //   {
+  //     title: "Action",
+  //     key: "action",
+  //     render: (_, record) => (
+  //       <Tag
+  //         color={record.status === "Pay Now" ? "red" : "#1b7443"}
+  //         className="px-3 py-1 rounded-lg cursor-pointer"
+  //         onClick={() => showActionsModal(record)} // Open actions modal when status is "Pay Now"
+  //       >
+  //         <div>{record.status}</div>
+  //       </Tag>
+  //     ),
+  //   },
+  // ];
+
   const columns = [
     {
-      title: "S.ID",
-      dataIndex: "id",
+      title: "SL ID",
+      dataIndex: "_id",
+      render: (_, __, index) => `${index + 1}`,
       key: "id",
     },
     {
-      title: "Organizer",
-      dataIndex: "founderName",
-      key: "founderName",
+      title: "Name",
+      key: "name",
+      render: (record) => `${record?.organizerInfo?.firstName || ""} ${record?.organizerInfo?.lastName || ""}` || "N/A",
     },
     {
       title: "Organization",
-      dataIndex: "eventName",
-      key: "eventName",
+      key: "organization",
+      render: (record) => record.organizationDetails?.organizationName || "N/A",
     },
+    
     {
       title: "Ending Date",
-      dataIndex: "endDate",
       key: "endDate",
+      render: (record) => {
+        const info = record.fundraiserInformation;
+        return info
+          ? `${info.year || ""}/ ${info.endMonth || ""}/ ${info.endDay || ""}/ ${info.endTime || ""}`
+          : "N/A";
+      },
     },
     {
       title: "Target",
-      dataIndex: "target",
       key: "target",
+      render: (record) => record.fundraiserInformation?.goal || "N/A",
     },
     {
-      title: "Sells",
-      dataIndex: "sells",
-      key: "sells",
+      title: "Total Sells",
+      dataIndex: "totalSells",
+      key: "totalSells",
+      render: (totalSells) => totalSells || "0",
     },
     {
-      title: "Payment",
-      dataIndex: "payment",
-      key: "payment",
+      title: "Code",
+      dataIndex: "uniquePopsCode",
+      key: "uniquePopsCode",
+    },
+
+    {
+      title: "Status",
+      dataIndex: "status",
+      key: "status",
+      render: (status) => {
+        const colors = { running: "green", completed: "red", pending: "orange" };
+        return <Tag color={colors[status] || "blue"}>{status || "Unknown"}</Tag>;
+      },
     },
     {
-      title: "Payout option",
-      dataIndex: "payoutOption",
-      key: "payoutOption",
-      render: (_, record) => (
-        <Tag
-          className={`px-3 py-1 rounded-lg cursor-pointer font-semibold ${
-            record.payoutOption === "Direct Deposit"
-              ? "bg-[#1b7443] text-white"
-              : "bg-[#B2DAC4] text-[#1b7443]"
-          }`}
-          onClick={() => showDirectsModal(record)}
-        >
-          {record.payoutOption}
-        </Tag>
-      ),
+      title: "Payment Status",
+      dataIndex: "paymentStatus",
+      key: "paymentStatus",
+      render: (paymentStatus) => {
+        const colors = { complete: "red", pending: "orange" };
+        return <Tag color={colors[paymentStatus] || "blue"}>{paymentStatus || "Unknown"}</Tag>;
+      }
+     
     },
     {
-      title: "Details",
+      title: "Payment Type",
+      dataIndex: "paymentType",
+      key: "paymentType",
+     
+    },
+    {
+      title: "Actions",
       key: "details",
       render: (_, record) => (
-        <Tooltip title="View Details">
-          <Button
-            icon={<EyeOutlined />}
-            shape="circle"
-            onClick={() => showDetailsModal(record)}
-          />
-        </Tooltip>
+        <>
+          {/* Tooltip for viewing details */}
+          <Tooltip title="View Details">
+            <Button
+              icon={<EyeOutlined />}
+              shape="circle"
+              onClick={() => showDetailsModal(record)}
+            />
+          </Tooltip>
+    
+          {/* Conditional Tag */}
+          <Tag
+            className="px-3 py-1 rounded-lg cursor-pointer ml-2 bg-green-700 text-white"
+            onClick={ () => showActionsModal(record)}
+          >
+         Pay now
+          </Tag>
+        </>
       ),
-    },
-    {
-      title: "Action",
-      key: "action",
-      render: (_, record) => (
-        <Tag
-          color={record.status === "Pay Now" ? "red" : "#1b7443"}
-          className="px-3 py-1 rounded-lg cursor-pointer"
-          onClick={() => showActionsModal(record)} // Open actions modal when status is "Pay Now"
-        >
-          <div>{record.status}</div>
-        </Tag>
-      ),
-    },
+    }
+    
+    
   ];
+
 
   return (
     <div className="min-h-screen bg-[#FAF8F5]">
@@ -189,9 +290,9 @@ const OrganizationPayment = () => {
             value={searchTerm} // Bind the search term state
             onChange={(e) => handleSearch(e.target.value)} // Handle search input change
           />
-          <button className="rounded-full bg-white w-10 h-10 md:w-10 flex items-center justify-center">
+          {/* <button className="rounded-full bg-white w-10 h-10 md:w-10 flex items-center justify-center">
             <GrDownload className="text-4xl text-[#1B7443] p-2" />
-          </button>
+          </button> */}
         </div>
       </div>
 
@@ -212,7 +313,7 @@ const OrganizationPayment = () => {
           columns={columns}
           dataSource={filteredData} // Display the filtered data
           pagination={{ pageSize: 8 }}
-          loading={loading}
+          loading={isLoading}
           rowKey="id"
           className="bg-white rounded-b-lg shadow-lg"
           scroll={{ x: true }}
@@ -229,30 +330,34 @@ const OrganizationPayment = () => {
       )}
 
       {/* Show PayNowModal if selectedAction's status is "Pay Now" */}
-      {selectedAction &&
+      {/* {selectedAction &&
         isActionVisible &&
-        selectedAction.status === "Pay Now" && (
+        selectedAction.paymentType === "deposit" && (
           <PayNowModal
             visible={isActionVisible}
             onClose={closeActionsModal}
             data={selectedAction}
           />
-        )}
+        )} */}
 
       {/* Show other modals for other payout options */}
+      
+      
       {selectedRecord &&
         isModalVisible &&
-        (selectedRecord.payoutOption === "Check Payout" ? (
+        (selectedRecord?.paymentType === "check" ? (
           <CheckPayoutModal
             visible={isModalVisible}
             onClose={closeModal}
             data={selectedRecord}
+            refetch={refetch}
           />
         ) : (
           <DirectDepositModal
             visible={isModalVisible}
             onClose={closeModal}
             data={selectedRecord}
+            refetch={refetch}
           />
         ))}
     </div>

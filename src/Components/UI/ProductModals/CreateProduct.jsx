@@ -11,6 +11,7 @@ import {
 } from "antd";
 import { useEffect, useState } from "react";
 import { RiDeleteBin6Line } from "react-icons/ri";
+import { useGetAllCategoryQuery } from "../../../Redux/api/categoryApi";
 
 const { TextArea } = Input;
 const { Option } = Select;
@@ -22,12 +23,17 @@ const AddProductForm = ({ onSubmit }) => {
   const [price, setPrice] = useState("");
   const [quantity, setQuantity] = useState("");
   const [productName, setProductName] = useState("");
+  const [categoryName, setCategoryName] = useState("");
+  const [productDetails, setProductDetails] = useState("");
   const [size, setSize] = useState("");
 
   const [teaItems, setTeaItems] = useState([]);
   const [tShirtItems, setTShirtItems] = useState([]);
   const [mugItems, setMugItems] = useState([]);
   const [toteItems, setToteItems] = useState([]);
+  const [categoryId, setCategoryId] = useState("");
+
+  const {data:categoryData, isLoading, refetch} = useGetAllCategoryQuery();
 
   useEffect(() => {
     console.log("Mug Items:", mugItems);
@@ -64,6 +70,7 @@ const AddProductForm = ({ onSubmit }) => {
   };
 
   const handleSubmit = () => {
+    const formData = new FormData();
     if (!productName) {
       message.error("Please enter a product name.");
       return;
@@ -77,8 +84,38 @@ const AddProductForm = ({ onSubmit }) => {
 
     // Call the onSubmit function passed as prop to update the parent
     onSubmit(productData);
+    console.log({categoryId});
+    
+    
+
+    const newProductData = {
+      categoryId: categoryId,
+      categoryName: categoryName,
+      productName: productName,
+      productDetails: productDetails,
+
+    };
+
+    if(teaItems){
+    newProductData.teaItems = [{
+      options:teaItems.options,
+      price:teaItems.price,
+
+    }]
+    }
+
+    if(tShirtItems){
+    newProductData.tShirtItems = [{
+      colors:teaItems.options,
+      size:teaItems.size,
+      price:teaItems.price,
+
+    }]
+    }
+
 
     console.log(productData);
+    console.log(newProductData);
 
     // Reset form fields
     setProductName("");
@@ -135,19 +172,28 @@ const AddProductForm = ({ onSubmit }) => {
         >
           <span className="font-semibold">Type</span>
           <Select
-            placeholder="Product Type"
-            className="w-full h-10"
-            onChange={(value) => setProductType(value)}
-            value={productType}
-          >
-            {/* <Option value="" disabled>
-              Select Product Type
-            </Option> */}
-            <Option value="tea">Tea</Option>
-            <Option value="mug">Mug</Option>
-            <Option value="tote">Tote</Option>
-            <Option value="tShirt">T-Shirt</Option>
-          </Select>
+  placeholder="Product Type"
+  className="w-full h-10"
+  onChange={(value) => {
+    // Find the selected category by name
+    const selectedCategory = categoryData?.data?.find(
+      (category) => category.name.toLowerCase() === value
+    );
+    if (selectedCategory) {
+      setCategoryId(selectedCategory._id);
+      setCategoryName(selectedCategory.name); // Set the category ID
+    }
+    setProductType(value); // Set the product type
+  }}
+  value={productType}
+>
+  {categoryData?.data?.map((category) => (
+    <Option key={category._id}  value={category.name.toLowerCase()}>
+      {category.name}
+    </Option>
+  ))}
+</Select>
+
         </ConfigProvider>
       </div>
 
@@ -410,6 +456,7 @@ const AddProductForm = ({ onSubmit }) => {
           className="placeholder:text-gray-500"
           placeholder="Enter product details..."
           rows={4}
+          onChange={(e) => setProductDetails(e.target.value)}
         />
       </div>
 

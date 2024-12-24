@@ -13,11 +13,10 @@ import { useEffect, useState } from "react";
 import { GrDownload } from "react-icons/gr";
 import ReasonModal from "../../UI/OrganizationModal/ReasonModal"; // ReasonModal component
 import RequestDetailsModal from "../../UI/OrganizationModal/ReqDetailsModal"; // RequestDetailsModal component
+import { useGetAllPendingOrganizersQuery } from "../../../Redux/api/organizerApi";
 
 const OrganizationRequest = () => {
-  const [data, setData] = useState([]); // Raw data
   const [filteredData, setFilteredData] = useState([]); // Filtered data based on search
-  const [loading, setLoading] = useState(true);
   const [isModalVisible, setIsModalVisible] = useState(false);
   const [selectedRecord, setSelectedRecord] = useState(null);
   const [deleteVisible, setDeleteVisible] = useState(false);
@@ -25,36 +24,36 @@ const OrganizationRequest = () => {
   const [selectedDelete, setSelectedDelete] = useState(null);
   const [searchTerm, setSearchTerm] = useState(""); // State for search term
 
-  // Fetching data
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const response = await axios.get("/data/requestData.json"); // Adjust path if necessary
-        setData(response.data);
-        setFilteredData(response.data); // Initially, show all data
-      } catch (error) {
-        console.error("Error fetching data:", error);
-      } finally {
-        setLoading(false);
+  const {data:organizationRequestData, isLoading, refetch} = useGetAllPendingOrganizersQuery();
+
+
+  // // Fetching data
+    // Sync state with fetched data
+    useEffect(() => {
+      if (organizationRequestData?.data) {
+        setFilteredData(organizationRequestData.data);
+      } else {
+        setFilteredData([]);
       }
-    };
-    fetchData();
-  }, []);
+    }, [organizationRequestData]);
 
   // Handle the search input change
+
+  console.log('request organizer', organizationRequestData?.data);
+  
   const handleSearch = (value) => {
     setSearchTerm(value);
 
     if (value.trim() === "") {
-      setFilteredData(data); // Show all data if search is empty
+      setFilteredData(organizationRequestData?.data); // Show all data if search is empty
     } else {
       // Filter data based on the search term (case-insensitive)
       const lowercasedValue = value.toLowerCase();
-      const filtered = data.filter((record) => {
+      const filtered = organizationRequestData?.data?.filter((record) => {
         return (
-          record.eventName.toLowerCase().includes(lowercasedValue) ||
-          record.name.toLowerCase().includes(lowercasedValue) ||
-          record.target.toLowerCase().includes(lowercasedValue)
+          record.organizationDetails.organizationName.toLowerCase().includes(lowercasedValue) 
+          // record.name.toLowerCase().includes(lowercasedValue) ||
+          // record.target.toLowerCase().includes(lowercasedValue)
         );
       });
       setFilteredData(filtered); // Update filtered data
@@ -97,91 +96,181 @@ const OrganizationRequest = () => {
     setSelectedRecord(null);
   };
 
+  // const columns = [
+  //   {
+  //     title: "SL ID",
+  //     dataIndex: "id",
+  //     key: "id",
+  //   },
+  //   {
+  //     title: "Image",
+  //     dataIndex: "image",
+  //     key: "image",
+  //     render: (image) => (
+  //       <img src={image} alt="Event" className="w-8 h-8 rounded-full" />
+  //     ),
+  //   },
+  //   {
+  //     title: "Organization",
+  //     dataIndex: "eventName",
+  //     key: "eventName",
+  //   },
+  //   {
+  //     title: "Organizer",
+  //     dataIndex: "name",
+  //     key: "name",
+  //   },
+  //   {
+  //     title: "Target",
+  //     dataIndex: "target",
+  //     key: "target",
+  //   },
+  //   {
+  //     title: "Approve or Deny",
+  //     dataIndex: "approve",
+  //     key: "approve",
+  //     render: (approve) => {
+  //       let bgColor = "";
+  //       let color = "";
+  //       if (approve === "Approved") {
+  //         bgColor = "#DEF2E7";
+  //         color = "#1B7443";
+  //       } else {
+  //         bgColor = "#F1F2DE";
+  //         color = "#9FA800";
+  //       }
+
+  //       return (
+  //         <Tag
+  //           className="ml-4"
+  //           style={{
+  //             backgroundColor: bgColor,
+  //             border: "none",
+  //             color: color,
+  //             fontSize: "16px",
+  //             padding: "2px 8px",
+  //           }}
+  //         >
+  //           {approve}
+  //         </Tag>
+  //       );
+  //     },
+  //   },
+    // {
+    //   title: "Action",
+    //   key: "delete",
+    //   render: (_, record) => (
+    //     <div className="flex">
+    //       <Tooltip title="View Details">
+    //         <Button
+    //           icon={<EyeOutlined />}
+    //           shape="circle"
+    //           className="-ml-4 mr-2"
+    //           onClick={() => showDetailsModal(record)}
+    //         />
+    //       </Tooltip>
+    //       <Tooltip title="Delete">
+    //         <Button
+    //           icon={<DeleteOutlined />}
+    //           shape="circle"
+    //           className="text-red-500"
+    //           onClick={() => handleDelete(record)}
+    //         />
+    //       </Tooltip>
+    //     </div>
+    //   ),
+    // },
+  // ];
+
   const columns = [
     {
       title: "SL ID",
-      dataIndex: "id",
+      dataIndex: "_id",
+      render: (_, __, index) => `${index + 1}`,
       key: "id",
     },
     {
-      title: "Image",
-      dataIndex: "image",
-      key: "image",
-      render: (image) => (
-        <img src={image} alt="Event" className="w-8 h-8 rounded-full" />
-      ),
+      title: "Name",
+      key: "name",
+      render: (record) => `${record?.organizerInfo?.firstName || ""} ${record?.organizerInfo?.lastName || ""}` || "N/A",
     },
     {
       title: "Organization",
-      dataIndex: "eventName",
-      key: "eventName",
+      key: "organization",
+      render: (record) => record.organizationDetails?.organizationName || "N/A",
     },
     {
-      title: "Organizer",
-      dataIndex: "name",
-      key: "name",
-    },
-    {
-      title: "Target",
-      dataIndex: "target",
-      key: "target",
-    },
-    {
-      title: "Approve or Deny",
-      dataIndex: "approve",
-      key: "approve",
-      render: (approve) => {
-        let bgColor = "";
-        let color = "";
-        if (approve === "Approved") {
-          bgColor = "#DEF2E7";
-          color = "#1B7443";
-        } else {
-          bgColor = "#F1F2DE";
-          color = "#9FA800";
-        }
-
-        return (
-          <Tag
-            className="ml-4"
-            style={{
-              backgroundColor: bgColor,
-              border: "none",
-              color: color,
-              fontSize: "16px",
-              padding: "2px 8px",
-            }}
-          >
-            {approve}
-          </Tag>
-        );
+      title: "Start Date",
+      key: "startDate",
+      render: (record) => {
+        const info = record.fundraiserInformation;
+        return info
+          ? `${info.year || ""}/ ${info.startMonth || ""}/ ${info.startDay || ""}/ ${info.startTime || ""}`
+          : "N/A";
       },
     },
     {
-      title: "Action",
-      key: "delete",
-      render: (_, record) => (
-        <div className="flex">
-          <Tooltip title="View Details">
-            <Button
-              icon={<EyeOutlined />}
-              shape="circle"
-              className="-ml-4 mr-2"
-              onClick={() => showDetailsModal(record)}
-            />
-          </Tooltip>
-          <Tooltip title="Delete">
-            <Button
-              icon={<DeleteOutlined />}
-              shape="circle"
-              className="text-red-500"
-              onClick={() => handleDelete(record)}
-            />
-          </Tooltip>
-        </div>
-      ),
+      title: "Ending Date",
+      key: "endDate",
+      render: (record) => {
+        const info = record.fundraiserInformation;
+        return info
+          ? `${info.year || ""}/ ${info.endMonth || ""}/ ${info.endDay || ""}/ ${info.endTime || ""}`
+          : "N/A";
+      },
     },
+    {
+      title: "Target",
+      key: "target",
+      render: (record) => record.fundraiserInformation?.goal || "N/A",
+    },
+    // {
+    //   title: "Total Sells",
+    //   dataIndex: "totalSells",
+    //   key: "totalSells",
+    //   render: (totalSells) => totalSells || "0",
+    // },
+    {
+      title: "Code",
+      dataIndex: "uniquePopsCode",
+      key: "uniquePopsCode",
+    },
+    {
+      title: "Status",
+      dataIndex: "status",
+      key: "status",
+      render: (status) => {
+        const colors = { running: "green", completed: "red", pending: "orange" };
+        return <Tag color={colors[status] || "blue"}>{status || "Unknown"}</Tag>;
+      },
+    },
+    {
+         title: "Action",
+         key: "delete",
+         render: (_, record) => (
+           <div className="flex">
+             <Tooltip title="View Details">
+               <Button
+                 icon={<EyeOutlined />}
+                 shape="circle"
+                 className="-ml-4 mr-2"
+                 onClick={() => showDetailsModal(record)}
+               />
+             </Tooltip>
+             {/* <Tooltip title="Delete">
+               <Button
+                 icon={<DeleteOutlined />}
+                 shape="circle"
+                 className="text-red-500"
+                 onClick={() => handleDelete(record)}
+               />
+             </Tooltip> */}
+           </div>
+         ),
+       },
+    
   ];
+
 
   return (
     <div className="min-h-screen bg-[#FAF8F5]">
@@ -198,9 +287,9 @@ const OrganizationRequest = () => {
             value={searchTerm} // Bind the search term state
             onChange={(e) => handleSearch(e.target.value)} // Handle search input change
           />
-          <button className="rounded-full bg-white w-10 h-10 md:w-10 flex items-center justify-center">
+          {/* <button className="rounded-full bg-white w-10 h-10 md:w-10 flex items-center justify-center">
             <GrDownload className="text-4xl text-[#1B7443] p-2" />
-          </button>
+          </button> */}
         </div>
       </div>
 
@@ -229,7 +318,7 @@ const OrganizationRequest = () => {
           columns={columns}
           dataSource={filteredData} // Display the filtered data
           pagination={{ pageSize: 8 }}
-          loading={loading}
+          loading={isLoading}
           rowKey="id"
           className="bg-white rounded-b-lg shadow-lg mt-4"
           scroll={{ x: true }}
@@ -282,6 +371,7 @@ const OrganizationRequest = () => {
           visible={isModalVisible}
           onClose={closeModal}
           data={selectedRecord}
+          refetch={refetch}
         />
       )}
     </div>

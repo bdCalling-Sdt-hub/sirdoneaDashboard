@@ -156,7 +156,7 @@ const DashboardLayout = () => {
           style={{ color: "#222222", fontSize: "16px" }}
         />
       ),
-      label: <NavLink to="/signin">Logout</NavLink>,
+      label: <NavLink onClick={() => localStorage.clear()} >Logout</NavLink>,
     },
   ];
 

@@ -10,7 +10,7 @@ const { TextArea } = Input;
 // const { Option } = Select;
 
 const EditProductForm = ({ initialValues, onSubmit }) => {
-  console.log(initialValues);
+  console.log({initialValues});
 
   // State for managing form fields
   const [productName, setProductName] = useState(initialValues?.product || "");
@@ -396,7 +396,7 @@ const EditProductForm = ({ initialValues, onSubmit }) => {
         >
           {coverImage ? (
             <img
-              src={URL.createObjectURL(coverImage)}
+              src={URL?.createObjectURL(coverImage)}
               alt="cover"
               style={{ width: "100%" }}
             />

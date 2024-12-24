@@ -10,29 +10,90 @@ import { baseApi } from "../baseApi";
 const categoryApi = baseApi.injectEndpoints({
   endpoints: (builder) => ({
     getAllCategory: builder.query({
-      query: () => ({
-        url: "/categories",
-        method: "GET",
-        // body: data,
-        // headers: {
-        //   "content-type": "application/json",
-        // },
-      }),
+      query: () => {
+        const accessToken = localStorage.getItem("accessToken");
+        console.log("accessToken", accessToken);
+        return {
+          url: "/category/admin",
+          method: "GET",
+          headers: {
+            "content-type": "application/json",
+            Authorization: `Bearer ${accessToken}`,
+          },
+        };
+      },
       providesTags: ["category"],
     }),
     createCategory: builder.mutation({
-      query: (formData) => ({
-        url: "/categories/create-category",
-        method: "POST",
-        body: formData,
-        headers: {
-          "Content-type": "multipart/form-data",
-        },
-        invalidatesTags: ["category"],
-      }),
+      query: (formData) => {
+        console.log('formdata query', formData);
+        
+        const accessToken = localStorage.getItem("accessToken");
+        console.log("accessToken", accessToken);
+        return {
+          url: "/category/create-category",
+          method: "POST",
+          body: formData,
+          headers: {
+            // "content-type": "application/json",
+            "Content-type": "multipart/form-data",
+            Authorization: `Bearer ${accessToken}`,
+          },
+          invalidatesTags: ["category"],
+        };
+      },
+      
+    }),
+    deleteCategory: builder.mutation({
+      query: (id) => {
+        // console.log('formdata query', formData);
+        
+        const accessToken = localStorage.getItem("accessToken");
+        console.log("accessToken", accessToken);
+        return {
+          url: `/category/${id}`,
+          method: "DELETE",
+          headers: {
+            "content-type": "application/json",
+            Authorization: `Bearer ${accessToken}`,
+          },
+          invalidatesTags: ["category"],
+        };
+      },
+      
+    }),
+    activeZDeactiveStatusCategory: builder.mutation({
+      query: (id) => {
+        const accessToken = localStorage.getItem("accessToken");
+        console.log("accessToken", accessToken);
+        return {
+          url: `/category/isActive/${id}`,
+          method: "PATCH",
+          headers: {
+            "content-type": "application/json",
+            Authorization: `Bearer ${accessToken}`,
+          },
+          invalidatesTags: ["category"],
+        };
+      },
+    }),
+
+    updateCategory: builder.mutation({
+      query: (id, formData) => {
+        const accessToken = localStorage.getItem("accessToken");
+        return {
+          url: `/category/${id}`,
+          method: "PATCH",
+          body: formData, // Automatically set `multipart/form-data`
+          headers: {
+            Authorization: `Bearer ${accessToken}`, // Don't manually set Content-Type
+          },
+        };
+      },
     }),
   }),
 });
 
-export const { useGetAllCategoryQuery, useCreateCategoryMutation } =
+
+export const { useGetAllCategoryQuery, useCreateCategoryMutation, useDeleteCategoryMutation, useActiveZDeactiveStatusCategoryMutation, useUpdateCategoryMutation } =
   categoryApi;

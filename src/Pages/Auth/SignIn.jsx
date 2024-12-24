@@ -8,12 +8,53 @@ import {
 } from "antd";
 import { Link, useNavigate } from "react-router-dom";
 import logo from "../../../public/images/logo.png";
+import { useSignInMutation } from "../../Redux/api/authApi";
+import Swal from "sweetalert2";
 
 const SignIn = () => {
   const navigate = useNavigate();
+  const [login, { isLoading }] = useSignInMutation();
 
-  const onFinish = (values) => {
+  const onFinish = async(values) => {
     console.log("Success:", values);
+    const data = {
+      email: values.email,
+      password: values.password,
+    };
+
+    try {
+      // Await the mutation response
+      const res = await login(data).unwrap();
+      // Storing tokens separately
+      console.log('res', res);
+      
+      localStorage.setItem("accessToken", res?.data?.accessToken);
+      localStorage.setItem("refreshToken", res?.data?.refreshToken);
+
+      if (res.success) {
+        Swal.fire({
+          title: "Login Successfully!",
+          text: "The user has been login!.",
+          icon: "success",
+        });
+        navigate("/");
+      } else {
+        Swal.fire({
+          title: "Error",
+          text: "There was an issue user login .",
+          icon: "error",
+        });
+      }
+    } catch (error) {
+      console.error("Error user login:", error);
+      if (error.data) {
+        Swal.fire({
+          title: `${error.data.message}`,
+          text: "Something went wrong while login users.",
+          icon: "error",
+        });
+      }
+    }
     navigate("/");
   };
   return (

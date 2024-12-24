@@ -1,5 +1,3 @@
-/* eslint-disable react/prop-types */
-// ProductDetailsModal.js
 import { LeftOutlined, RightOutlined } from "@ant-design/icons";
 import { Button, ConfigProvider, Modal, Table } from "antd";
 import { useState } from "react";
@@ -7,64 +5,82 @@ import { useState } from "react";
 const ProductDetailsModal = ({ visible, onClose, product }) => {
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
 
-  if (!product) return null; // If no product is selected, don't render
+  if (!product) return null; 
 
+  console.log("Product Details:", product);
+
+  // Handle Previous Image
   const handlePrevImage = () => {
     setCurrentImageIndex((prevIndex) =>
       prevIndex === 0 ? product.images.length - 1 : prevIndex - 1
     );
   };
 
+  // Handle Next Image
   const handleNextImage = () => {
     setCurrentImageIndex((prevIndex) =>
       prevIndex === product.images.length - 1 ? 0 : prevIndex + 1
     );
   };
 
-  const tShirtColumns = [
-    {
-      title: "Option",
-      dataIndex: "option",
-      key: "option",
-      render: (text, record) => {
-        // record will contain the row data, which is the product
-        return (
-          <div className="flex items-center gap-1">
-            <p>{record.product}</p>{" "}
-            {/* Access product name or any other field in the record */}
-          </div>
-        );
-      },
-    },
+  // Determine columns dynamically
+  const determineColumns = () => {
+    if (product.tShirtItems && product.tShirtItems.length > 0) {
+      return [
+        {
+          title: "Color",
+          dataIndex: "colors",
+          key: "colors",
+          render: (text) => <span>{text}</span>,
+        },
+        {
+          title: "Price",
+          dataIndex: "price",
+          key: "price",
+          render: (text) => <span>${text}</span>,
+        },
+        {
+          title: "Size",
+          dataIndex: "size",
+          key: "size",
+          render: (text) => <span>{text}</span>,
+        },
+       
+      ];
+    } else if (product.teaItems && product.teaItems.length > 0) {
+      return [
+        {
+          title: "Options",
+          dataIndex: "options",
+          key: "options",
+          render: (text) => <span>{text}</span>,
+        },
+        {
+          title: "Price",
+          dataIndex: "price",
+          key: "price",
+          render: (text) => <span>${text}</span>,
+        },
+      ];
+    } else {
+      return [
+        {
+          title: "Stock",
+          dataIndex: "stock",
+          key: "stock",
+          render: (text) => <span>{text}</span>,
+        },
+        {
+          title: "Price",
+          dataIndex: "price",
+          key: "price",
+          render: (text) => <span>${text}</span>,
+        },
+      ];
+    }
+  };
 
-    {
-      title: "Price",
-      dataIndex: "price",
-      key: "price",
-      render: (text) => {
-        // 'text' is the value of the column ('price'), 'record' is the entire row data
-        return (
-          <div>
-            <p>${text}</p> {/* Use 'text' here to access the 'price' value */}
-          </div>
-        );
-      },
-    },
-
-    {
-      title: "Quantity",
-      dataIndex: "quantity",
-      key: "quantity",
-      render: (text) => {
-        // 'text' is the value of the column ('price'), 'record' is the entire row data
-        return (
-          <div>
-            <p>{text}</p> {/* Use 'text' here to access the 'price' value */}
-          </div>
-        );
-      },
-    },
-  ];
+  const columns = determineColumns();
 
   return (
     <ConfigProvider
@@ -84,8 +100,8 @@ const ProductDetailsModal = ({ visible, onClose, product }) => {
         width={600}
         className="bg-[#FAF8F5] rounded-lg"
       >
-        <div className="p-5">
-          <div className="flex items-center justify-center mb-4">
+        <div className="p-2 ">
+          <div className="flex items-center justify-center mb-4 ">
             <Button
               icon={<LeftOutlined />}
               onClick={handlePrevImage}
@@ -95,18 +111,13 @@ const ProductDetailsModal = ({ visible, onClose, product }) => {
             {product.images && product.images.length > 0 ? (
               <div className="flex">
                 <img
-                  src={product.images[currentImageIndex]}
-                  alt={product.name}
-                  className="w-2/4 h-64 object-cover rounded-lg mx-2"
-                />
-                <img
-                  src={product.images[currentImageIndex]}
-                  alt={product.name}
-                  className="w-2/4 h-64 object-cover rounded-lg mx-4"
+                  src={`http://192.168.12.232:8010/${product.images[currentImageIndex]}`}
+                  alt={product.productName}
+                  className="w-[600px] h-64 object-cover rounded-lg mx-2"
                 />
               </div>
             ) : (
-              <div className="w-1/2 h-auto object-cover rounded-lg mx-4 text-center">
+              <div className="w-full h-64 object-cover rounded-lg mx-4 text-center">
                 <p>No image available</p>
               </div>
             )}
@@ -117,9 +128,10 @@ const ProductDetailsModal = ({ visible, onClose, product }) => {
               disabled={!product.images || product.images.length <= 1}
             />
           </div>
+
           <div className="text-start">
             <h2 className="text-xl font-semibold">
-              Product: <span>{product.product}</span>
+              Product: <span>{product.productName}</span>
             </h2>
 
             <div className="mt-4">
@@ -136,9 +148,9 @@ const ProductDetailsModal = ({ visible, onClose, product }) => {
                 }}
               >
                 <Table
-                  columns={tShirtColumns}
-                  dataSource={[product]}
-                  rowKey="productName"
+                  columns={columns}
+                  dataSource={product.tShirtItems.length > 0 ? product.tShirtItems : product.teaItems.length > 0 ? product.teaItems : [product]}
+                  rowKey="key"
                   pagination={false}
                 />
               </ConfigProvider>
@@ -146,7 +158,7 @@ const ProductDetailsModal = ({ visible, onClose, product }) => {
           </div>
 
           <div className="mt-4 text-gray-600 text-sm text-start">
-            <p>{product.description}</p>
+            <p> <span className="font-semibold"> Details: </span> {product.description}</p>
           </div>
 
           <div className="flex justify-center mt-8">

@@ -16,6 +16,9 @@ import { IoSearchOutline } from "react-icons/io5";
 import AddProductForm from "../UI/ProductModals/CreateProduct";
 import EditProductForm from "../UI/ProductModals/EditProduct";
 import ProductDetailsModal from "../UI/ProductModals/ProductDetailsModal";
+import { useActiveDeactiveStatusProductMutation, useDeleteProductMutation, useGetAllProductsQuery } from "../../Redux/api/product";
+import Swal from "sweetalert2";
+
 
 const Products = () => {
   const [data, setData] = useState([]); // All products
@@ -28,37 +31,27 @@ const Products = () => {
   const [isModalVisible, setIsModalVisible] = useState(false);
   const [searchText, setSearchText] = useState(""); // New state to manage search query
 
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const response = await axios.get("/data/products.json");
-        console.log(response);
-        setData(response.data);
-        setFilteredData(response.data); // Initially show all products
-      } catch (error) {
-        console.error("Error fetching data:", error);
-      } finally {
-        setLoading(false);
-      }
-    };
-
-    fetchData();
-  }, []);
-
+  const {data:products, isLoading, refetch} = useGetAllProductsQuery(null);
+  const [activeDeactiveProduct] = useActiveDeactiveStatusProductMutation();
+  const [deleteProduct] = useDeleteProductMutation();
+  console.log(products?.data);
+  // console.log(first);
+  
+ 
   // Filter products based on search text
   useEffect(() => {
     if (searchText.trim() === "") {
-      setFilteredData(data); // If search is empty, show all products
+      setFilteredData(products?.data); // If search is empty, show all products
     } else {
       const lowercasedSearchText = searchText.toLowerCase();
-      const filtered = data.filter(
+      const filtered = products?.data?.filter(
         (product) =>
-          product.product.toLowerCase().includes(lowercasedSearchText) ||
-          product.id.toString().includes(lowercasedSearchText) // You can filter by other fields too (e.g., product id)
+          product.productName.toLowerCase().includes(lowercasedSearchText) ||
+          product.categoryName.toString().includes(lowercasedSearchText) // You can filter by other fields too (e.g., product id)
       );
       setFilteredData(filtered);
     }
-  }, [searchText, data]);
+  }, [searchText, products?.data]);
 
   const showDetailsModal = (product) => {
     setSelectedProduct(product);
@@ -69,10 +62,50 @@ const Products = () => {
     setSelectedProduct(null);
   };
 
+  const handleSwitchChange = async(checked, record) => {
+    console.log("Current Value:", checked);
+    console.log("Record Data:", record);
+    try {
+      //  console.log({formData});
+       
+          const response = await activeDeactiveProduct(record._id).unwrap();
+          console.log("category response:", response);
+    
+          if (response.success === true) {
+            
+            // toast.success("OTP verified successfully!");
+            Swal.fire({
+              icon: "success",
+              title: "Success!",
+              text: response.message,
+            });
+    
+            refetch();
+            
+          }
+        } catch (error) {
+          console.error("Error:", error);
+          if (error.data?.message) {
+            // toast.error("Invalid OTP. Please try again.");
+            Swal.fire({
+              icon: "error",
+              title: "Error!",
+              text: error.data?.message,})
+          } else {
+            // toast.error("Failed to verify OTP. Please try again.");
+            Swal.fire({
+              icon: "error",
+              title: "Error!",
+              text: "Failed to deleted category. Please try again.",})
+          }
+        }
+  };
+
   const columns = [
     {
       title: "S.ID",
       dataIndex: "id",
+      render: (text, record, index) => `${index + 1}`,
       key: "id",
     },
     {
@@ -85,7 +118,7 @@ const Products = () => {
             images.map((image, index) => (
               <img
                 key={index}
-                src={image}
+                src={`http://192.168.12.232:8010/${image}`}
                 alt={`Product Image ${index + 1}`}
                 className="size-8 rounded-full"
               />
@@ -98,26 +131,48 @@ const Products = () => {
     },
     {
       title: "Product",
-      dataIndex: "product",
-      key: "product",
+      dataIndex: "productName",
+      key: "productName",
     },
     {
       title: "Price",
       dataIndex: "price",
       key: "price",
-      render: (price) => `$${price}`,
+      render: (price, record) => {
+        // Check if tShirtItems or teaItems have prices
+        if (record.tShirtItems && record.tShirtItems.length > 0) {
+          return `$${record.tShirtItems[0].price} - $${record.tShirtItems[1].price}`; // Display the first T-shirt item's price
+        } else if (record.teaItems && record.teaItems.length > 0) {
+          return `$${record.teaItems[0].price} - ${record.teaItems[1].price}`; // Display the first tea item's price
+        } else {
+          return `$${price}`; // Default to the product's base price
+        }
+      },
+    },
+    
+    
+    {
+      title: "Stock",
+      dataIndex: "stock",
+      key: "stock",
     },
     {
-      title: "Quantity",
-      dataIndex: "quantity",
-      key: "quantity",
+      title: "Active/Inactive",
+      dataIndex: "isActive",
+      key: "isActive",
+      render: (isActive) => (isActive ? "Active" : "Inactive"),
+      
     },
     {
       title: "Action",
       key: "action",
       render: (_, record) => (
         <div className="flex items-center space-x-2">
-          <Switch defaultChecked={record.status} />
+          {/* <Switch defaultChecked={record.status} /> */}
+          <Switch
+        checked={record.isActive} // Dynamically bind to isActive
+        onChange={(checked) => handleSwitchChange(checked, record)}
+      />
           <Tooltip title="View Details">
             <Button
               icon={<EyeOutlined />}
@@ -161,23 +216,44 @@ const Products = () => {
   };
 
   const handleEdit = (record) => {
+    
     setSelectedProduct(record);
     setIsEditModalVisible(true);
   };
 
-  const handleDelete = (record) => {
+  const handleDelete = async (record) => {
     Modal.confirm({
       title: "Do you want to delete this item?",
-      content: `${record.product} will be permanently deleted.`,
+      content: `${record.productName} will be permanently deleted.`,
       okText: "Yes, Delete",
       okType: "danger",
       cancelText: "Cancel",
-      onOk: () => {
-        // Perform delete action here
-        console.log("Deleted record:", record);
+      onOk: async () => {
+        try {
+          const response = await deleteProduct(record._id).unwrap();
+  
+          if (response.success) {
+            Swal.fire({
+              icon: "success",
+              title: "Success!",
+              text: "Product deleted successfully.",
+            });
+  
+            // setPopoverVisible(null); // Reset popover visibility if any
+            refetch(); // Refresh the data
+          }
+        } catch (error) {
+          console.error("Error:", error);
+          Swal.fire({
+            icon: "error",
+            title: "Error!",
+            text: error.data?.message || "Failed to delete product. Please try again.",
+          });
+        }
       },
     });
   };
+  
 
   const handleCloseEditModal = () => {
     setIsEditModalVisible(false);
@@ -228,9 +304,9 @@ const Products = () => {
           />
 
           {/* Download Button */}
-          <button className="rounded-full bg-white w-10 h-10 md:w-14 flex items-center justify-center">
+          {/* <button className="rounded-full bg-white w-10 h-10 md:w-14 flex items-center justify-center">
             <GrDownload className="text-4xl text-[#1B7443] p-2" />
-          </button>
+          </button> */}
         </div>
       </div>
 
@@ -249,7 +325,7 @@ const Products = () => {
           columns={columns}
           dataSource={filteredData} // Use filteredData instead of data
           pagination={{ pageSize: 8 }}
-          loading={loading}
+          loading={isLoading}
           rowKey="id"
           className="bg-white rounded-lg shadow-lg"
         />

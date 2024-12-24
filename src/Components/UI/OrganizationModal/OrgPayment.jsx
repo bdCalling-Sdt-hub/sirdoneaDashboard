@@ -4,6 +4,8 @@
 import { Button, ConfigProvider, Modal } from "antd";
 import { IoIosArrowBack } from "react-icons/io";
 
+const url = "http://192.168.12.232:8010/";
+
 const OrgPayment = ({ visible, onClose, data }) => {
   return (
     <ConfigProvider
@@ -50,45 +52,39 @@ const OrgPayment = ({ visible, onClose, data }) => {
 
         <div className="px-14">
           <h3 className="text-xl font-thin text-[#1b7443] text-center">
-            Organization Name: {data.name || " supper offer for New Year"}
+          Organization Name: {data.organizationDetails.organizationName}
           </h3>
 
           <div className="p-6 ">
             <div className="gap-4">
               <div className="flex justify-between items-center mb-6">
                 <img
-                  src={data.image}
+                  src={`${url}${data.userId.image}`}
                   alt="Event"
                   className="w-40 h-40 rounded-lg object-cover"
                 />
                 <div className="text-right">
-                  <p className="text-red-600 font-semibold">
-                    Ending Date: {data.endDate}
-                  </p>
+                <p className="text-red-600 font-semibold">
+                Ending Date: {`${data.fundraiserInformation.year || ""}/ ${data.fundraiserInformation.endMonth || ""}/ ${data.fundraiserInformation.endDay || ""}/ ${data.fundraiserInformation.endTime || ""}`}
+              </p>
                 </div>
               </div>
               <div>
                 <p className="text-lg font-semibold mt-4">
-                  Organization Creator: Stiven Hoking
+                Organization Creator Name :<span>  {data?.organizerInfo?.firstName || ""} {data?.organizerInfo?.lastName || ""}</span>
                 </p>
                 <p>{data.creatorName}</p>
                 <p className="text-lg text-[#1B7443] font-semibold">
-                  Totall Sells: {data.sells}
+                  Totall Sells: {data?.totalSells}
                 </p>
                 <p className="text-lg font-semibold">
-                  Target: <span className="font-thin">{data.target}</span>
-                </p>
-
-                <p className="text-lg font-semibold">
-                  Percentage:{" "}
-                  <span className="font-thin">{data.percentage}%</span>
+                Target: <span className="font-normal">{data.fundraiserInformation.goal}</span>
                 </p>
               </div>
             </div>
 
             <div className="">
               <h4 className="text-lg font-semibold">Organization’s Details:</h4>
-              <p className="mt-2 text-gray-700">{data.details}</p>
             </div>
             <div className="text-[#1E1E1E99]">
               <p>
@@ -131,10 +127,10 @@ const OrgPayment = ({ visible, onClose, data }) => {
 
         <div className="flex justify-center items-center gap-4 mt-6">
           <Button
-            onClick={() => console.log("Approve clicked")}
+            onClick={() => onClose()}
             className="bg-[#1B7443] text-white px-8 py-4 rounded-md"
           >
-            Pay Now
+            Cencel
           </Button>
         </div>
       </Modal>
