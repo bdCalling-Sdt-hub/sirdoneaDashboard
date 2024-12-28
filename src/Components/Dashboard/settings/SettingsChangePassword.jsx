@@ -1,11 +1,65 @@
 import { Button, Form, Input, Typography } from "antd";
 import { Link, useNavigate } from "react-router-dom";
+import { useChangePasswordMutation } from "../../../Redux/api/settingsApi";
+import Swal from "sweetalert2";
 
 const SettingsChangePassword = () => {
   const navigate = useNavigate();
-  const onFinish = (values) => {
-    console.log("Success:", values);
-    navigate("/signin");
+  const [changePassword] = useChangePasswordMutation();
+
+  const onFinish = async (values) => {
+    console.log("password Values", values);
+    try {
+      const data = {
+        oldPassword: values.currentPassword,
+        newPassword: values.newPassword,
+      };
+      console.log("Request payload:", data);
+
+      // const token = localStorage.getItem("authToken");
+      // if (!token) {
+      //   toast.error("Session expired. Please start the reset process again.");
+      //   navigate("/forgot-password");
+      //   return;
+      // }
+
+      const response = await changePassword(data).unwrap();
+      console.log("Response:", response);
+
+      if (response.success) {
+        // toast.success("Password updated successfully!");
+        Swal.fire({
+          icon: "success",
+          title: "Success",
+          text: "Password updated successfully!",
+        });
+        navigate("/signin");
+      } else {
+        Swal.fire({
+          icon: "error",
+          title: "Error",
+          text: "Failed to update password. Please try again.",
+        })
+        // toast.error(response.message || "Failed to update password.");
+      }
+    } catch (error) {
+      console.log("Error updating password:", error);
+      Swal.fire({
+        icon: "error",
+        title: "Error",
+        text: "Failed to update password. Please try again.",
+      })
+      
+      // if (error.response) {
+      //   console.error("Validation error details:", error.response.data);
+      //   toast.error(
+      //     error.response.data.message ||
+      //       "Failed to update password. Please try again."
+      //   );
+      // } else {
+      //   toast.error("An unexpected error occurred. Please try again.");
+      // }
+    }
   };
   return (
     <>

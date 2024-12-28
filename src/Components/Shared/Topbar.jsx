@@ -78,7 +78,7 @@ console.log('noti', notification1?.data);
       </div>
       <p className="border-b-[1px]  border-[#1B7443] py-2 mb-2"></p>
       {notification1?.data?.map((notification) => (
-        <div key={notification.id} className="flex items-center gap-2 py-3 ">
+        <div key={notification._id} className="flex items-center gap-2 py-3 ">
           <FaRegBell
             // className="bg-[#B2DAC4] text-2xl"
             style={{

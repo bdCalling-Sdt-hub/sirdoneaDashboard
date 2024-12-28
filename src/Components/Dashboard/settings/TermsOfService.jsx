@@ -1,18 +1,105 @@
 import { LeftOutlined } from "@ant-design/icons";
-import { Button } from "antd";
+import { Button, Spin } from "antd";
 import JoditEditor from "jodit-react";
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { useAddSettingsMutation, useGetSettingsQuery, useUpdateSettingsMutation } from "../../../Redux/api/settingsApi";
+import Swal from "sweetalert2";
 
 const TermsOfService = () => {
   const editor = useRef(null);
   const [content, setContent] = useState("");
   const navigate = useNavigate();
 
-  const handleOnSave = () => {
-    console.log("Saved PP");
+  const {
+    data: getSettingsData,
+    isLoading: isFetching,
+    error: fetchError,
+    refetch,
+  } = useGetSettingsQuery();
+  // console.log("terms",getSettingsData?.data.termsOfService);
+  // const privesyPolicy = getSettingsData?.data?.termsOfService;
+  // console.log({privesyPolicy});
+  
+
+  // Mutations for adding and updating Terms & Condition
+  const [addSettings, { isLoading: isAdding }] = useAddSettingsMutation();
+  const [updateSettings, { isLoading: isUpdating }] =
+    useUpdateSettingsMutation();
+
+  // Load Terms & Condition data on component mount
+  useEffect(() => {
+    if (getSettingsData?.data.termsOfService) {
+      setContent(getSettingsData.data.termsOfService); // Load the latest policy
+    }
+  }, [getSettingsData]);
+
+  console.log({content});
+  
+
+  const handleOnSave = async () => {
+    try {
+      // console.log('111');
+      // console.log('click',getSettingsData?.data.termsOfService);
+      
+      
+      if (getSettingsData?.data) {
+        console.log('222');
+        // Update existing Terms & Condition
+      const res =  await updateSettings({ termsOfService: content }).unwrap();
+      console.log('res',res);
+      
+      if(res.success){
+        Swal.fire({
+          icon: "success",
+          title: "Success!",
+          text: "Terms & Condition updated successfully!",
+        })
+      }
+        // toast.success("Terms & Condition updated successfully!");
+      } else {
+        // Add a new Terms & Condition if not existing
+     const res =  await addSettings({ termsOfService: content }).unwrap();
+     if(res.success){
+        Swal.fire({
+          icon: "success",
+          title: "Success!",
+          text: "Terms & Condition added successfully!",
+        })
+     }
+        // toast.success("Terms & Condition added successfully!");
+      }
+      refetch(); // Refresh the data after save
+    } catch (error) {
+      // toast.error("Failed to save Terms & Condition. Please try again.");
+      if(error){
+        Swal.fire({
+          icon: "error",
+          title: "Error!",
+          text: "Failed to save Terms & Condition. Please try again.",
+        })
+      }
+      console.error("Save error:", error);
+    }
   };
 
+  // Show loading state while fetching data
+  if (isFetching) {
+    return (
+      <div className="flex justify-center items-center h-screen">
+        <Spin size="large" tip="Loading Terms & Condition..." />
+      </div>
+    );
+  }
+
+  // Show error message if fetch fails
+  if (fetchError) {
+    return (
+      <div className="text-white">
+        Error loading Terms & Condition. Please try again later.
+      </div>
+    );
+  }
   const handleGoBack = () => {
     navigate(-1);
   };
@@ -37,6 +124,12 @@ const TermsOfService = () => {
             config={{ height: 500, theme: "light", readonly: false }}
             onBlur={(newContent) => setContent(newContent)}
           />
+          <div>
+          {/* <div
+      className="terms-container"
+      dangerouslySetInnerHTML={{ __html: privesyPolicy }}
+    /> */}
+          </div>
         </div>
         <Button
           onClick={handleOnSave}

@@ -28,7 +28,7 @@ const settingsApi = baseApi.injectEndpoints({
     }),
     addSettings: builder.mutation({
       query: (data) => ({
-        url: "/settings/",
+        url: "/settings",
         method: "POST",
         body: data,
         headers: {
