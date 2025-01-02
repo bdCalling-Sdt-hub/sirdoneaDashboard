@@ -4,7 +4,7 @@ import { FaPlus } from "react-icons/fa";
 import { useCreateCategoryMutation } from "../../Redux/api/categoryApi";
 import Swal from "sweetalert2";
 
-const CategoryAdd = ({setIsAddModalVisible}) => {
+const CategoryAdd = ({setIsAddModalVisible, refetch}) => {
   const [imageFile, setImageFile] = useState(null);
   // const [imageFile2, setImageFile2] = useState(null);
   // console.log({ imageFile });
@@ -61,6 +61,7 @@ const CategoryAdd = ({setIsAddModalVisible}) => {
         });
 
         setIsAddModalVisible(false);
+        refetch();
       }
     } catch (error) {
       console.error("Error:", error);

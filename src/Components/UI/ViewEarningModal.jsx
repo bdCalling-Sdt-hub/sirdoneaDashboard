@@ -2,7 +2,7 @@
 import { Modal } from "antd";
 import { useEffect } from "react";
 
-const url = "http://192.168.12.232:8010/";
+const url = "http://10.0.70.35:8010/";
 
 const ViewEarningModal = ({
   isViewModalVisible,

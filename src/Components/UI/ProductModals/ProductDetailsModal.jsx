@@ -12,25 +12,25 @@ const ProductDetailsModal = ({ visible, onClose, product }) => {
   // Handle Previous Image
   const handlePrevImage = () => {
     setCurrentImageIndex((prevIndex) =>
-      prevIndex === 0 ? product.images.length - 1 : prevIndex - 1
+      prevIndex === 0 ? product?.images?.length - 1 : prevIndex - 1
     );
   };
 
   // Handle Next Image
   const handleNextImage = () => {
     setCurrentImageIndex((prevIndex) =>
-      prevIndex === product.images.length - 1 ? 0 : prevIndex + 1
+      prevIndex === product?.images?.length - 1 ? 0 : prevIndex + 1
     );
   };
 
   // Determine columns dynamically
   const determineColumns = () => {
-    if (product.tShirtItems && product.tShirtItems.length > 0) {
+    if (product?.addedItems && product?.addedItems?.length > 0 && product?.addedItems[0]?.color && product?.addedItems[0]?.size) {
       return [
         {
           title: "Color",
-          dataIndex: "colors",
-          key: "colors",
+          dataIndex: "color",
+          key: "color",
           render: (text) => <span>{text}</span>,
         },
         {
@@ -45,9 +45,15 @@ const ProductDetailsModal = ({ visible, onClose, product }) => {
           key: "size",
           render: (text) => <span>{text}</span>,
         },
+        {
+          title: "Stock",
+          dataIndex: "stock",
+          key: "stock",
+          render: (text) => <span>{text}</span>,
+        },
        
       ];
-    } else if (product.teaItems && product.teaItems.length > 0) {
+    } else if (product?.addedItems && product?.addedItems?.length > 0 && product?.addedItems[0]?.options) {
       return [
         {
           title: "Options",
@@ -60,6 +66,12 @@ const ProductDetailsModal = ({ visible, onClose, product }) => {
           dataIndex: "price",
           key: "price",
           render: (text) => <span>${text}</span>,
+        },
+        {
+          title: "Stock",
+          dataIndex: "stock",
+          key: "stock",
+          render: (text) => <span>{text}</span>,
         },
       ];
     } else {
@@ -106,12 +118,12 @@ const ProductDetailsModal = ({ visible, onClose, product }) => {
               icon={<LeftOutlined />}
               onClick={handlePrevImage}
               className="bg-[#FFA500] text-white p-2 rounded-full"
-              disabled={!product.images || product.images.length <= 1}
+              disabled={!product.images || product?.images?.length <= 1}
             />
-            {product.images && product.images.length > 0 ? (
+            {product?.images && product?.images?.length > 0 ? (
               <div className="flex">
                 <img
-                  src={`http://192.168.12.232:8010/${product.images[currentImageIndex]}`}
+                  src={`http://10.0.70.35:8010/${product.images[currentImageIndex]}`}
                   alt={product.productName}
                   className="w-[600px] h-64 object-cover rounded-lg mx-2"
                 />
@@ -125,7 +137,7 @@ const ProductDetailsModal = ({ visible, onClose, product }) => {
               icon={<RightOutlined />}
               onClick={handleNextImage}
               className="bg-[#FFA500] text-white p-2 rounded-full"
-              disabled={!product.images || product.images.length <= 1}
+              disabled={!product?.images || product?.images?.length <= 1}
             />
           </div>
 
@@ -149,7 +161,7 @@ const ProductDetailsModal = ({ visible, onClose, product }) => {
               >
                 <Table
                   columns={columns}
-                  dataSource={product.tShirtItems.length > 0 ? product.tShirtItems : product.teaItems.length > 0 ? product.teaItems : [product]}
+                  dataSource={product?.addedItems?.length > 0 ? product?.addedItems : []}
                   rowKey="key"
                   pagination={false}
                 />

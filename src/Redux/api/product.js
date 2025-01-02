@@ -55,16 +55,23 @@ const productApi = baseApi.injectEndpoints({
       },
       
     }),
-    editProduct: builder.mutation({
-      query: ({ id, data }) => ({
-        url: `/product-info/${id}`,
-        method: "PATCH",
-        body: data,
-        headers: {
-          "Content-type": "multipart/form-data",
-        },
-        invalidatesTags: ["products"],
-      }),
+    editProductHandle: builder.mutation({
+      query: ({ id, formData }) => {
+        console.log("FormData query", formData);
+        
+        const accessToken = localStorage.getItem("accessToken");
+        console.log("accessToken", accessToken);
+    
+        return {
+          url: `/product/${id}`,
+          method: "PATCH",
+          body: formData,
+          headers: {
+            Authorization: `Bearer ${accessToken}`,
+          },
+        };
+      },
+      invalidatesTags: ["product"],
     }),
 
     deleteProduct: builder.mutation({
@@ -93,7 +100,7 @@ const productApi = baseApi.injectEndpoints({
 export const {
   useGetAllProductsQuery,
   useCreateProductMutation,
-  useEditProductMutation,
+  useEditProductHandleMutation,
   useActiveDeactiveStatusProductMutation,
   useDeleteProductMutation
 } = productApi;

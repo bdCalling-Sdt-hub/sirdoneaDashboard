@@ -3,7 +3,7 @@ import { ConfigProvider, Table } from "antd";
 import { render } from "react-dom";
 
 
-const url = "http://192.168.12.232:8010/";
+const url = "http://10.0.70.35:8010/";
 
 const InventoryTracking = ({ data, loading, pageSize = 0 }) => {
   console.log('data', data);
@@ -37,16 +37,30 @@ const InventoryTracking = ({ data, loading, pageSize = 0 }) => {
       key: "categoryName",
     },
 
+    // {
+    //   title: "Stock",
+
+    //   dataIndex: "stock",
+    //   key: "stock",
+    //   render: (record) => (
+    //     console.log(record)
+    //   ),
+    // },
+    // {
+    //   title: "Available Stock",
+    //   dataIndex: "availablestock",
+    //   key: "availablestock",
+      
+    // },
     {
       title: "Stock",
-      dataIndex: "stock",
       key: "stock",
+      render: (_, record) => record?.addedItems[0]?.stock || "N/A", // Fetch stock from nested structure
     },
     {
       title: "Available Stock",
-      dataIndex: "availablestock",
-      key: "availablestock",
-      
+      key: "availableStock",
+      render: (_, record) => record?.addedItems[0]?.availableStock || "N/A", // Fetch available stock from nested structure
     },
     {
       title: "Active/Inactive",

@@ -6,7 +6,7 @@ import { IoIosArrowBack } from "react-icons/io";
 import { useApprovedOrganizersMutation, useDeletedOrganizersMutation } from "../../../Redux/api/organizerApi";
 import Swal from "sweetalert2";
 
-const url = "http://192.168.12.232:8010/";
+const url = "http://10.0.70.35:8010/";
 
 const RequestDetailsModal = ({ visible, onClose, data , refetch}) => {
 

@@ -18,7 +18,7 @@ import { useActiveZDeactiveStatusCategoryMutation, useDeleteCategoryMutation, us
 import Swal from "sweetalert2";
 
 
-const url = "http://192.168.12.232:8010/";
+const url = "http://10.0.70.35:8010/";
 
 const Categories = () => {
   const [isAddModalVisible, setIsAddModalVisible] = useState(false);
@@ -273,7 +273,7 @@ const handleSwitchChange = async(checked, record) => {
         centered
         width={800}
       >
-        <CategoryAdd setIsAddModalVisible={setIsAddModalVisible} />
+        <CategoryAdd refetch={refetch} setIsAddModalVisible={setIsAddModalVisible} />
       </Modal>
 
       {/* Product Details Modal */}

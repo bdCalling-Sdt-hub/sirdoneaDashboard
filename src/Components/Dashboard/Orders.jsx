@@ -114,6 +114,8 @@ export default function Orders() {
     setStatusFilter(value); // Update the status filter
   };
 
+  console.log({currentRecord})
+
   return (
     <div className="min-h-screen rounded-lg">
       <div className="flex items-center justify-between p-3 bg-[#1b7443] rounded">
@@ -378,7 +380,7 @@ export default function Orders() {
                   {currentRecord?.orderProductList?.map((product, index) => (
                     <tr key={index} className="text-center bg-[#F2F2F7]">
                       <td className="border border-[#FFEFD9] px-4 py-2">
-                        {product.productId.productName}
+                        {product?.productId?.productName}
                       </td>
                       <td className="border border-[#FFEFD9] px-4 py-2">
                         ${product?.price?.toFixed(2)}

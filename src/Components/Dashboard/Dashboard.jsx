@@ -143,7 +143,7 @@ const Dashboard = () => {
                     components: {
                       Select: {
                         fontSize: 18,
-                        colorBorder: "#222222",
+                        colorBorder: "#000",
                         optionSelectedBg: "rgb(254,188,96)",
                         optionActiveBg: "rgb(255,217,165)",
                       },
@@ -151,9 +151,13 @@ const Dashboard = () => {
                   }}
                 >
                   <Select
-                   onChange={(value) => setYear(value)}
-                    style={{ width: 100 }}
+                  className="border border-[#000] rounded"
+                    onChange={(value) => setYear(value)}
+                    style={{ width: 100,}}
+                    value={year}
                     options={[
+                      { value: "2026", label: "2026" },
+                      { value: "2025", label: "2025" },
                       { value: "2024", label: "2024" },
                       { value: "2023", label: "2023" },
                       { value: "2022", label: "2022" },
