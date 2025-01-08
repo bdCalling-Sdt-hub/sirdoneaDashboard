@@ -7,7 +7,7 @@ const organizerApi = baseApi.injectEndpoints({
         const accessToken = localStorage.getItem("accessToken");
         console.log("accessToken", accessToken);
         return {
-          url: "/organizer",
+          url: "/organizer?status=accept",
           method: "GET",
           headers: {
             "content-type": "application/json",
