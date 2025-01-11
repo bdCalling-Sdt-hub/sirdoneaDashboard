@@ -27,15 +27,22 @@ const productApi = baseApi.injectEndpoints({
     }),
     
     createProduct: builder.mutation({
-      query: (formData) => ({
-        url: "/product/create-product",
-        method: "POST",
-        body: formData,
-        headers: {
-          "Content-type": "multipart/form-data",
-        },
-        invalidatesTags: ["products"],
-      }),
+      query: (formData) => {
+        const accessToken = localStorage.getItem("accessToken");
+        console.log("accessToken", accessToken);
+        return {
+          url: "/product/create-product",
+          method: "POST",
+          body: formData,
+          headers: {
+            "Content-type": "multipart/form-data",
+            Authorization: `Bearer ${accessToken}`,
+          },
+        };
+        
+      },
+      invalidatesTags: ["products"],
+
     }),
     activeDeactiveStatusProduct: builder.mutation({
       query: (id) => {

@@ -402,7 +402,6 @@ import { IoSearchOutline } from "react-icons/io5";
 import AddProductForm from "../UI/ProductModals/CreateProduct";
 // import EditProductForm from "../UI/ProductModals/EditProduct";
 import ProductDetailsModal from "../UI/ProductModals/ProductDetailsModal";
-// import CreateProductForm from "../UI/ProductModals/CreateProductForm";
 import {
   useActiveDeactiveStatusProductMutation,
   useCreateProductMutation,
@@ -411,7 +410,7 @@ import {
 } from "../../Redux/api/product";
 import Swal from "sweetalert2";
 import EditProductForm from "../UI/ProductModals/EditProductForm";
-import CreateProductForm from "../UI/ProductModals/EditProductForm";
+import CreateProductForm from "../UI/ProductModals/CreateProductForm";
 
 const Products = () => {
   // const [data, setData] = useState([]); // All products
@@ -459,7 +458,7 @@ const Products = () => {
       const filtered = products?.data?.filter(
         (product) =>
           product.productName.toLowerCase().includes(lowercasedSearchText) ||
-          product.categoryName.toString().includes(lowercasedSearchText) // You can filter by other fields too (e.g., product id)
+          product.categoryName.toString().includes(lowercasedSearchText)
       );
       setFilteredData(filtered);
     }

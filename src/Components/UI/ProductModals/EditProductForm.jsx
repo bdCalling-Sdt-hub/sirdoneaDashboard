@@ -826,7 +826,7 @@ import Swal from "sweetalert2";
 
 const { Option } = Select;
 
-const CreateProductForm = ({
+const EditProductForm = ({
   setIsEditModalVisible,
   refetch,
   selectedProduct,
@@ -1403,5 +1403,5 @@ if(deletedImageUrls && deletedImageUrls.length > 0){
   );
 };
 
-export default CreateProductForm;
+export default EditProductForm;
 
