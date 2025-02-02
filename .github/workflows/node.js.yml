@@ -26,4 +26,4 @@ jobs:
       - run: npm ci
       - name: Change Directory
         run: cd /home/masters/actions-sirdonea-dashboard/_work/sirdoneaDashboard/sirdoneaDashboard
-      - run: pm2 restart 25
+      - run: pm2 restart 20
