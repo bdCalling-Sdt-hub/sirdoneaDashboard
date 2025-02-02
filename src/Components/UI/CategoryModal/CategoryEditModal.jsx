@@ -12,7 +12,7 @@ const CategoryEditModal = ({ visible, onClose, product, refetch }) => {
 
   useEffect(() => {
     setCategoryName(product?.name || "");
-    setImageUrl(`http://10.0.70.35:8010/${product?.image}`);
+    setImageUrl(`http://139.59.0.25:8050/${product?.image}`);
   }, [product]);
 
   const handleUpload = (info) => {
@@ -93,7 +93,7 @@ const CategoryEditModal = ({ visible, onClose, product, refetch }) => {
               <div className="relative w-[572px] h-[338px] rounded-sm flex justify-center items-center">
                 {imageUrl ? (
                   <img
-                    src={ imageUrl  ? imageUrl : `http://10.0.70.35:8010/${product?.image}`}
+                    src={ imageUrl  ? imageUrl : `http://139.59.0.25:8050/${product?.image}`}
                     alt="Uploaded"
                     className="w-full h-[338px] object-cover rounded-sm"
                   />

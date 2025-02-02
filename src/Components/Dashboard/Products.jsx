@@ -522,6 +522,7 @@ const Products = () => {
       render: (text, record, index) => `${index + 1}`,
       key: "id",
     },
+  
     {
       title: "Image",
       dataIndex: "images",
@@ -532,7 +533,7 @@ const Products = () => {
             images.map((image, index) => (
               <img
                 key={index}
-                src={`http://10.0.70.35:8010/${image}`}
+                src={`http://139.59.0.25:8050/${image}`}
                 alt={`Product Image ${index + 1}`}
                 className="size-8 rounded-full"
               />

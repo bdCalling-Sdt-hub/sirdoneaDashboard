@@ -3,7 +3,7 @@ import { ConfigProvider, Table } from "antd";
 import { render } from "react-dom";
 
 
-const url = "http://10.0.70.35:8010/";
+const url = "http://139.59.0.25:8050/";
 
 const InventoryTracking = ({ data, loading, pageSize = 0 }) => {
   console.log('data', data);

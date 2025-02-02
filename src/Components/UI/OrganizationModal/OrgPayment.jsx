@@ -4,7 +4,7 @@
 import { Button, ConfigProvider, Modal } from "antd";
 import { IoIosArrowBack } from "react-icons/io";
 
-const url = "http://10.0.70.35:8010/";
+const url = "http://139.59.0.25:8050/";
 
 const OrgPayment = ({ visible, onClose, data }) => {
   return (

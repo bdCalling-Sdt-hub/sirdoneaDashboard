@@ -18,7 +18,8 @@ import { useActiveZDeactiveStatusCategoryMutation, useDeleteCategoryMutation, us
 import Swal from "sweetalert2";
 
 
-const url = "http://10.0.70.35:8010/";
+
+const url = "http://139.59.0.25:8050/";
 
 const Categories = () => {
   const [isAddModalVisible, setIsAddModalVisible] = useState(false);

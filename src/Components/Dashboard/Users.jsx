@@ -8,7 +8,7 @@ import { GrDownload } from "react-icons/gr";
 import { AllIcons } from "../../../public/images/AllImages";
 import { useAllUsersQuery } from "../../Redux/api/usersApi";
 
-const url = "http://10.0.70.35:8010/";
+const url = "http://139.59.0.25:8050/";
 export default function Users() {
   const [searchText, setSearchText] = useState("");
   const [isViewModalVisible, setIsViewModalVisible] = useState(false);

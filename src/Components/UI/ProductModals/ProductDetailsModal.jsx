@@ -123,7 +123,7 @@ const ProductDetailsModal = ({ visible, onClose, product }) => {
             {product?.images && product?.images?.length > 0 ? (
               <div className="flex">
                 <img
-                  src={`http://10.0.70.35:8010/${product.images[currentImageIndex]}`}
+                  src={`http://139.59.0.25:8050/${product.images[currentImageIndex]}`}
                   alt={product.productName}
                   className="w-[600px] h-64 object-cover rounded-lg mx-2"
                 />
