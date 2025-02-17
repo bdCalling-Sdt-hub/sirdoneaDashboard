@@ -51,6 +51,12 @@ const ProductDetailsModal = ({ visible, onClose, product }) => {
           key: "stock",
           render: (text) => <span>{text}</span>,
         },
+        {
+          title: "Weight",
+          dataIndex: "productWeight",
+          key: "productWeight",
+          render: (_, record) => <span>{product.productWeight ? product.productWeight : "N/A"} gm</span>,
+        },
        
       ];
     } else if (product?.addedItems && product?.addedItems?.length > 0 && product?.addedItems[0]?.options) {
@@ -73,6 +79,12 @@ const ProductDetailsModal = ({ visible, onClose, product }) => {
           key: "stock",
           render: (text) => <span>{text}</span>,
         },
+        {
+          title: "Weight",
+          dataIndex: "productWeight",
+          key: "productWeight",
+          render: (_, record) => <span>{product.productWeight ? product.productWeight : "N/A"} gm</span>,
+        },
       ];
     } else {
       return [
@@ -87,6 +99,12 @@ const ProductDetailsModal = ({ visible, onClose, product }) => {
           dataIndex: "price",
           key: "price",
           render: (text) => <span>${text}</span>,
+        },
+        {
+          title: "Weight (gm)",
+          dataIndex: "productWeight",
+          key: "productWeight",
+          render: (_, record) => <span>{product.productWeight ? product.productWeight : "N/A"} gm</span>,
         },
       ];
     }

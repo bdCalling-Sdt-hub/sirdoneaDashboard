@@ -699,7 +699,7 @@ const Products = () => {
   //   await createProduct(formData);
 
   //   // setData(allItems);
-  //   // setFilteredData(allItems); // Update filtered data when new product is added
+  //   // setFilteredData(allItems); 
   //   setIsAddModalVisible(false);
   // };
 
