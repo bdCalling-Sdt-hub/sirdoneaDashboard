@@ -371,6 +371,9 @@ export default function Orders() {
                     <th className="border border-[#FFEFD9] px-4 py-2">
                       Quantity
                     </th>
+                    <th className="border border-[#FFEFD9] px-4 py-2">
+                      Weight
+                    </th>
                     {/* <th className="border border-[#FFEFD9] px-4 py-2">
                       Total Price
                     </th> */}
@@ -388,6 +391,9 @@ export default function Orders() {
                       <td className="border border-[#FFEFD9] px-4 py-2">
                         {product.quantity}
                       </td>
+                      <td className="border border-[#FFEFD9] px-4 py-2">
+                        {product.weight || "N/A"}
+                      </td>
                       {/* <td className="border border-[#FFEFD9] px-4 py-2">
   ${((product?.price) * (product?.quantity)).toFixed(2)}
 </td> */}
@@ -397,7 +403,7 @@ export default function Orders() {
                 <tfoot>
                   <tr className="bg-green-200 font-bold">
                     <td
-                      colSpan="3"
+                      colSpan="4"
                       className="border px-4 py-2 text-right text-[#1B7443] "
                     >
                       All Products Price ${currentRecord?.totalAmount?.toFixed(2) }

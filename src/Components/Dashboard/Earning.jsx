@@ -41,12 +41,12 @@ export default function Earning() {
               <div className="flex items-center gap-3 bg-[#1b7443] text-primary-color px-4 py-2 rounded">
                 <LuArrowLeftRight />
                 <h1>Today’s Earning</h1>
-                <h1 className="font-semibold text-lg">${earningDataToday?.data?.todayEarnings}</h1>
+                <h1 className="font-semibold text-lg">${earningDataToday?.data?.todayEarnings ? Math.round(earningDataToday?.data?.todayEarnings): 0}</h1>
               </div>
               <div className="flex items-center gap-3 bg-[#1b7443] text-primary-color px-4 py-2 rounded">
                 <LuArrowLeftRight />
                 <h1>Total Earning</h1>
-                <h1 className="font-semibold text-lg">${earningDataToday?.data?.totalEarnings}</h1>
+                <h1 className="font-semibold text-lg">${earningDataToday?.data?.totalEarnings ? Math.round(earningDataToday?.data?.totalEarnings): 0}</h1>
               </div>
             </div>
           </div>

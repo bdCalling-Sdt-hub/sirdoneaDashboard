@@ -62,6 +62,7 @@ const CreateProductForm = ({ setIsAddModalVisible }) => {
    const finalData = {
     categoryId,
     productName: payload.productName,
+    productWeight: payload.productWeight,
     description: payload.description,
     images: payload.images,
     coverImage: payload.coverImage,
@@ -462,6 +463,14 @@ const CreateProductForm = ({ setIsAddModalVisible }) => {
         rules={[{ required: true, message: "Please enter a product name!" }]}
       >
         <Input className="w-full h-10" placeholder="Enter product name" />
+      </Form.Item>
+
+      <Form.Item
+        label={<span className="font-semibold tracking-wide ">Product Weight (gm)</span>}
+        name="productWeight"
+        rules={[{ required: true, message: "Please enter a product weight!" }]}
+      >
+        <Input className="w-full h-10" placeholder="Enter product weight (gm)" />
       </Form.Item>
 
       {renderDynamicFields()}

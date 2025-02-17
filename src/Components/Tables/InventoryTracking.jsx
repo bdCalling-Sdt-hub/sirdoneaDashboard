@@ -1,5 +1,6 @@
 /* eslint-disable react/prop-types */
 import { ConfigProvider, Table } from "antd";
+import moment from "moment/moment";
 import { render } from "react-dom";
 
 
@@ -74,7 +75,8 @@ const InventoryTracking = ({ data, loading, pageSize = 0 }) => {
       title: "Product Publish Date",
       dataIndex: "createdAt",
       key: "createdAt",
-      render: (createdAt) => new Date(createdAt).toLocaleDateString(),
+      // render: (createdAt) => new Date(createdAt).toLocaleDateString(),
+      render: (createdAt) => moment(createdAt).format("MM/DD/YYYY"),
     },
   ];
   return (

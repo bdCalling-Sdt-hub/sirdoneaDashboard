@@ -10,6 +10,7 @@ import PayNowModal from "../../UI/OrganizationPaymentModal/PayNowModal";
 import { useGetAllApprovedOrganizersQuery } from "../../../Redux/api/organizerApi";
 import { useAccountInfoDetailsQuery } from "../../../Redux/api/payment";
 import { render } from "react-dom";
+import moment from "moment";
 
 const OrganizationPayment = () => {
   const [filteredData, setFilteredData] = useState([]); // Filtered data based on search
@@ -202,10 +203,11 @@ const OrganizationPayment = () => {
       render: (record) => {
         const info = record.fundraiserInformation;
         return info
-          ? `${info.year || ""}/ ${info.endMonth || ""}/ ${info.endDay || ""}/ ${info.endTime || ""}`
-          : "N/A";
+              ? `${info.startMonth || ""}/ ${info.startDay || ""}/ ${info.year || ""}/ ${info.startTime ? moment(info.startTime, "HH:mm:ss").format("HH:mm") : "" }`
+              : "N/A";
       },
     },
+    
     {
       title: "Target",
       key: "target",
@@ -215,7 +217,7 @@ const OrganizationPayment = () => {
       title: "Total Sells",
       dataIndex: "totalSells",
       key: "totalSells",
-      render: (totalSells) => totalSells || "0",
+      render: (totalSells) => Math.round(totalSells) || "0",
     },
     {
       title: "Code",
@@ -245,6 +247,7 @@ const OrganizationPayment = () => {
     {
       title: "Payment Type",
       dataIndex: "paymentType",
+      render: (paymentType) => paymentType || "N/A",
       key: "paymentType",
      
     },

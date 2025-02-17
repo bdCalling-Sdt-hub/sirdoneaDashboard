@@ -554,13 +554,12 @@ const Products = () => {
       dataIndex: "price",
       key: "price",
       render: (_, record) => {
-        // Render prices from addedItems
         if (record.addedItems && record.addedItems.length > 0) {
           // const prices = record.addedItems.map((item) => `$${item.price}`).join(", ");
           const prices = record.addedItems[0].price;
-          return prices;
+          return `$ ${prices}`; 
         }
-        return "N/A"; // Fallback if no prices available
+        return "N/A"; 
       },
     },
     {
@@ -577,6 +576,12 @@ const Products = () => {
         }
         return "N/A"; // Fallback if no stock available
       },
+    },
+    {
+      title: "Weight",
+      dataIndex: "productWeight",
+      key: "productWeight",
+      render: (_, record) => `${record?.productWeight || "N/A"} (gm)`,
     },
     {
       title: "Active/Inactive",

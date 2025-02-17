@@ -143,6 +143,16 @@ const DashboardLayout = () => {
           icon: <span>&#8226;</span>,
           label: <NavLink to="terms-of-service">Terms & Condition</NavLink>,
         },
+        {
+          key: "shipping-policy",
+          icon: <span>&#8226;</span>,
+          label: <NavLink to="shipping-policy">Shipping Policy</NavLink>,
+        },
+        {
+          key: "returns",
+          icon: <span>&#8226;</span>,
+          label: <NavLink to="returns">Returns</NavLink>,
+        },
       ],
     },
     {

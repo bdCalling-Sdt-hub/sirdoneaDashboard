@@ -33,7 +33,7 @@ const AddProductForm = ({ onSubmit }) => {
   const [toteItems, setToteItems] = useState([]);
   const [categoryId, setCategoryId] = useState("");
 
-  const {data:categoryData, isLoading, refetch} = useGetAllCategoryQuery();
+  const { data: categoryData, isLoading, refetch } = useGetAllCategoryQuery();
 
   useEffect(() => {
     console.log("Mug Items:", mugItems);
@@ -84,35 +84,33 @@ const AddProductForm = ({ onSubmit }) => {
 
     // Call the onSubmit function passed as prop to update the parent
     onSubmit(productData);
-    console.log({categoryId});
-    
-    
+    console.log({ categoryId });
 
     const newProductData = {
       categoryId: categoryId,
       categoryName: categoryName,
       productName: productName,
       productDetails: productDetails,
-
     };
 
-    if(teaItems){
-    newProductData.teaItems = [{
-      options:teaItems.options,
-      price:teaItems.price,
-
-    }]
+    if (teaItems) {
+      newProductData.teaItems = [
+        {
+          options: teaItems.options,
+          price: teaItems.price,
+        },
+      ];
     }
 
-    if(tShirtItems){
-    newProductData.tShirtItems = [{
-      colors:teaItems.options,
-      size:teaItems.size,
-      price:teaItems.price,
-
-    }]
+    if (tShirtItems) {
+      newProductData.tShirtItems = [
+        {
+          colors: teaItems.options,
+          size: teaItems.size,
+          price: teaItems.price,
+        },
+      ];
     }
-
 
     console.log(productData);
     console.log(newProductData);
@@ -172,28 +170,27 @@ const AddProductForm = ({ onSubmit }) => {
         >
           <span className="font-semibold">Type</span>
           <Select
-  placeholder="Product Type"
-  className="w-full h-10"
-  onChange={(value) => {
-    // Find the selected category by name
-    const selectedCategory = categoryData?.data?.find(
-      (category) => category.name.toLowerCase() === value
-    );
-    if (selectedCategory) {
-      setCategoryId(selectedCategory._id);
-      setCategoryName(selectedCategory.name); // Set the category ID
-    }
-    setProductType(value); // Set the product type
-  }}
-  value={productType}
->
-  {categoryData?.data?.map((category) => (
-    <Option key={category._id}  value={category.name.toLowerCase()}>
-      {category.name}
-    </Option>
-  ))}
-</Select>
-
+            placeholder="Product Type"
+            className="w-full h-10"
+            onChange={(value) => {
+              // Find the selected category by name
+              const selectedCategory = categoryData?.data?.find(
+                (category) => category.name.toLowerCase() === value
+              );
+              if (selectedCategory) {
+                setCategoryId(selectedCategory._id);
+                setCategoryName(selectedCategory.name); // Set the category ID
+              }
+              setProductType(value); // Set the product type
+            }}
+            value={productType}
+          >
+            {categoryData?.data?.map((category) => (
+              <Option key={category._id} value={category.name.toLowerCase()}>
+                {category.name}
+              </Option>
+            ))}
+          </Select>
         </ConfigProvider>
       </div>
 
@@ -428,6 +425,18 @@ const AddProductForm = ({ onSubmit }) => {
         </div>
       )}
 
+      <div className="mt-2">
+        <label className="font-semibold">Cover Image</label>
+        <div className="flex flex-col items-center bg-gray-200 py-3 rounded-lg">
+          <Upload className="" listType="picture-card">
+            <div>
+              <UploadOutlined />
+              <div>Click to upload</div>
+            </div>
+          </Upload>
+        </div>
+      </div>
+      
       <div className="mt-2">
         <label className="font-semibold">Cover Image</label>
         <div className="flex flex-col items-center bg-gray-200 py-3 rounded-lg">

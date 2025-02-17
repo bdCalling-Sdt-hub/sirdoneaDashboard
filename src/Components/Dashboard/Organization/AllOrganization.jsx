@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import { GrDownload } from "react-icons/gr";
 import OrganizationDetails from "../../UI/OrganizationModal/OrgDetails";
 import { useGetAllOrganizersQuery } from "../../../Redux/api/organizerApi";
+import moment from "moment/moment";
 
 const OrganizationTable = () => {
   const [filteredData, setFilteredData] = useState([]);
@@ -75,7 +76,7 @@ const OrganizationTable = () => {
       render: (record) => {
         const info = record.fundraiserInformation;
         return info
-          ? `${info.year || ""}/ ${info.startMonth || ""}/ ${info.startDay || ""}/ ${info.startTime || ""}`
+          ? `${info.startMonth || ""}/ ${info.startDay || ""}/ ${info.year || ""}/ ${info.startTime ? moment(info.startTime, "HH:mm:ss").format("HH:mm") : "" }`
           : "N/A";
       },
     },
@@ -85,7 +86,7 @@ const OrganizationTable = () => {
       render: (record) => {
         const info = record.fundraiserInformation;
         return info
-          ? `${info.year || ""}/ ${info.endMonth || ""}/ ${info.endDay || ""}/ ${info.endTime || ""}`
+          ? `${info.endMonth || ""}/ ${info.endDay || ""}/ ${info.year || ""}/ ${info.startTime ? moment(info.startTime, "HH:mm:ss").format("HH:mm") : "" }`
           : "N/A";
       },
     },
@@ -98,7 +99,7 @@ const OrganizationTable = () => {
       title: "Total Sells",
       dataIndex: "totalSells",
       key: "totalSells",
-      render: (totalSells) => totalSells || "0",
+      render: (totalSells) => Math.round(totalSells) || "0",
     },
     {
       title: "Code",

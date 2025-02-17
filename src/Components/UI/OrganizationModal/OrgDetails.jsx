@@ -7,7 +7,7 @@ const url = "http://139.59.0.25:8050/";
 const OrganizationDetails = ({ visible, onClose, data }) => {
   if (!data) return null;
 
-  console.log(data);
+  console.log('organizer details here',data);
 
   return (
     <Modal
@@ -29,10 +29,6 @@ const OrganizationDetails = ({ visible, onClose, data }) => {
           </h2>
         </div>
 
-        <h2 className="text-center text-[#1b7443] text-2xl font-thin mb-4">
-          Organization Name: {data.organizationDetails.organizationName}
-        </h2>
-
         <div className="px-14">
           <div className="flex justify-between items-center mb-6">
             <img
@@ -40,27 +36,60 @@ const OrganizationDetails = ({ visible, onClose, data }) => {
               alt="Event"
               className="w-40 h-40 rounded-full object-cover"
             />
+            {/* moment(createdAt).format("MM/DD/YYYY") */}
             <div className="text-right">
               <p className="text-green-600 font-semibold">
-                Starting Date: {`${data.fundraiserInformation.year || ""}/ ${data.fundraiserInformation.startMonth || ""}/ ${data.fundraiserInformation.startDay || ""}/ ${data.fundraiserInformation.startTime || ""}`}
+                Starting Date: {`${data.fundraiserInformation.startMonth || ""}/ ${data.fundraiserInformation.startDay || ""}/ ${data.fundraiserInformation.year || ""}/ ${data.fundraiserInformation.startTime || ""}`}
               </p>
               <p className="text-red-600 font-semibold">
-                Ending Date: {`${data.fundraiserInformation.year || ""}/ ${data.fundraiserInformation.endMonth || ""}/ ${data.fundraiserInformation.endDay || ""}/ ${data.fundraiserInformation.endTime || ""}`}
+                Ending Date: {`${data.fundraiserInformation.startMonth || ""}/ ${data.fundraiserInformation.startDay || ""}/ ${data.fundraiserInformation.year || ""}/ ${data.fundraiserInformation.endTime || ""}`}
               </p>
             </div>
           </div>
-
-          <p className="text-lg font-semibold mb-1">
-            Organization Creator Name :<span>  {data?.organizerInfo?.firstName || ""} {data?.organizerInfo?.lastName || ""}</span>
+          
+          <h2 className="text-[#1b7443] text-lg font-thin ">
+          Organization Name: {data.organizationDetails.organizationName}
+        </h2>
+          <p className="text-lg mb-1">
+             Industry Type :<span>  {data?.organizationDetails?.industryType || ""}</span>
           </p>
-          <p className="text-lg font-semibold mb-1">
+          <p className="text-lg mb-1">
+             Tax-ID :<span>  {data?.organizationDetails?.organizationTaxId || ""}</span>
+          </p>
+          <p className="text-lg mb-1">
+             ProfitType :<span>  {data?.organizationDetails?.profitType || ""}</span>
+          </p>
+          <p className="text-lg mb-1">
+             Addess :<span>  {data?.organizationDetails?.address?.streetAddress}, {data?.organizationDetails?.address?.city}, {data?.organizationDetails?.address?.country}</span>
+          </p>
+
+
+          <p className="text-lg  mb-1">
+             Creator Name :<span>  {data?.organizerInfo?.firstName || ""} {data?.organizerInfo?.lastName || ""}</span>
+          </p>
+          <p className="text-lg  mb-1">
+             Creator Email :<span>  {data?.organizerInfo?.email || ""}</span>
+          </p>
+          <p className="text-lg  mb-1">
+             Creator Phone :<span>  {data?.organizerInfo?.phone || ""} </span>
+          </p>
+          <p className="text-lg  mb-1">
             Target: <span className="font-normal">{data.fundraiserInformation.goal}</span>
           </p>
+          <p className="text-lg  mb-1">
+            Signature Name: <span className="font-normal">{data.signatureName}</span>
+          </p>
+          <p className="text-green-600 text-lg">
+                Starting Date: {`${data.fundraiserInformation.startMonth || ""}/ ${data.fundraiserInformation.startDay || ""}/ ${data.fundraiserInformation.year || ""}/ ${data.fundraiserInformation.startTime || ""}`}
+              </p>
+              <p className="text-red-600 text-lg ">
+                Ending Date: {`${data.fundraiserInformation.startMonth || ""}/ ${data.fundraiserInformation.startDay || ""}/ ${data.fundraiserInformation.year || ""}/ ${data.fundraiserInformation.endTime || ""}`}
+              </p>
 
-          <h3 className="text-lg font-semibold mb-2">Organization’s Details</h3>
-          <p className="text-gray-600 whitespace-pre-line">{data.details}</p>
+          <h3 className="text-lg  mb-2 mt-3">Fundraiser Details</h3>
+          <p className="text-gray-600 whitespace-pre-line">{data?.fundraiserInformation?.fundraiserDescription}</p>
 
-          <div className="text-[#1E1E1E99]">
+          <div className="text-[#1E1E1E99] mt-3">
             <p>
               Event Overview: Host a “Tea Tasting Extravaganza” where attendees
               can sample a variety of teas from around the world. This event can

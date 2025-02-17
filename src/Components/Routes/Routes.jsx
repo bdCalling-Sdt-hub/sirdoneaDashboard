@@ -35,6 +35,8 @@ import OrganizationRequest from "../Dashboard/Organization/OrganizationRequest";
 import OrganizationPayment from "../Dashboard/Organization/OrganizationPayment";
 import Categories from "../Dashboard/Category";
 import ProtectedRoute from "../ProtectedRoute";
+import ShippingPolicy from "../Dashboard/settings/ShippingPolicy";
+import Returns from "../Dashboard/settings/Returns";
 
 //
 
@@ -130,6 +132,14 @@ const router = createBrowserRouter([
           {
             path: "privacy-policy",
             element: <PrivacyPolicy />,
+          },
+          {
+            path: "shipping-policy",
+            element: <ShippingPolicy />,
+          },
+          {
+            path: "returns",
+            element: <Returns />,
           },
           {
             path: "terms-of-service",

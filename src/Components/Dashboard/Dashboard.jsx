@@ -58,7 +58,8 @@ const Dashboard = () => {
                     Total Earning
                   </p>
                   <p className="text-sm lg:text-base xl:text-3xl font-semibold text-[#1B7443]">
-                    ${overviewData?.data?.totalEarnings}
+                    {/* ${ overviewData?.data?.totalEarnings} */}
+                    ${Math.round(overviewData?.data?.totalEarnings)}
                   </p>
                 </div>
               </div>
